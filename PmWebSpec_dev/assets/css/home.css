@@ -1,0 +1,240 @@
+	* { box-sizing	: border-box; }
+
+	.vidtop-content {
+	    top		: 0;
+	    color	: #fff;
+	}
+
+	.vid-info { 
+		position	: absolute;
+		top			: 0;
+		right		: 0;
+		width		: 33%;
+		background	: rgba(0,0,0,0);
+		color		: white;
+		padding		: 1rem;
+		font-family	: Avenir, Helvetica, sans-serif;
+	}
+
+	.vid-info h1 {
+		font-size	: 2rem;
+		font-weight	: 700;
+		margin-top	: 0;
+		line-height	: 1.2;
+	}
+
+	.vid-info a {
+		font-size		: 2rem;
+		display			: block;
+		color			: white;
+		text-decoration	: none;
+		background		: rgba(0,0,0,0);
+		transition		: .6s background;
+		border-bottom	: none;
+		text-align		: center;
+	}
+
+	@media all and (max-width: 600px) {
+		.vid-info {
+			width	: 50%;
+			padding	: .5rem;
+		}
+
+		.vid-info h1 { margin-bottom : .2rem; }
+	}
+
+	@media all and (max-width: 500px) {
+		.vid-info .acronym { display : none; }
+	}
+
+	.info-container {
+	    display			: flex;
+	    flex-direction	: column;
+	    text-align		: center;
+	    margin-right	: 0;
+	}
+
+	.info-container a {
+	    color				: white !important;   
+	    text-decoration		: none; 
+	    display				: inline;
+	    text-align			: right;
+	    font-size			: 12pt;
+	    margin-right		: 30px;
+	}
+
+	.button-container {
+	    display			: flex;
+	    justify-content	: space-evenly;
+	    align-items		: center;
+	    margin-top		: 10rem;
+	    width			: 900px;
+	    margin			: 0px auto;
+	    height			: 300px;
+	}
+
+	.button {
+	    color				: white;
+	    background-color	: black;
+	    border-color		: white;
+	    font-family			: Avenir, Helvetica, sans-serif;
+	    margin-right		: 5rem;
+	    font-size			: 1rem;
+	    padding				: 10px;
+	    width				: 150px;
+	    border-style		: solid;
+	    border-radius		: 25px;
+	}
+
+	a.button {
+	    color				: white;
+	    background-color	: black;
+	    border-color		: white;
+	    font-family			: Avenir, Helvetica, sans-serif;
+	    margin-right		: 5rem;
+	    font-size			: 1rem;
+	    padding				: 10px;
+	    width				: 150px;
+	    border-top			: 2px solid;
+	    border-bottom		: 2px solid;
+	    border-left			: 2px solid;
+	    border-right		: 2px solid;
+	    border-radius		: 25px;
+	}
+
+	.new-spec-inputs a:hover {
+	    font-weight		: bold;
+	    border-color	: white;
+	}
+
+	.other-inputs a:hover {
+	    color			: #3498DB;
+	    font-weight		: bold;
+	    border-color	: white;
+	}
+
+	.button:hover {
+		font-weight	: bold;
+	    color		: #FEDCCA;
+	}
+
+	.footer {
+	    color				: white;
+	    left				: 2%;
+	    bottom				: 20px;
+	    height				: 150px;
+	    width				: 100%;
+	    overflow			: hidden;
+	    display				: flex;
+	    background-color	: transparent;
+	    border-color		: transparent;
+	    flex-direction		: column;
+	    font-family			: Avenir, Helvetica, sans-serif;
+	    position			: absolute;
+	}
+
+	.footer ul {
+	    list-style	: none;
+	    margin		: 0;
+	}
+
+	.footer a {
+	    color			: white !important;   
+	    text-decoration	: none; 
+	}
+
+	.footer a:hover {
+	    font-weight	: bold;
+	}
+
+	.body-container {
+	    display			: flex;
+	    justify-content	: center;
+	    min-height		: 100%;
+	    min-width		: 100%;
+	}
+
+	.new-spec-form {
+	    width	: 1rem;
+	}
+
+	.input-container {
+	    display			: flex;
+	    flex-direction	: column;
+	}
+
+	.new-spec-inputs {
+	    margin-bottom	: 3rem;
+	    align-items		: center;
+	}
+	
+	.new-spec-inputs, .other-inputs {
+	    display			: flex;
+	    justify-content	: center;
+	}
+	
+	.footer-container {
+	    display			: flex;
+	    justify-content	: left;
+	    width			: 400px;
+	    margin			: 0 auto;
+	    text-align		: left;
+	    margin-left		: 100px;
+	    bottom			: 150px;
+	}
+
+	.footer-copyright {
+	    position		: fixed;
+	    text-align		: right;
+	    bottom			: 0;
+	    width			: 100%;
+	    display			: block;
+	    color			: white;
+	    font-family		: Avenir, Helvetica, sans-serif;
+	    font-size		: .75rem;
+	    list-style-type	: none;
+	    right			: 100px;
+	}
+
+	.footer-copyright ul {
+	    list-style	: none;
+	    margin		: 0;
+	}
+
+    {
+    	margin	: 0;
+    	padding	: 0;
+    }
+
+	html { 
+		background				: url('background-2.jpg') no-repeat center center fixed; 
+		-webkit-background-size	: cover;
+		-moz-background-size	: cover;
+		-o-background-size		: cover;
+		background-size			: cover;
+	}
+
+	.hovertip {
+	    position	: relative;
+	    display		: inline-block;           
+	}
+
+	.hovertip .hovertiptext {
+	    visibility		: hidden;
+	    width			: 300px;
+	    background-color: #264d73;
+	    color			: #fff;
+	    text-align		: center;
+	    border-radius	: 10px;
+	    padding			: 5px;
+
+        /* Position the tooltip */
+   		position		: absolute;
+	    z-index			: 1;
+	    top				: 50px;
+	    left			: 0%;
+	}
+
+	.hovertip:hover .hovertiptext {
+	    visibility	: visible;
+	}

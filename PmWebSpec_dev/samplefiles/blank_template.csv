@@ -1,0 +1,6 @@
+﻿var_name,var_label,units,type,round,missVal,note,source
+PROJID,Project Identifier,,Char,,blank,,
+STUDYID,Study Identifier,,Char,,blank,,
+STUDYIDN,Study Identifier (N),,Num,,,"Convert alphanumeric studies to numeric using alphabetic letter position, e.g. A=01, U=21. Study 76U would be STUDYIDN=7621.",
+USUBJID,Unique Subject Identifier,,Char,,blank,,
+USUBJIDN,Unique Subject Identifier (N),,Num,,,Unique numerical representation of USUBJID.,
