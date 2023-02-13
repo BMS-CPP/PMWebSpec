@@ -135,19 +135,22 @@ class CIHome extends CI_Controller {
            		 }
 				$data['spec_id'] = $this->MSpec->saveSpecData();
 				$data['msg'] = $this->MUser->notifySpecSubmitted($data);
-				//print_r($data);exit;
+				// print_r($data);exit;
 				$this->load->view('inc/h1.inc.php');
 				$this->load->view('save_spec', $data);
       //}
-	    } else if(strtolower($param) == 'new') {
+	    } else if(strtolower($param) == 'new') 
+	    {
 	    	$spec_type                                      = $this->input->post('SpecType');
             $this->MUser->user_id                           = $this->session->userdata('user_id');
             list($dstype, $dslabel, $cname,$dataset_sorted)                 = $this->MSpec->getTypeLabel($spec_type);
-            
+
             list($structarray, $optional, $otheroptional)   = $this->MSpec->tempVarsQuery($spec_type, $this->MHome->ppk, $this->MHome->er, $this->MHome->other);
 			// echo '<pre>';print_r($otheroptional);exit;
 
             $data['full_name']          = $this->session->userdata('user_details')[$this->MUser->user_id]['first_name']. " ". $this->session->userdata('user_details')[$this->MUser->user_id]['last_name'];
+
+            
             $data['spec_templates']     = $this->MSpec->getSpecType();
             $data['spec_type']          = $spec_type;
             $data['ds_type']            = $dstype;
@@ -163,16 +166,26 @@ class CIHome extends CI_Controller {
             $data['ppk_other']          = $this->MHome->ppkother;
             $data['flag_array']         = $this->MSpec->tempFlagQuery($spec_type);
 
-            // echo '<pre>';print_r($otheroptional); die;
-
 	        $this->load->view('inc/h1.inc.php');
 	        $this->load->view('single_spec', $data);
 	    } else if(strtolower($param) == 'checkflag') {
 	        $data['flag'] = $this->MSpec->getFlagsList();
 	        $this->load->view('inc/h1.inc.php');
 	        $this->load->view('check_flag', $data);
-	    } else {
-	    	// echo 'hi';die;
+	    } 
+		else if(strtolower($param) == 'searchvariable') {
+	        $data['getvariable'] = $this->MSpec->getvariable();
+	        // echo '<pre>';print_r($data);die;
+	        $this->load->view('inc/h1.inc.php');
+	        $this->load->view('searchvariable', $data);
+	    }
+	    else if(strtolower($param) == 'getreports') {
+	        $data['getresult'] = $this->MSpec->gettrackstudy();
+	        // echo '<pre>';print_r($data);die;
+	        $this->load->view('inc/h1.inc.php');
+	        $this->load->view('trackstudy', $data);
+	    }
+	    else {
 	        $data['spec_types'] = $this->MSpec->getSpecType();
 	        $this->load->view('inc/h1.inc.php');
     	    $this->load->view('new_spec', $data);
@@ -404,7 +417,7 @@ class CIHome extends CI_Controller {
 	    
 			    if (isset($_FILES["fileToUpload"])) {
 
-			        include "S3connection.php";
+			        //include "S3connection.php";
 			    
 			        for( $i = 0; $i<count($_FILES["fileToUpload"]["name"]); $i++ ) {
 			        
@@ -427,9 +440,9 @@ class CIHome extends CI_Controller {
 			            $fileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
 			            $filenameOnly = basename($name, ".".$fileType); 
 
-			            $filepath = str_replace(pkms_path, '', $target_path);
-			            $filepath = str_replace(pkms_path2, '', $filepath);
-			            $filepath = str_replace('/', '_', $filepath);   
+			            // $filepath = str_replace(pkms_path, '', $target_path);
+			            // $filepath = str_replace(pkms_path2, '', $filepath);
+			            // $filepath = str_replace('/', '_', $filepath);   
 
 			            $file_name = $filenameOnly.$filepath.".".$fileType;
 
@@ -457,7 +470,7 @@ class CIHome extends CI_Controller {
 			                error_log("Attachment is not uploaded because of error #" . $_FILES["fileToUpload"]["error"][0], 0);
 			                die("The form is submitted but attachment is not uploaded due to errors.");             
 			            } else {
-			                file_transfer($target_file, s3_bucket_path);
+			                //file_transfer($target_file, s3_bucket_path);
 			            }
 
 			        }
@@ -715,7 +728,7 @@ class CIHome extends CI_Controller {
 	    
 			    if (isset($_FILES["fileToUpload"])) {
 
-			        include "S3connection.php";
+			        //include "S3connection.php";
 			    
 			        for( $i = 0; $i<count($_FILES["fileToUpload"]["name"]); $i++ ) {
 			        
@@ -738,9 +751,9 @@ class CIHome extends CI_Controller {
 			            $fileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
 			            $filenameOnly = basename($name, ".".$fileType); 
 
-			            $filepath = str_replace(pkms_path, '', $target_path);
-			            $filepath = str_replace(pkms_path2, '', $filepath);
-			            $filepath = str_replace('/', '_', $filepath);   
+			            // $filepath = str_replace(pkms_path, '', $target_path);
+			            // $filepath = str_replace(pkms_path2, '', $filepath);
+			            // $filepath = str_replace('/', '_', $filepath);   
 
 			            $file_name = $filenameOnly.$filepath.".".$fileType;
 
@@ -768,7 +781,7 @@ class CIHome extends CI_Controller {
 			                error_log("Attachment is not uploaded because of error #" . $_FILES["fileToUpload"]["error"][0], 0);
 			                die("The form is submitted but attachment is not uploaded due to errors.");             
 			            } else {
-			                file_transfer($target_file, s3_bucket_path);
+			                //file_transfer($target_file, s3_bucket_path);
 			            }
 
 			        }
@@ -827,7 +840,6 @@ class CIHome extends CI_Controller {
 			// echo '<pre>';print_r($dslabel);die;
 
 			$ppk = ["PPK-standard"];
-
             $erother=["Blank Template","ER-ISOP-safety-efficacy"];
 
 			$otheroptional = $this->MSpec->getotheroptional($data['importexisting']['all_var'] , $dstype, $ppk, $erother);
@@ -908,11 +920,15 @@ class CIHome extends CI_Controller {
 	    $data['param']      = strtolower($param);
 	    $data['selected']   = strtolower($this->session->userdata('selection'));
 	    if(strtolower($param) == "available") {
+
 	        $this->load->view('inc/h1.inc.php');
 	        $spec_id = $this->input->post("spec_id");
 	        $version_id = $this->input->post("version_id");
+
+	        // echo 'hi';die;
+	        
 	        $data['modify'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	        //print_r($data['modify']);exit;
+	        // print_r($data['modify']);exit;
 
 	        list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['modify']['user_spec']['type']);
 			$ppk = ["PPK-standard"];
@@ -1035,12 +1051,14 @@ class CIHome extends CI_Controller {
 			// $csv->load->model('CIModUser');
 			// $csv = $csv->CIModUser->notifyViaEmailDownload($spec_id);
 	    
-	    } else if(strtolower($param) == "wordfile") {
+	    } else if(strtolower($param) == "wordfile") 
+	    {
+	    	
 	        $this->load->view('inc/h1.inc.php');
 	        $spec_id = $this->input->post('spec_id');
             $version_id = $this->input->post('version_id');
 	       	$data['word_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	       	//print_r($data);exit;
+	       	// print_r($data);exit;
 			downlondDocxft($data['word_specs']);
 			$this->load->view('download_word', $data['word_specs']); 
 
@@ -1550,5 +1568,15 @@ class CIHome extends CI_Controller {
     	else{
     		die(json_encode(array('return' => 'File not uploaded')));
     	}
+    }
+
+    public function getstudydetails($spec_id=NULL,$version_id = NULL)
+    {
+    	$this->MSession->setSessionDetails();
+		$this->load->view('inc/h2.inc.php');
+		$spec_id = urldecode($spec_id);
+        $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
+        $data['studydetails'] = $data['pdf_specs']['clinical_data'];
+        $this->load->view('studydetails', $data);
     }
 }

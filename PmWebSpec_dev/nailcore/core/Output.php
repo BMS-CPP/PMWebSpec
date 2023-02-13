@@ -536,7 +536,6 @@ class CI_Output {
 		else
 		{
 			echo $output; // Send it to the browser!
-		    // redirect('https://smusath.net.Domain.com/siteminderagent/forms/authform.fcc?TYPE=33554433&REALMOID=06-407ec0ad-02a9-07e6-0000-5af900005af9&GUID=&SMAUTHREASON=0&METHOD=GET&SMAGENTNAME=-SM-s7GdbAZyvnThyoMZPcCzxDE7EY80AK9lFKCKlbmxuTJ7MUhWeSG1d%2fuvC34YE26i&TARGET=-SM-HTTPS%3a%2f%2fsmwinath%2eDomain%2ecom%2fredirect%2fredirector%2easp%3fORIGTARGET%3dhttps-%3a-%2f-%2flocalhost-%2fPMWebSpec','location', 301);
 		}
 
 		log_message('info', 'Final output sent to browser');

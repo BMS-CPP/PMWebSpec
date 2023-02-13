@@ -1,11 +1,6 @@
 <?php
 
 function downlondCsvft($data) {
-	// echo '<pre>';print_r($data);exit;
-
-	$path = str_replace(pkms_path, '', $data['dataset_path']);
-	$path = str_replace(pkms_path2, '', $path);
-	$path = str_replace('/', '_', $path);
 
 	$specid = str_replace(':', '-', $data['spec_id']);
 	$file_name = $specid .'_'. $data['dataset_name'] . '_v' . $data['version_id'] .'_Simba_spec' .'.csv';
@@ -32,6 +27,8 @@ function downlondCsvft($data) {
 		mkdir(exportcsvpath, 0755, true);
 	}
 
+
+
 	$csv_filename = exportcsvpath . $file_name;
 	$fd = fopen ($csv_filename, "w");
 	// Prints the column names
@@ -40,24 +37,20 @@ function downlondCsvft($data) {
 	}
 	ob_end_clean();
 
-	fputs($fd, implode(array('Dataset name', $data['dataset_name']), ",") . "\n");
-	fputs($fd, implode(array('Dataset label', $data['dataset_label']), ",") . "\n");
-	fputs($fd, implode(array('Dataset will be sorted by', $data['dataset_sort']), ",") . "\n");
-	fputs($fd, implode(array('Dataset will contain', $data['dataset_criteria']), ",") . "\n");
-	fputs($fd, implode(array('Dataset will have', $data['dataset_multiple_record']), ",") . "\n");
+	fputs($fd, implode(",",array("Dataset name", $data['dataset_name'])) . "\n");
+	fputs($fd, implode(",",array('Dataset label', $data['dataset_label'])) . "\n");
+	fputs($fd, implode(",",array('Dataset will be sorted by', $data['dataset_sort'])) . "\n");
+	fputs($fd, implode(",",array('Dataset will contain', $data['dataset_criteria'])) . "\n");
+	fputs($fd, implode(",",array('Dataset will have', $data['dataset_multiple_record'])) . "\n");
+
 
 	$columns= array('Name', 'Label', 'Units', 'Type', 'Rounding', 'Missing');
-	fputs($fd, implode($columns, ",") . "\n");
 
-
+	fputs($fd, implode(",",$columns). "\n");
 
 	// -------------- dataset structure table;
 	foreach($data['dataset_structure'] as $row) {
 		fputcsv($fd, $row);
 	}
-
-	// include "S3connection.php";
-	// $file_Path = $csv_filename;
-	// file_transfer($file_Path, s3_bucket_path);
 }
 ?>

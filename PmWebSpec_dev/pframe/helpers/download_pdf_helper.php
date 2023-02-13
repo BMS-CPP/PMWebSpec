@@ -377,10 +377,10 @@ $html2 = '';
 
 	$filename = $data['dataset_path'];
 
-	$filename = str_replace(pkms_path, '', $filename);
-	$filename = str_replace(pkms_path2, '', $filename);
+	// $filename = str_replace(pkms_path, '', $filename);
+	// $filename = str_replace(pkms_path2, '', $filename);
 
-	$filename = str_replace('/', '_', $filename);
+	// $filename = str_replace('/', '_', $filename);
 	$specid = str_replace(':', '-', $data['spec_id']);
 
     ob_end_clean();
@@ -408,11 +408,6 @@ $html2 = '';
 	$files_details =& get_instance();
 	$files_details->load->model('CIModSpec');
 	$files_details->CIModSpec->insert_file("file_transfer", $fileData);
-
-	//include "S3connection.php";
-
-	//$file_Path = pdfspecpath.$specid.'_'.$data['dataset_name'].'_v'.$data['version_id'].'_'.'dataset_spec'.'.pdf';
-	//file_transfer($file_Path, s3_bucket_path);
 	return 1;
 }
 

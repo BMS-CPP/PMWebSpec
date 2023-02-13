@@ -590,17 +590,17 @@ foreach ($optional_var as  $value) {
 				}elseif($spec_type=='ER-safety-efficacy' OR $spec_type=='ER-ISOP-safety-efficacy'){
                 echo '<b>Please select endpoints and optional variables to add:</b>';
                 echo '<div class="chbox">';
-                echo '<label><input id="gr3" type="checkbox" name="endpoints[]" value="gr3" class="outcheck" /> Grade 3+ AE</label>
-                           <label><input id="aedcd" type="checkbox" name="endpoints[]" value="aedcd" class="outcheck" /> AE DC/D</label>
-                           <label><input id="imae" type="checkbox" name="endpoints[]" value="imae" class="outcheck" /> IMAE</label>
-                           <label><input id="gr2imae" type="checkbox" name="endpoints[]" value="gr2imae" class="outcheck" /> Grade 2+ IMAE</label>
-                           <label><input id="drae" type="checkbox" name="endpoints[]" value="drae" class="outcheck" /> Drug-related AE</label>
-                           <label><input id="draedcd" type="checkbox" name="endpoints[]" value="draedcd" class="outcheck" /> Drug-related AE DC/D</label>
-                           <label><input id="drgr2ae" type="checkbox" name="endpoints[]" value="drgr2ae" class="outcheck" /> Drug-related grade 2+ AE</label>
-                           <label><input id="drgr3ae" type="checkbox" name="endpoints[]" value="drgr3ae" class="outcheck" /> Drug-related grade 3+ AE</label>
-                          <label><input id="bor" type="checkbox" name="endpoints[]" value="bor" class="outcheck" /> Best overall response</label>
-                          <label><input id="pfs" type="checkbox" name="endpoints[]" value="pfs" class="outcheck" /> Progression-free survival</label>
-                          <label><input id="os" type="checkbox" name="endpoints[]" value="os" class="outcheck" /> Overall survival</label> ';
+                echo '<label><input id="gr3" type="checkbox" name="endpoints[]" value="gr3" class="outcheck" onClick="addOptional();" /> Grade 3+ AE</label>
+                           <label><input id="aedcd" type="checkbox" name="endpoints[]" value="aedcd" class="outcheck" onClick="addOptional();" /> AE DC/D</label>
+                           <label><input id="imae" type="checkbox" name="endpoints[]" value="imae" class="outcheck" onClick="addOptional();" /> IMAE</label>
+                           <label><input id="gr2imae" type="checkbox" name="endpoints[]" value="gr2imae" class="outcheck" onClick="addOptional();" /> Grade 2+ IMAE</label>
+                           <label><input id="drae" type="checkbox" name="endpoints[]" value="drae" class="outcheck" onClick="addOptional();" /> Drug-related AE</label>
+                           <label><input id="draedcd" type="checkbox" name="endpoints[]" value="draedcd" class="outcheck" onClick="addOptional();" /> Drug-related AE DC/D</label>
+                           <label><input id="drgr2ae" type="checkbox" name="endpoints[]" value="drgr2ae" class="outcheck" onClick="addOptional();" /> Drug-related grade 2+ AE</label>
+                           <label><input id="drgr3ae" type="checkbox" name="endpoints[]" value="drgr3ae" class="outcheck" onClick="addOptional();" /> Drug-related grade 3+ AE</label>
+                          <label><input id="bor" type="checkbox" name="endpoints[]" value="bor" class="outcheck" onClick="addOptional();" /> Best overall response</label>
+                          <label><input id="pfs" type="checkbox" name="endpoints[]" value="pfs" class="outcheck" onClick="addOptional();" /> Progression-free survival</label>
+                          <label><input id="os" type="checkbox" name="endpoints[]" value="os" class="outcheck" onClick="addOptional();" /> Overall survival</label> ';
                 echo '</div>';
                 echo '<br/><br/>';
                 echo '<div id="allspecs" class="">
@@ -877,56 +877,57 @@ $(document).ready(function()
 	function handleClick(cb) {
   		var select_value =  cb.id;
 
-  		if(select_value == "HEPA") {
-  			 document.getElementById("HEPAN").checked = true;
-  		}
-  		if(select_value == "HEPAN") {
-  			 document.getElementById("HEPA").checked = true;
-  		}
-  		if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
-  		{
-  			document.getElementById("HEPA").checked = false;	 
-	  		document.getElementById("HEPAN").checked = false; 	 
-  		}		
+  		// if(select_value == "HEPA") {
+  		// 	 document.getElementById("HEPAN").checked = true;
+  		// }
+  		// if(select_value == "HEPAN") {
+  		// 	 document.getElementById("HEPA").checked = true;
+  		// }
+  		// if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
+  		// {
+  		// 	document.getElementById("HEPA").checked = false;	 
+	  	// 	document.getElementById("HEPAN").checked = false; 	 
+  		// }		
 
-  		if(select_value == "TTYPEF") {
-	  		document.getElementById("TTYPEN").checked = true; 	 
-  		}
-  		if(select_value == "TTYPEN") {
-	  		document.getElementById("TTYPEF").checked = true; 	 
-  		}
-  		if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
-  		{
-  			document.getElementById("TTYPEF").checked = false;	 
-	  		document.getElementById("TTYPEN").checked = false; 	 
-  		}
-
-
-  		if((select_value == "SEX")) {
-  			 document.getElementById("SEXN").checked = true;
-  		}
-  		if(select_value == "SEXN") {
-	  		document.getElementById("SEX").checked = true; 	 
-  		}
-  		if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
-  		{
-  			document.getElementById("SEX").checked = false;	 
-	  		document.getElementById("SEXN").checked = false; 	 
-  		}
+  		// if(select_value == "TTYPEF") {
+	  	// 	document.getElementById("TTYPEN").checked = true; 	 
+  		// }
+  		// if(select_value == "TTYPEN") {
+	  	// 	document.getElementById("TTYPEF").checked = true; 	 
+  		// }
+  		// if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
+  		// {
+  		// 	document.getElementById("TTYPEF").checked = false;	 
+	  	// 	document.getElementById("TTYPEN").checked = false; 	 
+  		// }
 
 
-  		if(select_value == "RACE") {
-  			 document.getElementById("RACEN").checked = true;
-  		}
-  		if(select_value == "RACEN") {
-  			 document.getElementById("RACE").checked = true;
-  		}
-  		if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
-  		{
-  			document.getElementById("RACE").checked = false;	 
-	  		document.getElementById("RACEN").checked = false; 	 
-  		}
+  		// if((select_value == "SEX")) {
+  		// 	 document.getElementById("SEXN").checked = true;
+  		// }
+  		// if(select_value == "SEXN") {
+	  	// 	document.getElementById("SEX").checked = true; 	 
+  		// }
+  		// if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
+  		// {
+  		// 	document.getElementById("SEX").checked = false;	 
+	  	// 	document.getElementById("SEXN").checked = false; 	 
+  		// }
 
+
+  		// if(select_value == "RACE") {
+  		// 	 document.getElementById("RACEN").checked = true;
+  		// }
+  		// if(select_value == "RACEN") {
+  		// 	 document.getElementById("RACE").checked = true;
+  		// }
+  		// if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
+  		// {
+  		// 	document.getElementById("RACE").checked = false;	 
+	  	// 	document.getElementById("RACEN").checked = false; 	 
+  		// }
+
+  		addOptional();
   		
 	}
 

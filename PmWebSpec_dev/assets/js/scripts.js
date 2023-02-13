@@ -425,59 +425,127 @@
 			retrieveinfo('confs','confirmTable')
 		}
 
-		// function to show delete variables 
-		function showdelete(tableid) {
+		function showdelete(tableid) 
+		{
+			if(tableid=='myTable') 
+			{
+				if (confirm('Are you sure you want to delete?')) 
+				{
+					if(tableid=='myTable') {
+						//sort table
+						sortTable(0, 1)
+					}
 
-			if(tableid=='myTable') {
-				//sort table
-				sortTable(0, 1)
-			}
+					var arr=[];
+					var arr2=[];
+					var table = document.getElementById(tableid);
+					var inputElements = table.getElementsByClassName('checkboxc');
+					var input = table.getElementsByClassName('struct');
+					var cols = table.rows[0].cells.length - 1;
+					for(var i=0; inputElements[i]; ++i){
+						if(inputElements[i].checked){
+							if(tableid=="myTable") {
+								if(input[i*18+1].value=="1") {
+									alert("Required variable cannot be deleted!");
+								} else {
+									arr.push(i);
+									arr2.push(input[i*18+10].value);
+								}
 
-			var arr=[];
-			var arr2=[];
-			var table = document.getElementById(tableid);
-			var inputElements = table.getElementsByClassName('checkboxc');
-			var input = table.getElementsByClassName('struct');
-			var cols = table.rows[0].cells.length - 1;
-			for(var i=0; inputElements[i]; ++i){
-				if(inputElements[i].checked){
-					if(tableid=="myTable") {
-						if(input[i*18+1].value=="1") {
-							alert("Required variable cannot be deleted!");
-						} else {
-							arr.push(i);
-							arr2.push(input[i*18+10].value);
+							} else {
+								arr.push(i);
+							}				
 						}
+					}
 
-					} else {
-						arr.push(i);
-					}				
+					var adj=0;
+					var arrayLength = arr.length;
+					for (var i = 0; i < arrayLength; i++) {
+						table.deleteRow(arr[i]+1-adj);
+						adj++;
+					}
+
+					if(tableid=="myTable") {
+						var rows = table.rows;	
+						var rowlen = rows.length;
+						for (var j=0; j < rowlen-1; j++) {
+							input[j*18].value = pad(j+1, 3);
+						} 
+						// add rows back to the optional variable table
+						for (var z=0; z <arr2.length; z++) {
+							for (var k=0; k<otheroptional.length; k++) {
+		           				if(arr2[z]==otheroptional[k][0]) {
+		           					addvaropt(otheroptional[k]); 
+		           				}
+		           			}					
+						}
+					}
+				} else 
+				{
+				    // Clear the checkboxes
+				  	var table = document.getElementById(tableid);
+					var inputElements = table.getElementsByClassName('checkboxc');
+					for(var i=0; inputElements[i]; ++i){
+						if(inputElements[i].checked){
+							inputElements[i].checked=false;				
+						}
+					}
 				}
 			}
+			else
+			{
+				if(tableid=='myTable') {
+						//sort table
+						sortTable(0, 1)
+					}
 
-			var adj=0;
-			var arrayLength = arr.length;
-			for (var i = 0; i < arrayLength; i++) {
-				table.deleteRow(arr[i]+1-adj);
-				adj++;
-			}
+					var arr=[];
+					var arr2=[];
+					var table = document.getElementById(tableid);
+					var inputElements = table.getElementsByClassName('checkboxc');
+					var input = table.getElementsByClassName('struct');
+					var cols = table.rows[0].cells.length - 1;
+					for(var i=0; inputElements[i]; ++i){
+						if(inputElements[i].checked){
+							if(tableid=="myTable") {
+								if(input[i*18+1].value=="1") {
+									alert("Required variable cannot be deleted!");
+								} else {
+									arr.push(i);
+									arr2.push(input[i*18+10].value);
+								}
 
-			if(tableid=="myTable") {
-				var rows = table.rows;	
-				var rowlen = rows.length;
-				for (var j=0; j < rowlen-1; j++) {
-					input[j*18].value = pad(j+1, 3);
-				} 
-				// add rows back to the optional variable table
-				for (var z=0; z <arr2.length; z++) {
-					for (var k=0; k<otheroptional.length; k++) {
-           				if(arr2[z]==otheroptional[k][0]) {
-           					addvaropt(otheroptional[k]); 
-           				}
-           			}					
-				}
+							} else {
+								arr.push(i);
+							}				
+						}
+					}
+
+					var adj=0;
+					var arrayLength = arr.length;
+					for (var i = 0; i < arrayLength; i++) {
+						table.deleteRow(arr[i]+1-adj);
+						adj++;
+					}
+
+					if(tableid=="myTable") {
+						var rows = table.rows;	
+						var rowlen = rows.length;
+						for (var j=0; j < rowlen-1; j++) {
+							input[j*18].value = pad(j+1, 3);
+						} 
+						// add rows back to the optional variable table
+						for (var z=0; z <arr2.length; z++) {
+							for (var k=0; k<otheroptional.length; k++) {
+		           				if(arr2[z]==otheroptional[k][0]) {
+		           					addvaropt(otheroptional[k]); 
+		           				}
+		           			}					
+						}
+					}
 			}
 		}
+		
 
 
 		// add variable to the optional variable table
@@ -1461,9 +1529,6 @@
 		}
 
 		function addOptional() {
-			// alert('hureee');
-			// add endpoints
-			// console.log('hiii');
 			var inputElements = document.getElementsByName('endpoints[]');
 			
 			var len = inputElements.length;
@@ -1471,13 +1536,15 @@
 			for(var i=0; i<len; i++){
       			if(inputElements[i].checked===true){
            			var newvar = inputElements[i].value;   
-           			//alert(newvar);
+           			// alert(newvar);
            			if(newvar=='gr3') {
            				for (var j=0; j<optional.length; j++) {
            					if(optional[j]['erflag']=="gr3") {
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added gr3 all dataset variables');
            			}
            			else if (newvar=='aedcd') {
            				for (var j=0; j<optional.length; j++) {
@@ -1485,6 +1552,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added aedcd all dataset variables');
            			}
            			else if (newvar=='imae') {
            				for (var j=0; j<optional.length; j++) {
@@ -1492,6 +1561,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added imae all dataset variables');
            			}
 	           		else if (newvar=='gr2imae') {
            				for (var j=0; j<optional.length; j++) {
@@ -1499,13 +1570,17 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added gr2imae all dataset variables');
 	           		}
 					else if (newvar=='drae') {
 	           			for (var j=0; j<optional.length; j++) {
            					if(optional[j]['erflag']=="drae") {
            						addvar(optional[j]); 
            					}
-           				}	           			
+           				}	
+
+           				alert('added drae all dataset variables');           			
 	           		}
 	           		else if (newvar=='draedcd') {
            				for (var j=0; j<optional.length; j++) {
@@ -1513,6 +1588,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added draedcd all dataset variables');
 	           		}
 	           		else if (newvar=='drgr2ae') {
            				for (var j=0; j<optional.length; j++) {
@@ -1520,6 +1597,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added drgr2ae all dataset variables');
 	           		}
 	           		else if (newvar=='drgr3ae') {
 	           			for (var j=0; j<optional.length; j++) {
@@ -1527,6 +1606,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added drgr3ae all dataset variables');
 	           		}
 	           		else if (newvar=='bor') {
 	           			for (var j=0; j<optional.length; j++) {
@@ -1534,6 +1615,7 @@
            						addvar(optional[j]); 
            					}
            				}
+           				alert('added bor all dataset variables');
 	           		}
 	           		else if (newvar=='pfs') {
 	           			for (var j=0; j<optional.length; j++) {
@@ -1541,6 +1623,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added pfs all dataset variables');
 	           		}
 	           		else if (newvar=='os') {
 	           			for (var j=0; j<optional.length; j++) {
@@ -1548,6 +1632,8 @@
            						addvar(optional[j]); 
            					}
            				}
+
+           				alert('added os all dataset variables');
 	           		} 
 	           		//uncheck the box   
 	           		inputElements[i].checked=false;   			
@@ -1563,7 +1649,7 @@
 				if(inputElements2[i].checked===true){
 					var newvar2 = input[i].innerHTML;   
 					for (var j=0; j<otheroptional.length; j++) {
-						// console.log(otheroptional[j]);
+						console.log(otheroptional[j]);
            				if(otheroptional[j]['var_name']==newvar2) {
            					addvar(otheroptional[j]); 
            				}

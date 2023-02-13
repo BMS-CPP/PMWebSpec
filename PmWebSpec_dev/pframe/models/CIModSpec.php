@@ -50,6 +50,57 @@ class CIModSpec extends CI_Model {
         }
     }
 
+    public function gettrackstudy() 
+    {
+        $this->db->close();
+        $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
+
+        $this->aws_conn_obj->select('max(sg.version_id) as version_id,sg.spec_id,sg.modification_date,dg.dataset_inclusion,dg.dataset_path');
+         $this->aws_conn_obj->distinct();
+        $this->aws_conn_obj->from('spec_general as sg');
+        $this->aws_conn_obj->join('dataset_general as dg', 'sg.spec_id = dg.spec_id');
+        $this->aws_conn_obj->where('spec_status','0');
+        $this->aws_conn_obj->group_by('spec_id');       
+        $user_spec_query = $this->aws_conn_obj->get();
+        if($user_spec_query->num_rows() > 0) {
+            foreach($user_spec_query->result_array() as $user_spec) 
+            {
+                $version_id = $user_spec['version_id'];
+                $spec_id = $user_spec['spec_id'];
+
+                $this->db->close();
+                $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
+
+                $this->aws_conn_obj->select('GROUP_CONCAT(study) as study');
+                $this->aws_conn_obj->from('clinical_data');
+                $this->aws_conn_obj->where('version_id',$version_id);
+                $this->aws_conn_obj->where('spec_id',$spec_id);       
+                $user_spec_query1 = $this->aws_conn_obj->get();
+
+                if($user_spec_query1->num_rows() > 0) 
+                {
+
+                    foreach($user_spec_query1->result_array() as $clinical_data) 
+                    {
+                        $user_spec['study'] = $clinical_data['study'];
+                    }
+                }
+                else
+                {
+                   $user_spec['study'] = ''; 
+                }
+
+                $user_spec_details[] = $user_spec;     
+            }
+        }
+
+        // echo '<pre>';print_r($user_spec_details);exit;
+
+        return $user_spec_details;
+        $this->aws_conn_obj->close();
+    }
+
+
     // pre-populate dataset label, type and compound name
     public function getTypeLabel($type) {
 
@@ -95,7 +146,7 @@ class CIModSpec extends CI_Model {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where(array('SpecType' => $type, 'requiredFlag' => 0));
-            $this->db->order_by('var_name',asc);
+            $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
 
         } elseif (in_array($type, $er1)) {
@@ -110,7 +161,7 @@ class CIModSpec extends CI_Model {
             $this->db->from('dsstruct');
             //$this->db->where('SpecType', 'ER-optional');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$type.'" and requiredFlag = 0)');
-            $this->db->order_by('var_name',asc);
+            $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
 
             // $result = $optionalquery->result_array();
@@ -126,7 +177,7 @@ class CIModSpec extends CI_Model {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$type.'" and requiredFlag = 0)');
-            $this->db->order_by('var_name',asc);
+            $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
         }
         elseif(in_array($type, $isop)) 
@@ -142,7 +193,7 @@ class CIModSpec extends CI_Model {
                 $this->db->select('*');
                 $this->db->from('dsstruct');
                 $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$type.'" and requiredFlag = 0)');
-                $this->db->order_by('var_name',asc);
+                $this->db->order_by('var_name','asc');
                 $optionalquery = $this->db->get();
             }
             else
@@ -155,7 +206,7 @@ class CIModSpec extends CI_Model {
                 $this->db->select('*');
                 $this->db->from('dsstruct');
                 $this->db->where(array('SpecType' => $type, 'requiredFlag' => 0));
-                 $this->db->order_by('var_name',asc);
+                 $this->db->order_by('var_name','asc');
                 $optionalquery = $this->db->get();
             }
         }
@@ -203,7 +254,7 @@ class CIModSpec extends CI_Model {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where(array('SpecType' => $datasettype, 'requiredFlag' => 0));
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
             //echo $this->db->last_query();exit;
         } else if(in_array($datasettype, $otherdataset)) {
@@ -211,7 +262,7 @@ class CIModSpec extends CI_Model {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$datasettype.'" and requiredFlag = 0)');
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
         }
         elseif(in_array($datasettype, $isop)) {   
@@ -220,7 +271,7 @@ class CIModSpec extends CI_Model {
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$datasettype.'" and requiredFlag = 0)');
             //$this->db->where(array('SpecType' => $datasettype, 'requiredFlag' => 0));
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
         }
 
@@ -393,6 +444,8 @@ class CIModSpec extends CI_Model {
             $this->saveSpecDataByTable($this->aws_conn_obj, 'pkms_path', $pkms_path_data);
         }
 
+
+
         // -------------- dataset structure table;
         $request = $this->input->method();
         $lname = $this->input->$request("passvalue");
@@ -423,6 +476,8 @@ class CIModSpec extends CI_Model {
               //print_r($ds_struct_data['var_label']);
             $this->saveSpecDataByTable($this->aws_conn_obj, 'dataset_structure', $ds_struct_data);
         }
+
+
 
       //exit;
 
@@ -472,6 +527,8 @@ class CIModSpec extends CI_Model {
             $this->saveSpecDataByTable($this->aws_conn_obj, 'flag', $flag_data);
         }
 
+
+
     
         // confirmation table 
         $confs = $_REQUEST["confs"];
@@ -481,7 +538,7 @@ class CIModSpec extends CI_Model {
     
     if (isset($_FILES["fileToUpload"])) {
 
-        include "S3connection.php";
+        //include "S3connection.php";
     
         for( $i = 0; $i<count($_FILES["fileToUpload"]["name"]); $i++ ) {
         
@@ -495,18 +552,23 @@ class CIModSpec extends CI_Model {
              'name' =>  $name,
              
             );
+
+
+
             $this->saveSpecDataByTable($this->aws_conn_obj, 'files', $file_data); 
              $ds_path = $this->input->post("dataset_path");
             $source_path = s3_bucket_path;
             $target_path = $ds_path;
             $status = "Pending";
 
+
+
             $fileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
             $filenameOnly = basename($name, ".".$fileType); 
 
-            $filepath = str_replace(pkms_path, '', $target_path);
-            $filepath = str_replace(pkms_path2, '', $filepath);
-            $filepath = str_replace('/', '_', $filepath);   
+            // $filepath = str_replace(pkms_path, '', $target_path);
+            // $filepath = str_replace(pkms_path2, '', $filepath);
+            // $filepath = str_replace('/', '_', $filepath);   
 
             $file_name = $filenameOnly.$filepath.".".$fileType;
 
@@ -521,6 +583,8 @@ class CIModSpec extends CI_Model {
         ];
 
         $this->insert_file("file_transfer", $fileData);
+
+        // echo 'hi';die;
            
 
             //move the file to S3 bucket;
@@ -534,7 +598,7 @@ class CIModSpec extends CI_Model {
                 error_log("Attachment is not uploaded because of error #" . $_FILES["fileToUpload"]["error"][0], 0);
                 die("The form is submitted but attachment is not uploaded due to errors.");             
             } else {
-                file_transfer($target_file, s3_bucket_path);
+                //file_transfer($target_file, s3_bucket_path);
             }
 
         }

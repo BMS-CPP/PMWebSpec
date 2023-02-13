@@ -377,6 +377,7 @@ if ($user_name[0]['user_id'] == NULL) {
 		<pre><font size="4" color="red">* --------------------- final dataset ---------------- *; </font></pre>
 		<pre>proc sort data = your_dataset_name ;</pre>
 		<pre>    by <?php echo $dataset_sort; ?>; </pre>
+            
 		<pre>run; </pre>
 		<pre>data derived.<?php echo $dataset_name?> (label="<?php echo $dataset_label ?>") ; </pre>
 		<pre>    retain <?php echo $vars ?> ;</pre>

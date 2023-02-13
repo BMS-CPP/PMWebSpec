@@ -138,7 +138,7 @@ class CIModDownload extends CI_Model {
              $details = array_merge($details, $all_var);
         }
 
-        //print_r($all_var);exit;
+        // print_r($all_var);exit;
 
         $this->aws_conn->select('*');
         $this->aws_conn->from('derivations');
@@ -154,6 +154,8 @@ class CIModDownload extends CI_Model {
         if(is_array($derivations_details)) {
             $details = array_merge($details, $derivations_details);
         }
+
+
 
         $this->aws_conn->select('*');
         $this->aws_conn->from('missing_outlier');
@@ -183,6 +185,8 @@ class CIModDownload extends CI_Model {
             }           
           // print_r($flag_details);exit;
         }
+
+
 
         if(is_array($flag_details)) {
             $details = array_merge($details, $flag_details);
@@ -221,7 +225,7 @@ class CIModDownload extends CI_Model {
 
 			$details = array_merge($details, $programmers_details);
 		}
-        //echo $id;exit;
+        // echo $id;exit;
 		$this->aws_conn->select('*');
 		$this->aws_conn->from('user_spec');
 		$this->aws_conn->where('spec_id', $id);
@@ -248,6 +252,8 @@ class CIModDownload extends CI_Model {
             exit;
          }
 
+
+
         $ppk = ["PPK-standard"];
         $er = ["ER-ISOP-safety-efficacy"];
         $other=["Blank Template"];
@@ -255,44 +261,48 @@ class CIModDownload extends CI_Model {
         $erother=["Blank Template"];
         $isop=["ER-ISOP-safety-efficacy"];
 
-        //print_r(ppk);exit;
+        // print_r(ppk);exit;
             if (in_array($type, $ppk)) {       
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where(array('SpecType' => $type, 'requiredFlag' => 0));
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
 
         } elseif (in_array($type, $er)) {
            $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType', 'ER-optional');
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
 
         } elseif (in_array($type, $other)) {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$type.'" and requiredFlag = 0)');
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
         }
         elseif (in_array($type, $isop)) {
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where(array('SpecType' => $type, 'requiredFlag' => 0));
-             $this->db->order_by('var_name',asc);
+             $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
         }
 
 
+        // echo 'hi';die;
+
         $structarray    = [];
         $optional       = [];
         $required        = [];
+
+         // echo 'hi';die;
         // required query
-        //print_r($optionalquery->result_array());exit;
+        // print_r($optionalquery->num_rows());exit;
         if($optionalquery->num_rows() > 0) {
-            //echo "huree";exit;
+            // echo "huree";exit;
             foreach( $optionalquery->result_array() as $index => $sts ) {
                 //echo "huree";exit;
                 $structarray[$index] = $sts;
@@ -302,6 +312,8 @@ class CIModDownload extends CI_Model {
                 }
             }
         }
+
+
         
         //print_r($options_details);exit;
         if(is_array($options_details)) {

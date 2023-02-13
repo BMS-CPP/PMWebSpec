@@ -66,17 +66,10 @@ function downlondEsubft($data) {
 			$csv_data .= implode(array_values($row), ",") . "\n";
 		}
 
-		//fputcsv($fd, $csv_data);
-		//fwrite($fd, $csv_data);
-
 		ob_flush();
 		ob_clean();
 
 		fclose($fd);
-
-		// include "S3connection.php";
-		// $file_Path = $csv_filename;
-		// file_transfer($file_Path, s3_bucket_path);
 
 	unset($csv_data);
 

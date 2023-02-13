@@ -1,0 +1,52 @@
+<?php
+$lname = $_POST["passvalue"];
+$_SESSION["passvalue"] = $lname;
+$target_path = $dataset_path;
+echo ' 
+		<style>
+			    .center1 {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 20%;
+			}
+			.btn_css {
+				padding: 1%;
+				width: 15%;
+				background-color: #f50758;
+				weight: 100;
+				font-weight: bold;
+				color: white;
+			}
+			
+			.btn_css:hover {
+				background-color: #2a346f;
+				color: white;
+			}
+			.center {
+				 text-align: center;
+  				 margin: auto;
+ 				 width: 80%;
+ 				 padding: 10px;
+		}
+
+    </style>
+    <div class = "center">
+    	<form class="form-horizontal" name="upload_excel" enctype="multipart/form-data" method = "post" action= '.base_url('download/esub-file').'>
+       			<br/>
+       			<input type="text" name = "version_id" value = '.$version_id.' hidden>
+       			
+       			<input type="text" name = "spec_id" value = "'.$spec_id.'" hidden>
+       			<input type="text" name="dataset_label" value = "'.$dataset_label.'" hidden>
+       			<input type="text" name="dataset_name" value = "'.$dataset_name.'" hidden>
+			<p ><font size="5">Your ESub file is successfully processed by this application. Please check the target directory for the downloaded file "'.$target_path.'". If any error occurs, an email notification will be sent to you.</font></p>
+        	
+        	 <br/>
+	   		 <input type="submit" name="Export" class="button icon fa fa-cloud" id="download_csv" value="Download File"/>	
+        </form>
+     </div>
+ ';
+?> 
+
+
+

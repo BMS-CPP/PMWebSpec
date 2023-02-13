@@ -112,6 +112,12 @@ table {
 				</div>
 				</fieldset><br/>';
 
+                if($this->session->userdata('selection') == 'DsTools')
+                { ?>
+                    <button type="button" style="background-color: green;" onClick="window.open('<?php echo base_url('home/create/getreports'); ?>');" class="w3-btn w3-round-large w3-green w3-medium">Track Study</button>
+                    <?php
+                }
+
 
         		echo '<p><b>Results</b></p>';
         		echo '<div id="allspecs" class="">

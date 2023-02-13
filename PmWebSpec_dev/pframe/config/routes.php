@@ -140,3 +140,5 @@ $route['home/lockspec/(:any)/(:any)'] = 'CIHome/lockspec/$1/$2';
 $route['home/discardchange/(:any)'] = 'CIHome/discardchange/$1';
 $route['home/discardchangemanage/(:any)'] = 'CIHome/discardchangemanage/$1';
 $route['home/datasetsave']	= 'CIHome/datasetsave';
+
+$route['home/create/getreports']                 = 'CIHome/Create/CreateSpec/getreports';

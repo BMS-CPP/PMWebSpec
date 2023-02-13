@@ -967,55 +967,57 @@ if($approved_info == 1) {
     function handleClick(cb) {
         var select_value =  cb.id;
 
-        if(select_value == "TTYPEF") {
-            document.getElementById("TTYPEN").checked = true;    
-        }
-        if(select_value == "TTYPEN") {
-            document.getElementById("TTYPEF").checked = true;    
-        }
-        if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
-        {
-            document.getElementById("TTYPEF").checked = false;   
-            document.getElementById("TTYPEN").checked = false;   
-        }
+        // if(select_value == "TTYPEF") {
+        //     document.getElementById("TTYPEN").checked = true;    
+        // }
+        // if(select_value == "TTYPEN") {
+        //     document.getElementById("TTYPEF").checked = true;    
+        // }
+        // if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
+        // {
+        //     document.getElementById("TTYPEF").checked = false;   
+        //     document.getElementById("TTYPEN").checked = false;   
+        // }
 
 
-        if((select_value == "SEX")) {
-             document.getElementById("SEXN").checked = true;
-        }
-        if(select_value == "SEXN") {
-            document.getElementById("SEX").checked = true;   
-        }
-        if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
-        {
-            document.getElementById("SEX").checked = false;  
-            document.getElementById("SEXN").checked = false;     
-        }
+        // if((select_value == "SEX")) {
+        //      document.getElementById("SEXN").checked = true;
+        // }
+        // if(select_value == "SEXN") {
+        //     document.getElementById("SEX").checked = true;   
+        // }
+        // if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
+        // {
+        //     document.getElementById("SEX").checked = false;  
+        //     document.getElementById("SEXN").checked = false;     
+        // }
 
 
-        if(select_value == "RACE") {
-             document.getElementById("RACEN").checked = true;
-        }
-        if(select_value == "RACEN") {
-             document.getElementById("RACE").checked = true;
-        }
-        if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
-        {
-            document.getElementById("RACE").checked = false;     
-            document.getElementById("RACEN").checked = false;    
-        }
+        // if(select_value == "RACE") {
+        //      document.getElementById("RACEN").checked = true;
+        // }
+        // if(select_value == "RACEN") {
+        //      document.getElementById("RACE").checked = true;
+        // }
+        // if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
+        // {
+        //     document.getElementById("RACE").checked = false;     
+        //     document.getElementById("RACEN").checked = false;    
+        // }
 
-        if(select_value == "HEPA") {
-             document.getElementById("HEPAN").checked = true;
-        }
-        if(select_value == "HEPAN") {
-             document.getElementById("HEPA").checked = true;
-        }
-        if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
-        {
-            document.getElementById("HEPA").checked = false;     
-            document.getElementById("HEPAN").checked = false;    
-        }       
+        // if(select_value == "HEPA") {
+        //      document.getElementById("HEPAN").checked = true;
+        // }
+        // if(select_value == "HEPAN") {
+        //      document.getElementById("HEPA").checked = true;
+        // }
+        // if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
+        // {
+        //     document.getElementById("HEPA").checked = false;     
+        //     document.getElementById("HEPAN").checked = false;    
+        // }    
+
+        addOptional();   
     }
 	</script>
 

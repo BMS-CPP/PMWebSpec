@@ -1,6 +1,7 @@
 <?php
 function downlondDocxft($data)
 {
+
 // Load library
     include_once 'HtmlToDoc.class.php';
 
@@ -368,12 +369,16 @@ function downlondDocxft($data)
     }
 
 
+
+
     /*start*/
 
     $filename = $data['dataset_path'];
 
-    $filename = str_replace(pkms_path, '', $filename);
-    $filename = str_replace(pkms_path2, '', $filename);
+    // $filename = str_replace(pkms_path, '', $filename);
+    // $filename = str_replace(pkms_path2, '', $filename);
+
+
 
     $filename = str_replace('/', '_', $filename);
     $specid = str_replace(':', '-', $data['spec_id']);
@@ -388,11 +393,15 @@ function downlondDocxft($data)
     
     $file_name = exportcsvpath.$specid.'_'.$data['dataset_name'].'_v'.$data['version_id'].'_'.'docx_spec';
 
+
+
     $htd->createDoc($htmlContent, $file_name);
     
     $target_path = $data['dataset_path'];
     $source_path = s3_bucket_path;
     $status = "Pending";
+
+
    
   
     $file_name = $specid.'_'.$data['dataset_name'].'_v'.$data['version_id'].'_'.'docx_spec'.'.doc';
@@ -407,11 +416,4 @@ function downlondDocxft($data)
     $files_details =& get_instance();
     $files_details->load->model('CIModSpec');
     $files_details->CIModSpec->insert_file("file_transfer", $fileData);
-
-    //include "S3connection.php";
-    //$file_Path = exportcsvpath. $specid.'_'.$data['dataset_name'].'_v'.$data['version_id'].'_'.'docx_spec'.'.doc';
-    //file_transfer($file_Path, s3_bucket_path);
-
-    /*end*/
 }
-
