@@ -57,6 +57,7 @@ $route['home/create/new']                       = 'CIHome/Create/CreateSpec/New'
 $route['home/create/save']                      = 'CIHome/Create/CreateSpec/Save';
 $route['home/update/save']						= 'CIHome/Create/UpdateSpec/Update';
 $route['home/create/flagcheck']                 = 'CIHome/Create/CreateSpec/CheckFlag';
+$route['home/create/searchvariable']                 = 'CIHome/Create/CreateSpec/searchvariable';
 
 $route['home/import/existing']                  = 'CIHome/Create/ImportExisting';
 $route['home/import/existing/request']          = 'CIHome/Create/ImportExisting/Version';
@@ -142,3 +143,4 @@ $route['home/discardchangemanage/(:any)'] = 'CIHome/discardchangemanage/$1';
 $route['home/datasetsave']	= 'CIHome/datasetsave';
 
 $route['home/create/getreports']                 = 'CIHome/Create/CreateSpec/getreports';
+$route['home/getsearchvariableresult']	= 'CIHome/getsearchvariableresult';

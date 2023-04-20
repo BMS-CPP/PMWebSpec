@@ -6,8 +6,6 @@
 
 function downlondPdf($data) {
 
-	//print_r($data['title']);exit;
- //create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'utf-8', false);
 
     //set header and footer fonts
@@ -108,7 +106,7 @@ function downlondPdf($data) {
 
     $html_header = '
     	<h2>1. Purpose</h2>
-    	<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s): </p>
+    	<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset: </p>
 
     	<table id=dataset_info border="1" cellspacing="0" cellpadding="2">
     		<tr nobr="true">
@@ -376,11 +374,6 @@ $html2 = '';
     $pdf->writeHTML($html1 . $html2 . $html3 . $html4 . $html5, true, false, false, false, '');
 
 	$filename = $data['dataset_path'];
-
-	// $filename = str_replace(pkms_path, '', $filename);
-	// $filename = str_replace(pkms_path2, '', $filename);
-
-	// $filename = str_replace('/', '_', $filename);
 	$specid = str_replace(':', '-', $data['spec_id']);
 
     ob_end_clean();
@@ -410,5 +403,4 @@ $html2 = '';
 	$files_details->CIModSpec->insert_file("file_transfer", $fileData);
 	return 1;
 }
-
 ?>

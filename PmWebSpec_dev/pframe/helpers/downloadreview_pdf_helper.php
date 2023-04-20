@@ -108,7 +108,7 @@ function downlondReviewPdf($data) {
 
     $html_header = '
     	<h2>1. Purpose</h2>
-    	<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s): </p>
+    	<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset: </p>
 
     	<table id=dataset_info border="1" cellspacing="0" cellpadding="2">
     		<tr nobr="true">

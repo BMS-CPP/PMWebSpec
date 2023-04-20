@@ -68,10 +68,7 @@ function downlondEsubft($data) {
 
 		ob_flush();
 		ob_clean();
-
 		fclose($fd);
-
-	unset($csv_data);
-
+		unset($csv_data);
 }
 ?>

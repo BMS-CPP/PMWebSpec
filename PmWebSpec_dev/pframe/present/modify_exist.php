@@ -1,3 +1,4 @@
+<script src="<?php echo base_url("assets/js/scripts.js"); ?>"></script>
 <?php
 $user_id_session =& get_instance();
 $user_id_session->load->model('CIModSession');
@@ -78,12 +79,13 @@ if($approved_info == 1) {
                 {
                 	$changes_madeext = '';
                 } ?>
-                
-    			<legend>Specification information</legend>
-        		<label><b>Specification ID: </b></label><input id="spec_id" name="spec_id" type="text" size="80" value="<?php  echo htmlspecialchars($spec_id); ?>" readonly/>
-        		<label><b>Changes made: (Please track your changes to the specification)</b></label><input name="changes_made" value="<?php echo $changes_madeext; ?>" type="text" size="80" required />
-        		<label><b>Revised by: </b></label><input name="revised_by" readonly="readonly" type="text" size="80" value="<?php  echo $fullname; ?>" required  />
+
+                 <legend>Specification information</legend>
+                <label><b>Specification ID: </b></label><input id="spec_id" name="spec_id" type="text" size="80" value="<?php  echo htmlspecialchars($spec_id); ?>" readonly/>
+                <label><b>Changes made: (Please track your changes to the specification)</b></label><input name="changes_made" value="<?php echo $changes_madeext; ?>"  <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> type="text" size="80" required />
+                <label><b>Revised by: </b></label><input name="revised_by" type="text" size="80" value="<?php  echo $fullname; ?>" required  />
                  <input id="cname" name="cname" type="hidden" size="20"  value="<?php echo $user_spec['compound']; ?>" title="Compound name must start with letter Ex:Test- and followed by the compound number" oninput="cnameCheck();" required />
+
     		</fieldset>
     	</div>
 
@@ -105,11 +107,11 @@ if($approved_info == 1) {
 					<br/>
 					<div class="row required">
 						<div class="col-25"><label>Analysis title (eg. Population Pharmacokinetic Analysis of Compound Name): </label></div>
-						<div class="col-75"><input id="title" name="title" type="text" size="80" value="<?php  echo htmlspecialchars($title); ?>" /></div>
+						<div class="col-75"><input id="title" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> name="title" type="text" size="80" value="<?php  echo htmlspecialchars($title); ?>" /></div>
 					</div>
 					<div class="row required">
 						<div class="col-25"><label>Project (Compound Name, Protocol Name): </label></div>
-						<div class="col-75"><input id="project_name" name="project_name" type="text" size="80" value="<?php  echo htmlspecialchars($project_name); ?>" /></div>
+						<div class="col-75"><input id="project_name" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> name="project_name" type="text" size="80" value="<?php  echo htmlspecialchars($project_name); ?>" /></div>
 					</div>
 					<?php
 						$temp_var =& get_instance();
@@ -134,17 +136,17 @@ if($approved_info == 1) {
                 	<div class="row required">
 						<br/>
                         <div class="col-25"><label>PK scientist (Enter NA if not applicable)</label></div>
-                        <div class="col-75"><input id="pk_scientist" type="text" name="pk_scientist" value="<?php echo htmlspecialchars($pk_scientist); ?>" /></div>
+                        <div class="col-75"><input id="pk_scientist" type="text" name="pk_scientist" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php echo htmlspecialchars($pk_scientist); ?>" /></div>
                 	</div>
                 
                 	<div class="row required">
                         <div class="col-25"><label>Pharmacometric Scientist</label></div>
-                        <div class="col-75"><input id="pm_scientist" type="text" name="pm_scientist" value="<?php  echo htmlspecialchars($pm_scientist); ?>" /></div>
+                        <div class="col-75"><input id="pm_scientist" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> type="text" name="pm_scientist" value="<?php  echo htmlspecialchars($pm_scientist); ?>" /></div>
                 	</div>
                 	
                 	<div class="row required">
                         <div class="col-25"><label>Statistician and/or Programmer</label></div>
-                        <div class="col-75"><input id="statistician" type="text" name="statistician" value="<?php  echo htmlspecialchars($statistician); ?>" /></div>
+                        <div class="col-75"><input id="statistician" type="text" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> name="statistician" value="<?php  echo htmlspecialchars($statistician); ?>" /></div>
                 	</div>
 
                     <div class="row">
@@ -190,24 +192,24 @@ if($approved_info == 1) {
 
     		    <div class="panel container-fuild">
 					<br/>
-    				The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s). 
+    				The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset. 
     				Please note that <b>dataset name</b> must be <b>less than or equal to 8 characters</b> and <b>dataset label</b> must be <b>less than or equal to 40 characters</b>:
 
 					<br/><br/>
 
     				<div class="row required">
     	                 <div class="col-25"><label>Dataset Name: </label></div>
-    	                 <div class="col-75"><input type="text" id="dataset_name" name="dataset_name" maxlength="8" value="<?php  echo htmlspecialchars($dataset_name); ?>" /></div>
+    	                 <div class="col-75"><input type="text" id="dataset_name" name="dataset_name" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> maxlength="8" value="<?php  echo htmlspecialchars($dataset_name); ?>" /></div>
     				</div>
 
                     <div class="row required">
                         <div class="col-25"><label>Dataset Label:</label></div>
-                        <div class="col-75"><input type="text" id="dataset_label" name="dataset_label" value="<?php  echo htmlspecialchars($dataset_label); ?>" maxlength="40" /></div>
+                        <div class="col-75"><input type="text" id="dataset_label" name="dataset_label" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_label); ?>" maxlength="40" /></div>
                     </div>
                     
                     <div class="row required">
                         <div class="col-25"><label>Dataset Description: purpose of this analysis dataset</label></div>
-                        <div class="col-75"><input type="text" id="dataset_descriptor" name="dataset_descriptor" value="<?php  echo htmlspecialchars($dataset_description); ?>" /></div>
+                        <div class="col-75"><input type="text" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> id="dataset_descriptor" name="dataset_descriptor" value="<?php  echo htmlspecialchars($dataset_description); ?>" /></div>
                     </div>
 				
                     <div class="row required">
@@ -225,22 +227,22 @@ if($approved_info == 1) {
 				
                     <div class="row required">
                          <div class="col-25"><label>The dataset will include records that meet the criteria: </label></div>
-                         <div class="col-75"><input type="text" id="dataset_criteria" name="dataset_criteria" value="<?php  echo htmlspecialchars($dataset_inclusion); ?>"/></div>
+                         <div class="col-75"><input type="text" id="dataset_criteria" name="dataset_criteria" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_inclusion); ?>"/></div>
                     </div>
                     
                     <div class="row required">
                     	 <div class="col-25"><label>The dataset will be sorted by: </label></div>
-                         <div class="col-75"><input type="text" id="dataset_sort" name="dataset_sort" value="<?php  echo htmlspecialchars($dataset_sort); ?>" style="text-transform:uppercase"/></div>
+                         <div class="col-75"><input type="text" id="dataset_sort" name="dataset_sort" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_sort); ?>" style="text-transform:uppercase"/></div>
                     </div>
                     
                     <div class="row">
                          <div class="col-25"><label>Dataset Location:</label></div>
-                         <div class="col-75"><input type="text" id="dataset_path" name="dataset_path" value="<?php  echo htmlspecialchars($dataset_path); ?>"/></div>
+                         <div class="col-75"><input type="text" id="dataset_path" name="dataset_path" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_path); ?>"/></div>
                     </div>
 
                     <div class="row required">
                          <div class="col-25"><label>Delivery Date:</label></div>
-                         <div class="col-75"><input type="date" id="dataset_date" name="ds_due_date" value="<?php  echo htmlspecialchars($dataset_due_date); ?>"/></div>
+                         <div class="col-75"><input type="date" id="dataset_date" name="ds_due_date" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_due_date); ?>"/></div>
                     </div>
 					<br/>
                 </div>
@@ -350,8 +352,8 @@ if($approved_info == 1) {
 
     		    <div class="panel container-fuild">
 					<br/>
-    			    <p><b>Program development path: <input name="dataset_dev_path" type="text" size="80" value="<?php  echo htmlspecialchars($dataset_dev_path);?>"></b></p>
-    	            <p><b>Program QC path: <input name="dataset_qc_path" type="text" size="80" value="<?php  echo htmlspecialchars($dataset_qc_path);?>"></b></p>
+    			    <p><b>Program development path: <input name="dataset_dev_path" type="text" size="80" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> value="<?php  echo htmlspecialchars($dataset_dev_path);?>"></b></p>
+    	            <p><b>Program QC path: <input name="dataset_qc_path" type="text" <?php if($existmodifying == 'inprocess'){ echo 'readonly="readonly"';} ?> size="80" value="<?php  echo htmlspecialchars($dataset_qc_path);?>"></b></p>
     		    </div>	
     
     		    <button type="button" class="accordion" onclick="openpanel();">Dataset Requirements and Specifications</button>
@@ -461,8 +463,19 @@ if($approved_info == 1) {
 
         					if($user_spec['type'] == 'Blank Template')
         					{
+                                if($existmodifying == 'inprocess')
+                                {
+                                    $readonlyvariablename = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlyvariablename = '';
+                                }
+
         						//name
-             						echo '<td style="width:130px;"><input type="text" class="struct" maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . ($arr['nameChange'] == 0? '':'') . ' /></td>';
+                                echo '<td style="width:130px;"><input type="text" class="struct" ' . $readonlymissingval . ' maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . ($arr['nameChange'] == 0? '':'') . ' /></td>';
+
+             						// echo '<td style="width:130px;"><input type="text" class="struct" maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . ($arr['nameChange'] == 0? '':'') . ' /></td>';
              						//label
              						echo '<td style="width:340px;"><input type="text" class="struct" maxlength="40" value="' . $arr['var_label'] . '" ' . ($arr['labelChange'] == 0? '':'') . ' /></td>';
              						//unit
@@ -488,21 +501,84 @@ if($approved_info == 1) {
          							$i++;
          						}
          						echo '</select></td>';
-         						//miss value
-         						echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . ($arr['missValChange'] == 0? '':'') . ' /></td>';
-         						//note
-         						echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['noteChange'] == 0 ? '':'') . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
-         						//source
-         						echo '<td style="width:310px;"><textarea class="struct" ' . ($arr['sourceChange'] == 0? '':'') . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
+
+                                if($existmodifying == 'inprocess')
+                                {
+                                    $readonlymissingval = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlymissingval = '';
+                                }
+
+                                echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . $readonlymissingval . ' /></td>';
+                                //note
+                                echo '<td style="width:325px;"><textarea class="struct" ' . $readonlymissingval . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
+                                //source
+                                echo '<td style="width:310px;"><textarea class="struct" ' . $readonlymissingval . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
+
+
+         						// //miss value
+         						// echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . ($arr['missValChange'] == 0? '':'') . ' /></td>';
+         						// //note
+         						// echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['noteChange'] == 0 ? '':'') . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
+         						// //source
+         						// echo '<td style="width:310px;"><textarea class="struct" ' . ($arr['sourceChange'] == 0? '':'') . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
         					}
         					else
         					{
+                                if($arr['nameChange'] == 0)
+                                {
+                                    $readonlyvariablename = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlyvariablename = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlyvariablename = '';
+                                }
+
+                                echo '<td style="width:130px;"><input type="text" class="struct" maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . $readonlyvariablename . ' /></td>';
+
         						//name
-             						echo '<td style="width:130px;"><input type="text" class="struct" maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . ($arr['nameChange'] == 0? 'readonly':'') . ' /></td>';
+             						// echo '<td style="width:130px;"><input type="text" class="struct" maxlength="8" value="' . $arr['var_name'] . '" style="text-transform:uppercase" ' . ($arr['nameChange'] == 0? 'readonly':'') . ' /></td>';
+
+                                if($arr['labelChange'] == 0)
+                                {
+                                    $readonlyvariablelabel = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlyvariablelabel = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlyvariablelabel = '';
+                                }
+
+                                echo '<td style="width:340px;"><input type="text" class="struct" maxlength="40" value="' . $arr['var_label'] . '" ' . $readonlyvariablelabel . ' /></td>';
              						//label
-             						echo '<td style="width:340px;"><input type="text" class="struct" maxlength="40" value="' . $arr['var_label'] . '" ' . ($arr['labelChange'] == 0? 'readonly':'') . ' /></td>';
+             						// echo '<td style="width:340px;"><input type="text" class="struct" maxlength="40" value="' . $arr['var_label'] . '" ' . ($arr['labelChange'] == 0? 'readonly':'') . ' /></td>';
+
+                                if($arr['unitChange'] == 0)
+                                {
+                                    $readonlyvariableunit = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlyvariableunit = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlyvariableunit = '';
+                                }
+
+                                    echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_units'] . '" ' . $readonlyvariableunit . ' /></td>';
+
              						//unit
-             						echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_units'] . '" ' . ($arr['unitChange'] == 0? 'readonly':'') . ' /></td>';
+             						// echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_units'] . '" ' . ($arr['unitChange'] == 0? 'readonly':'') . ' /></td>';
                      			    //type
          						echo '<td style="width:108px;"><select class="struct" ' . ($arr['typeChange'] == 0? 'disabled':'') . '>';
          						$row = array('Char','Num');
@@ -513,9 +589,26 @@ if($approved_info == 1) {
          							$i++;
          						}
          						echo '</select></td>';
+
+                                if($arr['roundChange'] == 0)
+                                {
+                                    $readonlyvariableround = 'disabled';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlyvariableround = 'disabled';
+                                }
+                                else
+                                {
+                                    $readonlyvariableround = '';
+                                }
+
+                                echo '<td style="width:108px;"><select class="struct" ' . $readonlyvariableround . '>';
+
          						//round
-                                //print_r($arr['roundChange'] );
-         						echo '<td style="width:108px;"><select class="struct" '. ($arr['roundChange'] == 0 ? 'disabled':'') . '>';
+                         
+         						// echo '<td style="width:108px;"><select class="struct" '. ($arr['roundChange'] == 0 ? 'disabled':'') . '>';
+
          						$row = array('NA', '0.1', '0.01', '0.001', '1', '3 significant digits', '4 significant digits');
          						$selected = $arr['var_rounding'] ;
          						$i = 0;
@@ -524,12 +617,61 @@ if($approved_info == 1) {
          							$i++;
          						}
          						echo '</select></td>';
+
+                                if($arr['missValChange'] == 0)
+                                {
+                                    $readonlymissingval = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlymissingval = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlymissingval = '';
+                                }
+
+
+                                echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . $readonlymissingval . ' /></td>';
+
          						//miss value
-         						echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . ($arr['missValChange'] == 0? 'readonly':'') . ' /></td>';
+         						// echo '<td style="width:108px;"><input type="text" class="struct" value="' . $arr['var_missing_value'] . '" ' . ($arr['missValChange'] == 0? 'readonly':'') . ' /></td>';
+
+                                if($arr['noteChange'] == 0)
+                                {
+                                    $readonlynotes = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlynotes = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlynotes = '';
+                                }
+
+                                echo '<td style="width:325px;"><textarea class="struct" ' . $readonlynotes . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
+
          						//note
-         						echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['noteChange'] == 0 ? 'readonly':'') . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
+         						// echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['noteChange'] == 0 ? 'readonly':'') . ' >'.htmlspecialchars($arr['var_notes']).'</textarea></td>';
+
+                                if($arr['sourceChange'] == 0)
+                                {
+                                    $readonlysource = 'readonly';
+                                }
+                                elseif($existmodifying == 'inprocess')
+                                {
+                                    $readonlysource = 'readonly';
+                                }
+                                else
+                                {
+                                    $readonlysource = '';
+                                }
+
+                                echo '<td style="width:310px;"><textarea class="struct" ' . $readonlysource . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
+
          						//source
-         						echo '<td style="width:310px;"><textarea class="struct" ' . ($arr['sourceChange'] == 0? 'readonly':'') . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
+         						// echo '<td style="width:310px;"><textarea class="struct" ' . ($arr['sourceChange'] == 0? 'readonly':'') . ' >'. htmlspecialchars($arr['var_source']) .'</textarea></td>';
         					}	
         						
          						echo "</tr>";
@@ -595,9 +737,41 @@ if($approved_info == 1) {
      					echo '<td>' . $arr['type'] . '</td>';
      					echo '<td>' . $arr['round'] . '</td>';
      					echo '<td>' . $arr['missVal'] . '</td>';
-     					echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['note'] == 0 ? 'readonly':'') . ' >'.htmlspecialchars($arr['note']).'</textarea></td>';
+
+                        if($arr['note'] == 0)
+                        {
+                            $readonlynotes1 = 'readonly';
+                        }
+                        elseif($existmodifying == 'inprocess')
+                        {
+                            $readonlynotes1 = 'readonly';
+                        }
+                        else
+                        {
+                            $readonlynotes1 = '';
+                        }
+
+                        echo '<td style="width:325px;"><textarea class="struct" ' . $readonlynotes1 . ' >'.htmlspecialchars($arr['note']).'</textarea></td>';
+
+     					//echo '<td style="width:325px;"><textarea class="struct" ' . ($arr['note'] == 0 ? 'readonly':'') . ' >'.htmlspecialchars($arr['note']).'</textarea></td>';
      					// echo '<td>' . $arr['note'] . '</td>';
-     					echo '<td>' . $arr['source'] . '</td>';
+
+                        if($arr['source'] == 0)
+                        {
+                            $readonlysource1 = 'readonly';
+                        }
+                        elseif($existmodifying == 'inprocess')
+                        {
+                            $readonlysource1 = 'readonly';
+                        }
+                        else
+                        {
+                            $readonlysource1 = '';
+                        }
+
+                         echo '<td style="width:325px;"><textarea class="struct" ' . $readonlysource1 . ' >'.htmlspecialchars($arr['source']).'</textarea></td>';
+
+     					// echo '<td>' . $arr['source'] . '</td>';
      					echo "</tr>";
  				    }
                 }
@@ -627,13 +801,22 @@ if($approved_info == 1) {
 						</tr>															
 					</tbody>
 					<?php
- 						foreach($derivations as $arr) {
- 							echo '<tr>';
- 							echo '<td><input type="checkbox"  class="checkboxc" />&nbsp;</td>';
- 							echo '<td><input type="text" class="struct" value="' . $arr['field'] . '" /></td>';
- 							echo '<td><textarea class="struct">' . htmlspecialchars($arr['algorithm']) . '</textarea></td>';
- 							echo '</tr>';
- 					   }
+                        if($existmodifying == 'inprocess')
+                        {
+                            $readonlyalgo = 'readonly';
+                        }
+                        else
+                        {
+                            $readonlyalgo = '';
+                        }
+
+                        foreach($derivations as $arr) {
+                            echo '<tr>';
+                            echo '<td><input type="checkbox"  class="checkboxc" />&nbsp;</td>';
+                            echo '<td><input type="text" class="struct" '.$readonlyalgo.' value="' . $arr['field'] . '" /></td>';
+                            echo '<td><textarea '.$readonlyalgo.' class="struct">' . htmlspecialchars($arr['algorithm']) . '</textarea></td>';
+                            echo '</tr>';
+                       }
 					?>
 				</table>
 
@@ -652,7 +835,7 @@ if($approved_info == 1) {
 				<br/>
 				<textarea id="missingadd" name="missingadd"> </textarea>
 				<br/><br/>
-				<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Add description<i class="w3-margin-left material-icons">note_add</i></button>
+				<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Edit description<i class="w3-margin-left material-icons">note_add</i></button>
 				<br/><br/>
 			</div>
 
@@ -684,8 +867,37 @@ if($approved_info == 1) {
  								echo "<td><input type='checkbox' class='checkboxc'/>&nbsp;</td>";
  							}
  							echo '<td><input type="text" class="struct" value="' . $arr['flag_number'] . '" readonly /></td>';
- 							echo '<td><textarea class="struct" ' . ($arr['required'] == 1? 'readonly':'') . ' >' . htmlspecialchars($arr['flag_comment']) . '</textarea></td>';
- 							echo '<td><textarea class="struct" >' . htmlspecialchars($arr['flag_notes']) . '</textarea></td>';
+
+
+                            if($arr['required'] == 1)
+                            {
+                                $requiredflag = 'readonly';
+                            }
+                            elseif($existmodifying == 'inprocess')
+                            {
+                                $requiredflag = 'readonly';
+                            }
+                            else
+                            {
+                                $requiredflag = '';
+                            }
+
+                            echo '<td><textarea class="struct" ' . $requiredflag . ' >' . htmlspecialchars($arr['flag_comment']) . '</textarea></td>';
+
+ 							//echo '<td><textarea class="struct" ' . ($arr['required'] == 1? 'readonly':'') . ' >' . htmlspecialchars($arr['flag_comment']) . '</textarea></td>';
+
+                            if($existmodifying == 'inprocess')
+                            {
+                                $requiredcomment = 'readonly';
+                            }
+                            else
+                            {
+                                $requiredcomment = '';
+                            }
+
+ 							//echo '<td><textarea class="struct" >' . htmlspecialchars($arr['flag_notes']) . '</textarea></td>';
+                            echo '<td><textarea '.$requiredcomment.' class="struct" >' . htmlspecialchars($arr['flag_notes']) . '</textarea></td>';
+
  							echo '<td style="display:none;"><textarea class="struct" readonly>' . $arr['required'] . '</textarea></td>';
  							echo '</tr>';
  					   }
@@ -785,13 +997,15 @@ if($approved_info == 1) {
 				var existmodifying = document.getElementById("existmodifying").value;
 				if(existmodifying == 'inprocess')
 				{
-					// document.getElementById("specsubmit").disabled = true;
-					document.getElementById("viewmode").style.display = 'block';
-					document.getElementById("discardchange").style.display = 'none';
-					document.getElementById("specsubmit").style.display = 'none';
-					document.getElementById("saveprogress").style.display = 'none';
+                    document.getElementById("viewmode").style.display = 'block';
+                    document.getElementById("discardchange").style.display = 'none';
+                    document.getElementById("specsubmit").style.display = 'none';
+                    document.getElementById("saveprogress").style.display = 'none';
 
-					alert('A specification is currently being modified by you. Please submit the previous specification to proceed.');
+                    var lockedspecids = '<?php echo $lockedspecids; ?>';
+                    var msg =  'You have reached maximum limit (3) of specifications you can modify. Please submit one of the previous specifications to proceed. These specifications are: ';
+                    var lockedmsg = msg + lockedspecids;
+                    alert(lockedmsg);
 				}
 				else if(existmodifying == 'otherusing')
 				{
@@ -964,66 +1178,181 @@ if($approved_info == 1) {
 		var otheroptional = <?php echo json_encode($otheroptional); ?>;
 
 
-    function handleClick(cb) {
+    function handleClick(cb) 
+    {
+        var spec_type = document.getElementById("spec_type");
+
         var select_value =  cb.id;
 
-        // if(select_value == "TTYPEF") {
-        //     document.getElementById("TTYPEN").checked = true;    
-        // }
-        // if(select_value == "TTYPEN") {
-        //     document.getElementById("TTYPEF").checked = true;    
-        // }
-        // if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
-        // {
-        //     document.getElementById("TTYPEF").checked = false;   
-        //     document.getElementById("TTYPEN").checked = false;   
-        // }
+        if(select_value == "TTYPEF") {
+            document.getElementById("TTYPEN").checked = true;    
+        }
+        if(select_value == "TTYPEN") {
+            document.getElementById("TTYPEF").checked = true;    
+        }
+        
 
 
-        // if((select_value == "SEX")) {
-        //      document.getElementById("SEXN").checked = true;
-        // }
-        // if(select_value == "SEXN") {
-        //     document.getElementById("SEX").checked = true;   
-        // }
-        // if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
-        // {
-        //     document.getElementById("SEX").checked = false;  
-        //     document.getElementById("SEXN").checked = false;     
-        // }
+        if((select_value == "SEX")) {
+             document.getElementById("SEXN").checked = true;
+        }
+        if(select_value == "SEXN") {
+            document.getElementById("SEX").checked = true;   
+        }
+           
 
 
-        // if(select_value == "RACE") {
-        //      document.getElementById("RACEN").checked = true;
-        // }
-        // if(select_value == "RACEN") {
-        //      document.getElementById("RACE").checked = true;
-        // }
-        // if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
-        // {
-        //     document.getElementById("RACE").checked = false;     
-        //     document.getElementById("RACEN").checked = false;    
-        // }
+        if(select_value == "RACE") {
+             document.getElementById("RACEN").checked = true;
+        }
+        if(select_value == "RACEN") {
+             document.getElementById("RACE").checked = true;
+        }
+        
 
-        // if(select_value == "HEPA") {
-        //      document.getElementById("HEPAN").checked = true;
-        // }
-        // if(select_value == "HEPAN") {
-        //      document.getElementById("HEPA").checked = true;
-        // }
-        // if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
-        // {
-        //     document.getElementById("HEPA").checked = false;     
-        //     document.getElementById("HEPAN").checked = false;    
-        // }    
+        if(select_value == "HEPA") {
+             document.getElementById("HEPAN").checked = true;
+        }
+        if(select_value == "HEPAN") {
+             document.getElementById("HEPA").checked = true;
+        }
+            
 
-        addOptional();   
+        if(select_value == "ETHC") {
+             document.getElementById("ETHCN").checked = true;
+        }
+        if(select_value == "ETHCN") {
+             document.getElementById("ETHC").checked = true;
+        }
+
+        if(select_value == "ETHJ") {
+             document.getElementById("ETHJN").checked = true;
+        }
+        if(select_value == "ETHJN") {
+             document.getElementById("ETHJ").checked = true;
+        }
+
+        if(select_value == "ETH") {
+             document.getElementById("ETHN").checked = true;
+        }
+        if(select_value == "ETHN") {
+             document.getElementById("ETH").checked = true;
+        }
+
+        if(select_value == "LINEC") {
+             document.getElementById("LINEN").checked = true;
+        }
+        if(select_value == "LINEN") {
+             document.getElementById("LINEC").checked = true;
+        }
+
+        if(select_value == "BOR") {
+             document.getElementById("BORN").checked = true;
+        }
+        if(select_value == "BORN") {
+             document.getElementById("BOR").checked = true;
+        }
+
+        if(select_value == "ETIOLOGN") {
+             document.getElementById("ETIOLOGY").checked = true;
+        }
+        if(select_value == "ETIOLOGY") {
+             document.getElementById("ETIOLOGN").checked = true;
+        }
+
+        if(select_value == "EVID") {
+             document.getElementById("MDV").checked = true;
+        }
+        if(select_value == "MDV") {
+             document.getElementById("EVID").checked = true;
+        }
+
+        if(select_value == "ADDL") {
+             document.getElementById("II").checked = true;
+        }
+        if(select_value == "II") {
+             document.getElementById("ADDL").checked = true;
+        }
+
+        if(select_value == "FLAG") {
+             document.getElementById("FLAGC").checked = true;
+        }
+        if(select_value == "FLAGC") {
+             document.getElementById("FLAG").checked = true;
+        }
+
+        if(select_value == "EXCLF") {
+             document.getElementById("EXCLFC").checked = true;
+        }
+        if(select_value == "EXCLFC") {
+             document.getElementById("EXCLF").checked = true;
+        }
+
+        if(select_value == "STUDYID") {
+             document.getElementById("STUDYIDN").checked = true;
+        }
+        if(select_value == "STUDYIDN") {
+             document.getElementById("STUDYID").checked = true;
+        }
+
+        if(select_value == "USUBJID") {
+             document.getElementById("USUBJIDN").checked = true;
+        }
+        if(select_value == "USUBJIDN") {
+             document.getElementById("USUBJID").checked = true;
+        }
+
+        if(select_value == "DOSEP1") {
+             document.getElementById("DU1").checked = true;
+        }
+        if(select_value == "DU1") {
+             document.getElementById("DOSEP1").checked = true;
+        }
+
+        if(select_value == "DOSEPSS") {
+             document.getElementById("DUSS").checked = true;
+        }
+        if(select_value == "DUSS") {
+             document.getElementById("DOSEPSS").checked = true;
+        }
+
+        if(select_value == "FORM") {
+             document.getElementById("FORMN").checked = true;
+        }
+        if(select_value == "FORMN") {
+             document.getElementById("FORM").checked = true;
+        }
+
+        if(select_value == "PROC") {
+             document.getElementById("PROCN").checked = true;
+        }
+        if(select_value == "PROCN") {
+             document.getElementById("PROC").checked = true;
+        }
+
+        if(select_value == "ROUTE") {
+             document.getElementById("ROUTEN").checked = true;
+        }
+        if(select_value == "ROUTEN") {
+             document.getElementById("ROUTE").checked = true;
+        }
+
+        if(select_value == "SUBJTYP") {
+             document.getElementById("SUBJTYPN").checked = true;
+        }
+        if(select_value == "SUBJTYPN") {
+             document.getElementById("SUBJTYP").checked = true;
+        }
+
+        if(select_value == "ETHNIC") {
+            document.getElementById("ETHNICN").checked = true;
+        }
+        if(select_value == "ETHNICN") {
+             document.getElementById("ETHNIC").checked = true;
+        }
+        
+        addOptional();         
     }
 	</script>
-
-
-
 	</body>
 </html>
-
-

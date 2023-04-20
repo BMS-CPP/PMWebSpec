@@ -118,7 +118,7 @@ function downlondDocx($data)
 
     $htmlContent .= '
         <h2>1. Purpose</h2>
-        <p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s): </p>
+        <p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset: </p>
 
         <table id=dataset_info border="1" cellspacing="0" cellpadding="2">
             <tr>
@@ -147,7 +147,7 @@ function downlondDocx($data)
 
     $htmlContent .= '
     <h2>2. Study Description</h2>
-    <p>Brief descriptions of the studies to be included in the analysis dataset(s) are provided below.</p>
+    <p>Brief descriptions of the studies to be included in the analysis dataset are provided below.</p>
     <h3>2.1 PK Data Sources</h3>
     <table border="1" cellspacing="0" cellpadding="2">
         <tr>

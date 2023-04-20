@@ -173,6 +173,10 @@ class CIHome extends CI_Controller {
 	        $this->load->view('inc/h1.inc.php');
 	        $this->load->view('check_flag', $data);
 	    } 
+	    else if(strtolower($param) == 'searchvariable') {
+	        $this->load->view('inc/h1.inc.php');
+	        $this->load->view('searchvariableresult');
+	    }
 		else if(strtolower($param) == 'searchvariable') {
 	        $data['getvariable'] = $this->MSpec->getvariable();
 	        // echo '<pre>';print_r($data);die;
@@ -194,12 +198,15 @@ class CIHome extends CI_Controller {
 
 	public function ActionUpdateSpec($param=NULL) 
 	{
+
 		if(strtolower($param) == 'update') 
 		{
+
 			$submitform = $this->input->post("submitform");
 
 			if($submitform == 'Save Progress')
 			{
+
 				$spec_id = $this->input->post("spec_id");
 				$version_id = $this->input->post("version_id") - 1;
 				$checkexistingavailable = $this->MSpec->getSpecDetails($spec_id,$version_id);
@@ -233,7 +240,7 @@ class CIHome extends CI_Controller {
 					$version_id = $this->input->post("version_id");
 				}
 
-				// echo 'hi1';
+				// echo 'hi1';die;
 
 				$this->aws_conn_obj = $this->load->database('aws_db', TRUE);
 
@@ -265,12 +272,18 @@ class CIHome extends CI_Controller {
 	        	$date = date("Y-m-d H:i:s");
 		        $user_name = $this->session->user_details;
 		        $created_by_session = $user_name[0]['user_id'];
+
+
 	        	
 				// ------------- spec_general table;
-				$ds_programmer = implode(',', $this->input->post('ds_programmer'));
-				if($ds_programmer == null) {
-	           		 $ds_programmer = "----------";
-	       		}
+
+	       		if($this->input->post('ds_programmer') == "") {
+		            $ds_programmer = "----------";
+		        }
+		        else
+		        {
+		            $ds_programmer = implode(',', $this->input->post('ds_programmer'));
+		        }
 
 				$spec_general = [
 				'modification_date' => $this->input->post('cdate'),
@@ -289,6 +302,8 @@ class CIHome extends CI_Controller {
 
 				$this->MSpec->saveUpdateValue('spec_general', $spec_general, $spec_id, $version_id);
 
+
+
 				//dataset_general
 				$dataset_general  = [
 				'dataset_name' => $this->input->post("dataset_name"),
@@ -303,6 +318,8 @@ class CIHome extends CI_Controller {
 				'dataset_qc_path' => $this->input->post("dataset_qc_path"),];
 
 				$this->MSpec->saveUpdateValue('dataset_general', $dataset_general, $spec_id, $version_id);
+
+
 
 				$pks = $_REQUEST["pkdata"];
 				$pieces = explode("@@", $pks);
@@ -338,6 +355,8 @@ class CIHome extends CI_Controller {
 					$clinical_data['format'] = xss_clean($pieces[$i*6+5]);
 					$this->MSpec->saveUpdateValue('clinical_data', $clinical_data, $spec_id, $version_id);
 				}
+
+
 
 		  //       $clinicals = $_REQUEST["clinical"];
 				// $pieces = explode("@@", $clinicals);
@@ -579,10 +598,15 @@ class CIHome extends CI_Controller {
 		        $this->aws_conn_obj->update('spec_general', $data_info);
 
 				// ------------- spec_general table;
-				$ds_programmer = implode(',', $this->input->post('ds_programmer'));
-				if($ds_programmer == null) {
-	           		 $ds_programmer = "----------";
-	       		}
+
+	       		if($this->input->post('ds_programmer') == "") {
+		            $ds_programmer = "----------";
+		        }
+		        else
+		        {
+		            $ds_programmer = implode(',', $this->input->post('ds_programmer'));
+		        }
+
 
 				$spec_general = [
 				'modification_date' => $this->input->post('cdate'),
@@ -919,7 +943,10 @@ class CIHome extends CI_Controller {
 		$this->MSession->setSessionDetails();
 	    $data['param']      = strtolower($param);
 	    $data['selected']   = strtolower($this->session->userdata('selection'));
+
+
 	    if(strtolower($param) == "available") {
+	    	// echo 'hi';die;
 
 	        $this->load->view('inc/h1.inc.php');
 	        $spec_id = $this->input->post("spec_id");
@@ -947,8 +974,29 @@ class CIHome extends CI_Controller {
         	$checkotherspecinprocess = $this->MUser->checkotherspecinprocess($spec_id, 1);
         	if(!empty($checkotherspecinprocess))
         	{
-        		$data['modify']['existmodifying']      = 'inprocess';
-        		$data['modify']['lockedby']      = '';
+        		if(count($checkotherspecinprocess) >= 3)
+        		{
+        			$specidsarr = array();
+        			foreach ($checkotherspecinprocess as $otherspec) 
+        			{
+        				array_push($specidsarr, $otherspec->spec_id);
+        			}
+
+        			$string_versionspec = implode(',', $specidsarr);
+
+        			$data['modify']['existmodifying']      = 'inprocess';
+        			$data['modify']['lockedby']      = '';
+        			$data['modify']['lockedspecids']      = $string_versionspec;
+        		}
+        		else
+        		{
+        			$data['modify']['existmodifying']      = 'free';
+        			$data['modify']['lockedby']      = '';
+        			$data['modify']['lockedspecids']      = '';
+        		}
+
+        		// $data['modify']['existmodifying']      = 'inprocess';
+        		// $data['modify']['lockedby']      = '';
         	}
         	else
         	{
@@ -1578,5 +1626,39 @@ class CIHome extends CI_Controller {
         $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
         $data['studydetails'] = $data['pdf_specs']['clinical_data'];
         $this->load->view('studydetails', $data);
+    }
+
+    public function getsearchvariableresult()
+    {
+    	$getvariable = $this->MSpec->getvariable();
+    	$html = '';
+
+    	if(!empty($getvariable))
+    	{
+			foreach($getvariable as $arr) {
+				$html .= '<tr>
+					<td>' . $arr['var_name'] . '</td>
+					<td>' . $arr['spec_id'] . '</td>
+					<td>' . $arr['var_label'] . '</td>
+
+					<td>' . $arr['var_units'] . '</td>
+					<td>' . $arr['var_type'] . '</td>
+					<td>' . $arr['var_rounding'] . '</td>
+
+					<td>' . $arr['var_missing_value'] . '</td>
+					<td>' . htmlspecialchars($arr['var_notes']) . '</td>
+					<td>' . htmlspecialchars($arr['var_source']) . '</td>
+
+					</tr>';
+			}
+    	}
+    	else
+    	{
+    		$html .= '<tr nobr="true">
+						<td>No result was found</td>
+					  </tr>';
+    	}
+
+    	echo $html;
     }
 }

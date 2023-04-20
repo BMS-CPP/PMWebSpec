@@ -138,7 +138,7 @@ if ($user_name[0]['user_id'] == NULL) {
 	
         // Section 1
         echo "<h2>1. Purpose</h2>";
-        echo "<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s): </p>";
+        echo "<p>The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset: </p>";
 	
         // Dataset table
         echo "<table border='1' class='dataset_table'>";

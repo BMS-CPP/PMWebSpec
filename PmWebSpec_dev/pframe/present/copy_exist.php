@@ -171,7 +171,7 @@ $fullname = $user_name[0]['first_name']." ".$user_name[0]['last_name'];
 
 	    <div class="panel container-fluid">
 			<br/>
-			The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s).
+			The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset.
 			Please note that <b>dataset name</b> must be <b>less than or equal to 8 characters</b> and <b>dataset label</b> must be <b>less than or equal to 40 characters</b>:
 			<br/><br/>
 			
@@ -556,7 +556,7 @@ $fullname = $user_name[0]['first_name']." ".$user_name[0]['last_name'];
 				<br/>
 				<textarea id="missingadd" name="missingadd"> </textarea>
 				<br/><br/>
-				<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Add description<i class="w3-margin-left material-icons">note_add</i></button>
+				<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Edit description<i class="w3-margin-left material-icons">note_add</i></button>
 				<br/><br/>
 		    </div>
 		   

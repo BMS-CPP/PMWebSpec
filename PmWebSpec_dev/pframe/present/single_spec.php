@@ -207,7 +207,7 @@ foreach ($optional_var as  $value) {
 				<button type="button" class="accordion required" onclick="openpanel();"><label>Purpose</label></button>
 				<div class="panel ">
 					<br/>
-					The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset(s).
+					The purpose of this document is to specify the scope and content of the following Pharmacometric analysis dataset.
 					Please note that <b>dataset name</b> must be <b>less than or equal to 8 characters</b> and <b>dataset label</b> must be <b>less than or equal to 40 characters</b>:
 					<br/><br/>
 
@@ -532,6 +532,7 @@ foreach ($optional_var as  $value) {
 				<button type="button" onClick="addInput('dynamicInput');" class="w3-btn w3-round-large w3-grey w3-medium">Add new variable<i class="w3-margin-left material-icons">add_box</i></button>
 				<button type="button" onClick="showdelete('myTable');" class="w3-btn w3-round-large w3-grey w3-medium">Delete selected variables<i class="w3-margin-left material-icons">delete</i></button>
 				<button type="button" onClick="clearChecked();" class="w3-btn w3-round-large w3-grey w3-medium">Clear selected variables<i class="w3-margin-left material-icons">close</i></button>
+				<button style="padding: 11px;" type="button" onClick="window.open('<?php echo base_url('home/create/searchvariable'); ?>');" class="w3-btn w3-round-large w3-grey w3-medium">Search Variable</button> 
 				<br/><br/>
 
 				<button type="button" onClick="sortTable(10, 0);" class="w3-btn w3-round-large w3-grey w3-medium">Sort by variable name</button>
@@ -693,7 +694,7 @@ foreach ($optional_var as  $value) {
 					<br/>
 					<textarea id="missingadd" name="missingadd"> </textarea>
 					<br/><br/>
-					<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Add description<i class="w3-margin-left material-icons">note_add</i></button>
+					<button type="button" onClick="addText('missingadd', 'missingtext');" class="w3-btn w3-round-large w3-grey w3-medium">Edit description<i class="w3-margin-left material-icons">note_add</i></button>
 					<br/><br/>
 				</div>
 
@@ -874,62 +875,179 @@ $(document).ready(function()
   
 });
 
-	function handleClick(cb) {
-  		var select_value =  cb.id;
+    function handleClick(cb) 
+    {
+    	var spec_type = document.getElementById("spec_type");
 
-  		// if(select_value == "HEPA") {
-  		// 	 document.getElementById("HEPAN").checked = true;
-  		// }
-  		// if(select_value == "HEPAN") {
-  		// 	 document.getElementById("HEPA").checked = true;
-  		// }
-  		// if((document.getElementById("HEPAN").checked == false) || (document.getElementById("HEPA").checked == false)) 
-  		// {
-  		// 	document.getElementById("HEPA").checked = false;	 
-	  	// 	document.getElementById("HEPAN").checked = false; 	 
-  		// }		
+        var select_value =  cb.id;
 
-  		// if(select_value == "TTYPEF") {
-	  	// 	document.getElementById("TTYPEN").checked = true; 	 
-  		// }
-  		// if(select_value == "TTYPEN") {
-	  	// 	document.getElementById("TTYPEF").checked = true; 	 
-  		// }
-  		// if((document.getElementById("TTYPEN").checked == false) || (document.getElementById("TTYPEF").checked == false)) 
-  		// {
-  		// 	document.getElementById("TTYPEF").checked = false;	 
-	  	// 	document.getElementById("TTYPEN").checked = false; 	 
-  		// }
+        if(select_value == "TTYPEF") {
+            document.getElementById("TTYPEN").checked = true;    
+        }
+        if(select_value == "TTYPEN") {
+            document.getElementById("TTYPEF").checked = true;    
+        } 
 
 
-  		// if((select_value == "SEX")) {
-  		// 	 document.getElementById("SEXN").checked = true;
-  		// }
-  		// if(select_value == "SEXN") {
-	  	// 	document.getElementById("SEX").checked = true; 	 
-  		// }
-  		// if((document.getElementById("SEXN").checked == false) || (document.getElementById("SEX").checked == false)) 
-  		// {
-  		// 	document.getElementById("SEX").checked = false;	 
-	  	// 	document.getElementById("SEXN").checked = false; 	 
-  		// }
+        if((select_value == "SEX")) {
+             document.getElementById("SEXN").checked = true;
+        }
+        if(select_value == "SEXN") {
+            document.getElementById("SEX").checked = true;   
+        }
+	        
 
+        if(select_value == "RACE") {
+             document.getElementById("RACEN").checked = true;
+        }
+        if(select_value == "RACEN") {
+             document.getElementById("RACE").checked = true;
+        }
+        
 
-  		// if(select_value == "RACE") {
-  		// 	 document.getElementById("RACEN").checked = true;
-  		// }
-  		// if(select_value == "RACEN") {
-  		// 	 document.getElementById("RACE").checked = true;
-  		// }
-  		// if((document.getElementById("RACEN").checked == false) || (document.getElementById("RACE").checked == false)) 
-  		// {
-  		// 	document.getElementById("RACE").checked = false;	 
-	  	// 	document.getElementById("RACEN").checked = false; 	 
-  		// }
+        if(select_value == "HEPA") {
+             document.getElementById("HEPAN").checked = true;
+        }
+        if(select_value == "HEPAN") {
+             document.getElementById("HEPA").checked = true;
+        }
+	        
 
-  		addOptional();
-  		
-	}
+        if(select_value == "ETHC") {
+             document.getElementById("ETHCN").checked = true;
+        }
+        if(select_value == "ETHCN") {
+             document.getElementById("ETHC").checked = true;
+        }
+
+        if(select_value == "ETHJ") {
+             document.getElementById("ETHJN").checked = true;
+        }
+        if(select_value == "ETHJN") {
+             document.getElementById("ETHJ").checked = true;
+        }
+
+        if(select_value == "ETH") {
+             document.getElementById("ETHN").checked = true;
+        }
+        if(select_value == "ETHN") {
+             document.getElementById("ETH").checked = true;
+        }
+
+        if(select_value == "LINEC") {
+             document.getElementById("LINEN").checked = true;
+        }
+        if(select_value == "LINEN") {
+             document.getElementById("LINEC").checked = true;
+        }
+
+        if(select_value == "BOR") {
+             document.getElementById("BORN").checked = true;
+        }
+        if(select_value == "BORN") {
+             document.getElementById("BOR").checked = true;
+        }
+
+        if(select_value == "ETIOLOGN") {
+             document.getElementById("ETIOLOGY").checked = true;
+        }
+        if(select_value == "ETIOLOGY") {
+             document.getElementById("ETIOLOGN").checked = true;
+        }
+
+        if(select_value == "EVID") {
+             document.getElementById("MDV").checked = true;
+        }
+        if(select_value == "MDV") {
+             document.getElementById("EVID").checked = true;
+        }
+
+        if(select_value == "ADDL") {
+             document.getElementById("II").checked = true;
+        }
+        if(select_value == "II") {
+             document.getElementById("ADDL").checked = true;
+        }
+
+        if(select_value == "FLAG") {
+             document.getElementById("FLAGC").checked = true;
+        }
+        if(select_value == "FLAGC") {
+             document.getElementById("FLAG").checked = true;
+        }
+
+        if(select_value == "EXCLF") {
+             document.getElementById("EXCLFC").checked = true;
+        }
+        if(select_value == "EXCLFC") {
+             document.getElementById("EXCLF").checked = true;
+        }
+
+        if(select_value == "STUDYID") {
+             document.getElementById("STUDYIDN").checked = true;
+        }
+        if(select_value == "STUDYIDN") {
+             document.getElementById("STUDYID").checked = true;
+        }
+
+        if(select_value == "USUBJID") {
+             document.getElementById("USUBJIDN").checked = true;
+        }
+        if(select_value == "USUBJIDN") {
+             document.getElementById("USUBJID").checked = true;
+        }
+
+        if(select_value == "DOSEP1") {
+             document.getElementById("DU1").checked = true;
+        }
+        if(select_value == "DU1") {
+             document.getElementById("DOSEP1").checked = true;
+        }
+
+        if(select_value == "DOSEPSS") {
+             document.getElementById("DUSS").checked = true;
+        }
+        if(select_value == "DUSS") {
+             document.getElementById("DOSEPSS").checked = true;
+        }
+
+        if(select_value == "FORM") {
+             document.getElementById("FORMN").checked = true;
+        }
+        if(select_value == "FORMN") {
+             document.getElementById("FORM").checked = true;
+        }
+
+        if(select_value == "PROC") {
+             document.getElementById("PROCN").checked = true;
+        }
+        if(select_value == "PROCN") {
+             document.getElementById("PROC").checked = true;
+        }
+
+        if(select_value == "ROUTE") {
+             document.getElementById("ROUTEN").checked = true;
+        }
+        if(select_value == "ROUTEN") {
+             document.getElementById("ROUTE").checked = true;
+        }
+
+        if(select_value == "SUBJTYP") {
+             document.getElementById("SUBJTYPN").checked = true;
+        }
+        if(select_value == "SUBJTYPN") {
+             document.getElementById("SUBJTYP").checked = true;
+        }
+
+        if(select_value == "ETHNIC") {
+            document.getElementById("ETHNICN").checked = true;
+        }
+        if(select_value == "ETHNICN") {
+             document.getElementById("ETHNIC").checked = true;
+        }
+        
+        addOptional();	       
+    }
 
 	function submitdataset() 
 	{

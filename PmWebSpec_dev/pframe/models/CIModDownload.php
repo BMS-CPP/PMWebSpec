@@ -128,7 +128,7 @@ class CIModDownload extends CI_Model {
                 $dataset_structure_details['dataset_structure'][$count++] = $dataset_structure;    
             }           
         }
-        //print_r($dataset_structure_details['dataset_structure']);exit;
+        // print_r($dataset_structure_details['dataset_structure']);exit;
         if(is_array($dataset_structure_details)) {
             $details = array_merge($details, $dataset_structure_details);
         }
@@ -315,7 +315,7 @@ class CIModDownload extends CI_Model {
 
 
         
-        //print_r($options_details);exit;
+        // print_r($options_details);exit;
         if(is_array($options_details)) {
          $details = array_merge($details, $options_details);
         }

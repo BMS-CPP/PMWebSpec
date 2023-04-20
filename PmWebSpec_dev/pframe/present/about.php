@@ -21,8 +21,8 @@ if ($user_name[0]['user_id'] == NULL) {
 	<div class="title-head">
 		<fieldset>
 			<center>
-				<h3 align="center"> <b>Version:</b> 3.6 </h3><br/>
-				<h3 align="center"><b>Date:</b>  16th December 2022 </h3><br/>
+				<h3 align="center"> <b>Version:</b> 3.7 </h3><br/>
+				<h3 align="center"><b>Date:</b>  14th April 2023 </h3><br/>
 				<h3 align="center"><b>Host:</b> <?php  echo $hostname .""." via TCP/IP "; ?></h3><br/>
 				<h3 align="center"><b>S3 bucket:</b> <?php  echo s3_bucket_path; ?></h3><br/>
 			</center>

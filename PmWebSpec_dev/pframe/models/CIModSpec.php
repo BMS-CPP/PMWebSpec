@@ -50,6 +50,43 @@ class CIModSpec extends CI_Model {
         }
     }
 
+    public function getvariable() 
+    {
+        $this->db->close();
+        $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
+        $this->aws_conn_obj->distinct();
+        $this->aws_conn_obj->select('spec_id,var_name,var_label,var_units,var_type,var_rounding,var_missing_value,var_notes,var_source');
+        $this->aws_conn_obj->from('dataset_structure');
+        if(!empty($_POST['vname']))
+        {
+            // $this->aws_conn_obj->like('var_name', $_POST['vname']);
+            $this->aws_conn_obj->where('var_name', $_POST['vname']);
+        }
+        if(!empty($_POST['vlable']))
+        {
+            // $this->aws_conn_obj->like('var_label', $_POST['vlable']);
+             $this->aws_conn_obj->where('var_label', $_POST['vlable']);
+        }
+        if(!empty($_POST['spec_id']))
+        {
+            // $this->aws_conn_obj->like('var_label', $_POST['vlable']);
+             $this->aws_conn_obj->where('spec_id', $_POST['spec_id']);
+        }
+        if(!empty($_POST['vsource']))
+        {
+            $this->aws_conn_obj->like('var_source', $_POST['vsource']);
+        }
+        $flags = $this->aws_conn_obj->get();
+        if($flags->num_rows() > 0) {
+            foreach($flags->result_array() as $flag) {
+                $flags_details[] = $flag;
+            }
+        }
+        return $flags_details;
+        $this->aws_conn_obj->close();
+    }
+    
+
     public function gettrackstudy() 
     {
         $this->db->close();

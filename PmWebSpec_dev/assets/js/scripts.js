@@ -288,7 +288,6 @@
 		}
 
 		function validateMyForm() {
-			// console.log('hi');
 			var valid=true;
 
 			if(checkfield('title', 'Title cannot be empty')===false) {
@@ -329,6 +328,25 @@
 			}
 			if(checkfield('dataset_date', 'Dataset delivery date cannot be empty')===false){
 				valid=false;
+			}
+			else
+			{
+				var UserDate = document.getElementById("dataset_date").value;
+
+				myDate = UserDate.split("-");
+				var newDate = new Date( myDate[0], myDate[1] - 1, myDate[2]);
+			    var userDate1 = newDate.getTime();
+
+			    var todayDate = new Date().toISOString().slice(0, 10);
+			    toDate = todayDate.split("-");
+			    var toDate = new Date( toDate[0], toDate[1] - 1, toDate[2]);
+
+			    var todayDate1 = toDate.getTime(); 
+
+				if (todayDate1 > userDate1){
+				   alert("Delivery date should be greater than or equal to current date");
+					valid=false;
+				}
 			}
 
 			//retrieve information from the structure table
