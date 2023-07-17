@@ -144,3 +144,4 @@ $route['home/datasetsave']	= 'CIHome/datasetsave';
 
 $route['home/create/getreports']                 = 'CIHome/Create/CreateSpec/getreports';
 $route['home/getsearchvariableresult']	= 'CIHome/getsearchvariableresult';
+$route['home/viewonlyspec/(:any)/(:any)'] = 'CIHome/viewonlyspec/$1/$2';

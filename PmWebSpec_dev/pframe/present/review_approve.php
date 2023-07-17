@@ -375,22 +375,51 @@ if ($user_name[0]['user_id'] == NULL) {
     	echo '<hr>
     		<h3>Review and Approve</h3>
             <p>Please review the content above and sign your name if you approve it. Once you approve it, you cannot make any change.</p>';
-    
-    	echo '<form method="post" action="'.base_url('admin/manage/view/approve/spec').'" onsubmit="return confirm(\'Are you sure you want to approve this spec?\')">
-        		<div id="sign">
-                <canvas class="roundCorners" id="newSignature"
-      style="position: relative; margin: 0; padding: 0; border: 1px solid #c4caac;"></canvas>
-      </div>
-                <script>signatureCapture();</script>
-                <div style="margin-left: 5%;margin-top: 2%;">
-                    <button type="submit" onclick="signatureSave()">Approve</button>
 
-                    <button type="button" onclick="signatureClear()">Clear</button>
-                </div>
-                 <input type="text" hidden name="spec_id" value ="'.$spec_id.'" />
-               <input type="text" hidden name="digital" id="saveSignature" />
-    	   </form>';
-         
+        if($spec_status_live == '1')
+        {
+            echo '<div style="text-align:center;padding:2%;"><h3 style="color:red;">The Final version of spec is In Progress, please submit the final draft of spec or discard the changes to approve this spec!</h3></div>';
+        }
+        else
+        {
+
+            if($last_version != $version_id)
+            {
+                echo '<div style="text-align:center;padding:2%;"><h3 style="color:red;">Older version is selected!</h3></div>';
+            }
+            else
+            {
+                echo '<form method="post" action="'.base_url('admin/manage/view/approve/spec').'" onsubmit="return confirm(\'Are you sure you want to approve this spec?\')">
+                    <div id="sign">
+                        <canvas class="roundCorners" id="newSignature" style="position: relative; margin: 0; padding: 0; border: 1px solid #c4caac;"></canvas>
+                    </div>
+                    <script>signatureCapture();</script>
+                    <div style="margin-left: 5%;margin-top: 2%;">
+                        <button type="submit" onclick="signatureSave()">Approve</button>
+
+                        <button type="button" onclick="signatureClear()">Clear</button>
+                    </div>
+                     <input type="text" hidden name="spec_id" value ="'.$spec_id.'" />
+                   <input type="text" hidden name="digital" id="saveSignature" />
+               </form>';
+            }
+        }
+
+    
+    	// echo '<form method="post" action="'.base_url('admin/manage/view/approve/spec').'" onsubmit="return confirm(\'Are you sure you want to approve this spec?\')">
+     //    		<div id="sign">
+     //            <canvas class="roundCorners" id="newSignature"
+     //  style="position: relative; margin: 0; padding: 0; border: 1px solid #c4caac;"></canvas>
+     //  </div>
+     //            <script>signatureCapture();</script>
+     //            <div style="margin-left: 5%;margin-top: 2%;">
+     //                <button type="submit" onclick="signatureSave()">Approve</button>
+
+     //                <button type="button" onclick="signatureClear()">Clear</button>
+     //            </div>
+     //             <input type="text" hidden name="spec_id" value ="'.$spec_id.'" />
+     //           <input type="text" hidden name="digital" id="saveSignature" />
+    	//    </form>';
 ?>
 </body>
 <script>

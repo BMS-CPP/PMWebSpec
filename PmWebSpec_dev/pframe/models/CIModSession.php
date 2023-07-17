@@ -14,29 +14,21 @@ class CIModSession extends CI_Model {
 
     public function setCookieDetails()
     {
-        // $url = base_url();
-
-        // $cookie_name = "sm_user";
-        // $cookie_value = "testu1";
-        // setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
-
-        // $this->session->set_userdata('user_id', 'testu1');
-
         $url = base_url();
 
         $cookie_params = $_COOKIE;
         if (isset($cookie_params['sm_user']) && !empty($cookie_params['sm_user'])) 
         {
-            setcookie('sm_user', 'testu1', time() + (86400 * 30), '/');
-            $this->session->set_userdata('user_id', 'testu1');
+            setcookie('sm_user', 'gallanik', time() + (86400 * 30), '/');
+            $this->session->set_userdata('user_id', 'gallanik');
         }
         else
         {
             $cookie_name = "sm_user";
-            $cookie_value = "testu1";
+            $cookie_value = "gallanik";
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
-            $this->session->set_userdata('user_id', 'testu1');
+            $this->session->set_userdata('user_id', 'gallanik');
         }
 
 

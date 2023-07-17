@@ -25,6 +25,8 @@ class CIHome extends CI_Controller {
 	public function Index($err=NULL) {
 	    $user_ids = $this->MUser->getDistinctUserId();
 
+	    // echo '<pre>';print_r($this->session->userdata());die;
+
 	    if(!empty($err)) {
     	    if(!in_array($this->session->userdata('user_id'), $user_ids)) {
     	        redirect('Location: unauthorized', 'location', 301);
@@ -356,25 +358,6 @@ class CIHome extends CI_Controller {
 					$this->MSpec->saveUpdateValue('clinical_data', $clinical_data, $spec_id, $version_id);
 				}
 
-
-
-		  //       $clinicals = $_REQUEST["clinical"];
-				// $pieces = explode("@@", $clinicals);
-				// $clinical_data = [];
-
-		  //       for( $i = 0; $i<count($pieces)/4-1; $i++ ) 
-		  //       {
-		  //            $clinical_data = array(
-		  //                               'spec_id'       => $spec_id,
-		  //                               'version_id'    => $version_id,
-		  //                               'study'         => xss_clean($pieces[$i*4]),
-		  //                               'statistician'  => xss_clean($pieces[$i*4+1]),
-		  //                               'level0'        => xss_clean($pieces[$i*4+2]),
-		  //                               'format'        => xss_clean($pieces[$i*4+3]),
-		  //                            );
-		  //           $this->MSpec->saveUpdateValue('clinical_data', $clinical_data, $spec_id, $version_id);
-		  //       }
-
 				// -------------- dataset structure table;
 				$lname = $_REQUEST["passvalue"];
 				$pieces = explode("@@", $lname);
@@ -674,23 +657,6 @@ class CIHome extends CI_Controller {
 					$this->MSpec->saveUpdateValue('clinical_data', $clinical_data, $spec_id, $version_id);
 				}
 
-				// $clinicals = $_REQUEST["clinical"];
-				// $pieces = explode("@@", $clinicals);
-				// $clinical_data = [];
-
-		  //       for( $i = 0; $i<count($pieces)/4-1; $i++ ) 
-		  //       {
-		  //            $clinical_data = array(
-		  //                               'spec_id'       => $spec_id,
-		  //                               'version_id'    => $version_id,
-		  //                               'study'         => xss_clean($pieces[$i*4]),
-		  //                               'statistician'  => xss_clean($pieces[$i*4+1]),
-		  //                               'level0'        => xss_clean($pieces[$i*4+2]),
-		  //                               'format'        => xss_clean($pieces[$i*4+3]),
-		  //                            );
-		  //           $this->MSpec->saveUpdateValue('clinical_data', $clinical_data, $spec_id, $version_id);
-		  //       }
-
 				// -------------- dataset structure table;
 				$lname = $_REQUEST["passvalue"];
 				$pieces = explode("@@", $lname);
@@ -774,10 +740,6 @@ class CIHome extends CI_Controller {
 
 			            $fileType = strtolower(pathinfo($name,PATHINFO_EXTENSION));
 			            $filenameOnly = basename($name, ".".$fileType); 
-
-			            // $filepath = str_replace(pkms_path, '', $target_path);
-			            // $filepath = str_replace(pkms_path2, '', $filepath);
-			            // $filepath = str_replace('/', '_', $filepath);   
 
 			            $file_name = $filenameOnly.$filepath.".".$fileType;
 
@@ -944,26 +906,19 @@ class CIHome extends CI_Controller {
 	    $data['param']      = strtolower($param);
 	    $data['selected']   = strtolower($this->session->userdata('selection'));
 
-
 	    if(strtolower($param) == "available") {
-	    	// echo 'hi';die;
 
 	        $this->load->view('inc/h1.inc.php');
 	        $spec_id = $this->input->post("spec_id");
 	        $version_id = $this->input->post("version_id");
-
-	        // echo 'hi';die;
 	        
 	        $data['modify'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	        // print_r($data['modify']);exit;
 
 	        list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['modify']['user_spec']['type']);
 			$ppk = ["PPK-standard"];
             $erother=["Blank Template"];
-           // print_r($data['modify']['all_var']);exit;
-			$otheroptional = $this->MSpec->getotheroptional($data['modify']['all_var'] , $dstype, $ppk, $erother);
 
-			// echo '<pre>';print_r($otheroptional);die;
+			$otheroptional = $this->MSpec->getotheroptional($data['modify']['all_var'] , $dstype, $ppk, $erother);
 			
 			if(is_array($otheroptional)) {
            		 $data['modify'] = array_merge($data['modify'], $otheroptional);
@@ -990,17 +945,38 @@ class CIHome extends CI_Controller {
         		}
         		else
         		{
-        			$data['modify']['existmodifying']      = 'free';
-        			$data['modify']['lockedby']      = '';
-        			$data['modify']['lockedspecids']      = '';
-        		}
 
-        		// $data['modify']['existmodifying']      = 'inprocess';
-        		// $data['modify']['lockedby']      = '';
+        			// echo 'hey';die;
+        			$checkotherspecinprocess = $this->MUser->checkotherspecinprocesshome($spec_id, 1);
+
+        			// echo '<pre>';print_r($checkotherspecinprocess);die;
+
+	        		if(!empty($checkotherspecinprocess))
+		        	{
+		        		$data['modify']['existmodifying']      = 'otherusing';
+		        		
+		        		$where_cond=('user_id="'.$checkotherspecinprocess['0']->lockedby.'"');
+		        		$datausers = $this->MUser->GetUserData("users",$where_cond);
+		        		if(!empty($datausers))
+		        		{
+		        			$lockedby = $datausers['0']['first_name'].' '.$datausers['0']['last_name'];
+		        		}
+		        		else{
+		        			$lockedby = '';
+		        		}
+
+		        		$data['modify']['lockedby']      = $lockedby;
+		        	}
+		        	else
+		        	{
+		        		$data['modify']['existmodifying']      = 'free';
+	        			$data['modify']['lockedby']      = '';
+	        			$data['modify']['lockedspecids']      = '';
+		        	}
+        		}
         	}
         	else
         	{
-
         		$checkotherspecinprocess = $this->MUser->checkotherspecinprocesshome($spec_id, 1);
         		if(!empty($checkotherspecinprocess))
 	        	{
@@ -1025,8 +1001,6 @@ class CIHome extends CI_Controller {
 	        	}
         	}
 
-        	// echo '<pre>'; print_r($data);die;
-
 	        $this->load->view('modify_exist', $data['modify']);
 	    } else {
 	        redirect('home/import/existing','location',301);
@@ -1037,22 +1011,40 @@ class CIHome extends CI_Controller {
 	    $data['param']     = strtolower($param);
 	    $data['selected']  = strtolower($this->session->userdata('selection'));
 
+
+
 	    if(strtolower($param) == "specinspect") {
+
+	    	
+
 	        $this->load->view('inc/h2.inc.php');
 	        $spec_id = $_POST['spec_id']; 
            $version_id = $_POST['version_id'];
+
+           
 	       $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	       //print_r($data['pdf_specs']);
+
+
+	       $count = count($data['pdf_specs']['spec_general']) -  1; 
+	       
+	       $data['pdf_specs']['spec_status_live'] = $data['pdf_specs']['spec_general'][$count]['islocked'];
+
+	        $count1 = count($data['pdf_specs']['spec_general']);
+
+	        $data['pdf_specs']['last_version'] = $data['pdf_specs']['spec_general'][$count1 - 1]['version_id'];
+
 	        $this->load->view('review_approve', $data['pdf_specs']);
 	    } elseif (strtolower($param) == "dspecinspect") {
 	       $this->load->view('inc/h2.inc.php');
 	       $spec_id = $_POST['spec_id']; 
            $version_id = $_POST['version_id'];
 	       $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	       //print_r($data['pdf_specs']);
+
+	       $count = count($data['pdf_specs']['spec_general']) -  1; 
+	       
+	       $data['pdf_specs']['spec_status_live'] = $data['pdf_specs']['spec_general'][$count]['islocked'];
 	        $this->load->view('review_dapprove', $data['pdf_specs']);
 	    }
-
 	    else {
 	        redirect('home/import/existing','location',301);
 	    }
@@ -1091,13 +1083,8 @@ class CIHome extends CI_Controller {
 	        $spec_id = $this->input->post('spec_id');
             $version_id = $this->input->post('version_id');
 	        $data['csv_specs'] = $this->MDownload->getAllSpecCsv($spec_id, $version_id);
-	        // echo '<pre>';print_r($data['csv_specs']);exit;
 			downlondCsvft($data['csv_specs']);
 			$this->load->view('download_csv', $data['csv_specs']);
-
-			// $csv =& get_instance();
-			// $csv->load->model('CIModUser');
-			// $csv = $csv->CIModUser->notifyViaEmailDownload($spec_id);
 	    
 	    } else if(strtolower($param) == "wordfile") 
 	    {
@@ -1106,14 +1093,9 @@ class CIHome extends CI_Controller {
 	        $spec_id = $this->input->post('spec_id');
             $version_id = $this->input->post('version_id');
 	       	$data['word_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-	       	// print_r($data);exit;
+	
 			downlondDocxft($data['word_specs']);
 			$this->load->view('download_word', $data['word_specs']); 
-
-			// $doc =& get_instance();
-			// $doc->load->model('CIModUser');
-			// $doc = $doc->CIModUser->notifyViaEmailDownload($spec_id);
-	    
 	    } else if(strtolower($param)=="downloadcsv") {
 	         $spec_id = $_POST['spec_id']; 
              $version_id = $_POST['version_id'];
@@ -1126,18 +1108,12 @@ class CIHome extends CI_Controller {
 			$data['word_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
 			downlondDocx($data['word_specs']);
 		}
-//		else if(strtolower($param)=="downloadcsvft") {
-//			$spec_id = $_POST['spec_id'];
-//			$version_id = $_POST['version_id'];
-//			$data['csv_specs'] = $this->MDownload->getAllSpecCsv($spec_id, $version_id);
-//			//print_r($data['csv_specs']);exit;
-//			downlondCsvft($data['csv_specs']);
-//		}
+
 		else if(strtolower($param)=="generatesas") {
 	    	 $spec_id = $_POST['spec_id']; 
              $version_id = $_POST['version_id'];
              $data['grCode_specs'] = $this->MDownload->getAllGenerateSas($spec_id, $version_id);
-             //print_r( $data['grCode_specs'] );exit;
+            
 	        $this->load->view('sas_code', $data['grCode_specs']);
 
 	    } else if(strtolower($param)=="downloadesub") {
@@ -1176,37 +1152,6 @@ class CIHome extends CI_Controller {
 	        redirect('home/import/existing', 'location', 301);
 	    }
 	}
-
-	// public function getsessiontime()
- //    {
- //    	if (isset($_SESSION["LAST_ACTIVITY"])) 
-	// 	{
-	// 		$lastactivitytime = $_SESSION["LAST_ACTIVITY"];
-	// 		$afteractivity_timespent = time() - $_SESSION["LAST_ACTIVITY"];
-	// 		$timeremainingforsessiontimeout = $this->config->item('sess_expiration') - $afteractivity_timespent;
-
-	// 		$timearray = array('lastactivitytime'=>date('m/d/Y H:i:s', $lastactivitytime),
-	// 						'afteractivity_timespent'=>gmdate("H:i:s", $afteractivity_timespent),
-	// 						'timeremainingforsessiontimeout'=>gmdate("H:i:s", $timeremainingforsessiontimeout),
-	// 						'timeremainingforsessiontimeoutinsec'=>$timeremainingforsessiontimeout);
-
-	// 		echo json_encode($timearray);
-	// 	}
-	// 	else
-	// 	{
-	// 		$this->MSession->setSessionDetails();
-	// 		$lastactivitytime = $_SESSION["LAST_ACTIVITY"];
-	// 		$afteractivity_timespent = time() - $_SESSION["LAST_ACTIVITY"];
-	// 		$timeremainingforsessiontimeout = $this->config->item('sess_expiration') - $afteractivity_timespent;
-
-	// 		$timearray = array('lastactivitytime'=>date('m/d/Y H:i:s', $lastactivitytime),
-	// 						'afteractivity_timespent'=>gmdate("H:i:s", $afteractivity_timespent),
-	// 						'timeremainingforsessiontimeout'=>gmdate("H:i:s", $timeremainingforsessiontimeout),
-	// 						'timeremainingforsessiontimeoutinsec'=>$timeremainingforsessiontimeout);
-
-	// 		echo json_encode($timearray);
-	// 	}
- //    }
 
 	public function getsessiontime($LAST_ACTIVITY)
     {
@@ -1660,5 +1605,59 @@ class CIHome extends CI_Controller {
     	}
 
     	echo $html;
+    }
+
+    public function viewonlyspec($specid,$version)
+    {
+    	$this->MSession->setSessionDetails();
+	    $data['selected']   = strtolower($this->session->userdata('selection'));
+
+        $this->load->view('inc/h1.inc.php');
+        $spec_id = $specid;
+        $version_id = $version - 1;
+        $data['modify'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
+        // echo '<pre>';print_r($data['modify']);exit;
+
+        list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['modify']['user_spec']['type']);
+
+        $ppk = ["PPK-standard"];
+        $erother=["Blank Template"];
+		
+		$otheroptional = $this->MSpec->getotheroptional($data['modify']['all_var'] , $dstype, $ppk, $erother);
+		
+		if(is_array($otheroptional)) {
+       		 $data['modify'] = array_merge($data['modify'], $otheroptional);
+    	}
+
+    	$data['modify']['lastactivitytimeold']      = $_SESSION['LAST_ACTIVITY'];
+
+    	$checkotherspecinprocess = $this->MUser->checkotherspecinprocesshome($spec_id, 1);
+
+		if(!empty($checkotherspecinprocess))
+    	{
+    		// $data['modify']['existmodifying']      = 'otherusing';
+    		
+    		$where_cond=('user_id="'.$checkotherspecinprocess['0']->lockedby.'"');
+    		$datausers = $this->MUser->GetUserData("users",$where_cond);
+    		if(!empty($datausers))
+    		{
+    			$lockedby = $datausers['0']['first_name'].' '.$datausers['0']['last_name'];
+    		}
+    		else{
+    			$lockedby = '';
+    		}
+
+    		$data['modify']['lockedby']      = $lockedby;
+    		$data['modify']['existmodifying']      = 'inprocess';
+    		$data['modify']['lockedspecids']      = '';
+    	}
+    	else
+    	{
+    		$data['modify']['existmodifying']      = 'inprocess';
+			$data['modify']['lockedby']      = '';
+			$data['modify']['lockedspecids']      = '';
+    	}
+
+        $this->load->view('view_only', $data['modify']);	    
     }
 }

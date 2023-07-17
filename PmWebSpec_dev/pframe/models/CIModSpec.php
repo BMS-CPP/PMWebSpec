@@ -354,6 +354,7 @@ class CIModSpec extends CI_Model {
     }
     public function saveSpecData() 
     {
+
         $this->db->close();
         $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
         $t          = date("h:i:sa");
@@ -376,6 +377,8 @@ class CIModSpec extends CI_Model {
 
         $this->session->userdata('spec_id', $spec_id);
 
+
+
         // ----------- user_spec table;
         $user_spec_data = array(
                             'spec_id'       => $spec_id,
@@ -389,11 +392,18 @@ class CIModSpec extends CI_Model {
 
         $this->saveSpecDataByTable($this->aws_conn_obj, 'user_spec', $user_spec_data);
 
+
         // ------------- spec_general table;
-        $ds_programmer = implode(',', $this->input->post('ds_programmer'));
-        if($ds_programmer == null) {
+        // $ds_programmer = implode(',', $this->input->post('ds_programmer'));
+
+        if($this->input->post('ds_programmer') == "") {
             $ds_programmer = "----------";
         }
+        else
+        {
+            $ds_programmer = implode(',', $this->input->post('ds_programmer'));
+        }
+
         $spec_gen_data = array(
                             'spec_id'           => $spec_id,
                             'version_id'        => $version_id,
@@ -513,6 +523,7 @@ class CIModSpec extends CI_Model {
               //print_r($ds_struct_data['var_label']);
             $this->saveSpecDataByTable($this->aws_conn_obj, 'dataset_structure', $ds_struct_data);
         }
+
 
 
 

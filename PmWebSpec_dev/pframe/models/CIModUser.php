@@ -9,7 +9,7 @@ class CIModUser extends CI_Model {
         $this->load->database();
         $this->load->library('email');
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'testu1';
+        $this->user_id = 'gallanik';
     }
 
 	public function getDatabaseInfo() {
@@ -29,20 +29,20 @@ class CIModUser extends CI_Model {
         $cookie_params = $_COOKIE;
         if (isset($cookie_params['sm_user']) && !empty($cookie_params['sm_user'])) 
         {
-            setcookie('sm_user', 'testu1', time() + (86400 * 30), '/');
-            $this->session->set_userdata('user_id', 'testu1');
+            setcookie('sm_user', 'gallanik', time() + (86400 * 30), '/');
+            $this->session->set_userdata('user_id', 'gallanik');
         }
         else
         {
             $cookie_name = "sm_user";
-            $cookie_value = "testu1";
+            $cookie_value = "gallanik";
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
-            $this->session->set_userdata('user_id', 'testu1');
+            $this->session->set_userdata('user_id', 'gallanik');
         }
 
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'testu1';
+        $this->user_id = 'gallanik';
         $this->db->select("*");
         $this->db->from('users');
         $this->db->where('user_id', trim($this->user_id));
@@ -83,7 +83,7 @@ class CIModUser extends CI_Model {
     // Get all access related data from vw_user_access
     public function getUserAccessDataByUserName() {
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'testu1';
+        $this->user_id = 'gallanik';
         $this->db->select('screen_name');
         $this->db->from('vw_user_access as vua');
         $this->db->where('vua.user_id', $this->user_id);

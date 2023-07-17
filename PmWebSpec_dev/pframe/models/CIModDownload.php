@@ -24,7 +24,7 @@ class CIModDownload extends CI_Model {
             exit();
         }
 
-        // echo 'hey';die;
+        
         
         $this->aws_conn->select('*');
         $this->aws_conn->from('spec_general');
@@ -302,7 +302,7 @@ class CIModDownload extends CI_Model {
         // required query
         // print_r($optionalquery->num_rows());exit;
         if($optionalquery->num_rows() > 0) {
-            // echo "huree";exit;
+            //echo "huree";exit;
             foreach( $optionalquery->result_array() as $index => $sts ) {
                 //echo "huree";exit;
                 $structarray[$index] = $sts;

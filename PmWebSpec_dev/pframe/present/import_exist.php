@@ -146,7 +146,8 @@ table {
                      $dataset_path = wordwrap($spec['dataset_path'], 40, "<br />\n", true);
                     echo '<td style="width: 850px;">' . $spec['spec_id'] . '</td>';
 					echo '<td>' . $spec['created_by'] . '</td>';
-					echo '<td>' . $dataset_path . '</td>';
+					// echo '<td>' . $dataset_path . '</td>';
+                    echo '<td style="line-break: anywhere;">' . $spec['dataset_path'] . '</td>';
 					echo '<td>' . $spec['indication'] . '</td>';
 					echo '<td>' . $spec['type'] . '</td>';
 					echo '<td>' . date('Y-m-d',strtotime($spec['creation_date'])) . '</td>';

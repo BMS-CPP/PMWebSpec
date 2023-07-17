@@ -302,12 +302,53 @@
 			if(checkfield('pk_scientist', 'PK scientist cannot be empty')===false){
 				valid=false;
 			}
+			else
+			{
+				var hasNumber = /\d/;   
+				if (hasNumber.test(document.getElementById('pk_scientist').value)) 
+				{
+					alert('pk_scientist should not contain number');
+				    valid=false;
+				}
+			}
+
 			if(checkfield('pm_scientist', 'PM scientist cannot be empty')===false){
 				valid=false;
 			}
+			else
+			{
+				var hasNumber = /\d/;   
+				if (hasNumber.test(document.getElementById('pm_scientist').value)) 
+				{
+					alert('pm_scientist should not contain number');
+				    valid=false;
+				}
+			}
+		
 			if(checkfield('statistician', 'Statistician cannot be empty')===false){
 				valid=false;
 			}
+			else
+			{
+				var hasNumber = /\d/;   
+				if (hasNumber.test(document.getElementById('statistician').value)) 
+				{
+					alert('statistician should not contain number');
+				    valid=false;
+				}
+			}
+
+			if(checkfield('dataset_path', 'Dataset Location cannot be empty')===false){
+				valid=false;
+			}
+			else
+			{
+				if (/\s/.test(document.getElementById('dataset_path').value)) {
+				    alert('dataset_path should not contain space');
+				    valid=false;
+				}
+			}
+
 			if(checkfield('dataset_name', 'Dataset name cannot be empty')===false){
 				valid=false;
 			}
@@ -388,6 +429,92 @@
 					}
 				}					
 			}
+
+			var table = document.getElementById('pkTable');	
+			var input = table.getElementsByClassName('struct');
+			var arr = [];
+			
+			for (var z = 0; z < input.length;  z++) {
+				if (z % 3 ==0) {	
+					if (input[z].value=="") {
+						alert("Study cannot be empty");
+						valid=false;
+					} 
+					else {
+						arr.push(input[z].value.toUpperCase());
+					}				
+				} 					
+			}
+
+			// console.log(findDuplicate(arr).length);
+			
+			if(findDuplicate(arr).length > 0) { 
+				alert("Study " + findDuplicate(arr) + " from PK Data Source is already exist!");
+				valid=false;
+			}
+
+
+			var table = document.getElementById('pathTable');	
+			var input = table.getElementsByClassName('struct');
+			var arr = [];
+			
+			for (var z = 0; z < input.length;  z++) {
+				if (z % 6 ==0) {
+					if (input[z].value=="") {
+						alert("Study from clinical data cannot be empty");
+						valid=false;
+					} 
+					else {
+						arr.push(input[z].value.toUpperCase());
+					}				
+				} 					
+			}
+			
+			if(findDuplicate(arr).length > 0) { 
+				alert("Study " + findDuplicate(arr) + " from clinical Data Source is already exist!");
+				valid=false;
+			}
+
+			var table = document.getElementById('flagTable');	
+			var input = table.getElementsByClassName('struct');
+			var arr = [];
+
+			for (var z = 0; z < input.length;  z++) {
+				
+				if (z % 4 ==0) {
+					input[z].value = input[z].value.replace(/\s+/g, "");
+					if (Number(input[z].value)=="0" || isNaN(Number(input[z].value))) { 
+						alert("flag number should be number and cannot empty");
+						valid=false;
+					} 
+					else 
+					{
+						if(input[z].value.includes("."))
+						{
+							alert("flag number cannot be float");
+							valid=false;
+						}
+						else
+						{
+							arr.push(input[z].value.toUpperCase());
+						}
+					}				
+				} 	
+
+				if (z % 4 ==1) 
+				{
+					if (input[z].value=="") {
+						alert("Flag comment cannot be empty");
+						valid=false;
+					} 
+				}				
+			}
+
+			if(findDuplicate(arr).length > 0) { 
+				alert("Variable " + findDuplicate(arr) + " already exist!");
+				valid=false;
+			}
+
 			// console.log(findDuplicate(arr).length);
 			
 			if(findDuplicate(arr).length > 0) { 
@@ -442,7 +569,7 @@
 			//retrieve information from the confirmation table
 			retrieveinfo('confs','confirmTable')
 		}
-
+		
 		function showdelete(tableid) 
 		{
 			if(tableid=='myTable') 
@@ -484,17 +611,29 @@
 					}
 
 					if(tableid=="myTable") {
+						// alert('revert');
 						var rows = table.rows;	
 						var rowlen = rows.length;
 						for (var j=0; j < rowlen-1; j++) {
 							input[j*18].value = pad(j+1, 3);
 						} 
+						
+						// console.log(otheroptional);
+
 						// add rows back to the optional variable table
 						for (var z=0; z <arr2.length; z++) {
 							for (var k=0; k<otheroptional.length; k++) {
-		           				if(arr2[z]==otheroptional[k][0]) {
+								// console.log(arr2[z]);
+								// console.log(otheroptional[k]['var_name']);
+
+								if(arr2[z]==otheroptional[k]['var_name']) {
 		           					addvaropt(otheroptional[k]); 
+		           					// addclickevent(otheroptional[k]['var_name']);
+
 		           				}
+		           				// if(arr2[z]==otheroptional[k][0]) {
+		           				// 	addvaropt(otheroptional[k]); 
+		           				// }
 		           			}					
 						}
 					}
@@ -547,6 +686,7 @@
 					}
 
 					if(tableid=="myTable") {
+
 						var rows = table.rows;	
 						var rowlen = rows.length;
 						for (var j=0; j < rowlen-1; j++) {
@@ -563,11 +703,9 @@
 					}
 			}
 		}
-		
 
-
-		// add variable to the optional variable table
 		function addvaropt(vararray) {
+			// console.log(vararray);
 			
 			var table = document.getElementById("allspectable"); 
 
@@ -576,36 +714,41 @@
 			var checkbox = document.createElement('input');
 				checkbox.type = "checkbox";
 				checkbox.className="checkboxc";	
-				checkbox.value = "value";
-				checkbox.id = "id";	
+				// checkbox.onclick = "value";	
+				checkbox.id = vararray['var_name'];	
 				checkbox.style.width="24px";
+
+				// checkbox.onclick = function('handleclick(vararray["var_name"])');
+				checkbox.setAttribute("onclick","handleClick(this);");
+
 				
 			var td1 = document.createElement("td");
-				td1.innerHTML = vararray[0];
+				td1.innerHTML = vararray['var_name'];
 				td1.className = "varname";
 				
 			var td2 = document.createElement("td");
-				td2.innerHTML = vararray[1];
+				td2.innerHTML = vararray['var_label'];
 				
 			var td3 = document.createElement("td");
-				td3.innerHTML = vararray[2];
+				td3.innerHTML = vararray['units'];
 
 			var td4 = document.createElement("td");
-				td4.innerHTML = vararray[3];
+				td4.innerHTML = vararray['type'];
 
 			var td5 = document.createElement("td");
-				td5.innerHTML = vararray[4];
+				td5.innerHTML = vararray['round'];
 
 			var td6 = document.createElement("td");
-				td6.innerHTML = vararray[5];
+				td6.innerHTML = vararray['missVal'];
 				
 			var td7 = document.createElement("td");
-				td7.innerHTML = vararray[6];
+				td7.innerHTML = vararray['note'];
 				
 			var td8 = document.createElement("td");
-				td8.innerHTML = vararray[7];	
+				td8.innerHTML = vararray['source'];	
 
 			td0.appendChild(checkbox);	
+			// checkbox.onclick = function() { conn.send('$connect\r\n'); };
 			tr.appendChild(td0);
 			tr.appendChild(td1);
 			tr.appendChild(td2);

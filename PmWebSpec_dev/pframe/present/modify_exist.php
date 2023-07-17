@@ -980,23 +980,31 @@ if($approved_info == 1) {
 		$(document).ready(function() 
 		{
 			var existmodifying = document.getElementById("existmodifying").value;
-			if(existmodifying == 'otherusing')
-			{
-				document.getElementById("viewmode").style.display = 'block';
-				document.getElementById("discardchange").style.display = 'none';
-				document.getElementById("specsubmit").style.display = 'none';
-				document.getElementById("saveprogress").style.display = 'none';
+            if(existmodifying == 'otherusing')
+            {
+                document.getElementById("viewmode").style.display = 'block';
+                document.getElementById("discardchange").style.display = 'none';
+                document.getElementById("specsubmit").style.display = 'none';
+                document.getElementById("saveprogress").style.display = 'none';
 
-				var lockedby = '<?php echo $lockedby; ?>';
-				var msg =  'You wont be able to make any changes as this specification is currently being modified by: ';
-				var lockedmsg = msg + lockedby;
-				alert(lockedmsg);
-			}
-			else
-			{
-				var existmodifying = document.getElementById("existmodifying").value;
-				if(existmodifying == 'inprocess')
-				{
+                var lockedby = '<?php echo $lockedby; ?>';
+                var msg =  'You wont be able to make any changes as this specification is currently being modified by: ';
+                var lockedmsg = msg + lockedby;
+                alert(lockedmsg);
+
+
+                var spec_id_change = document.getElementById("spec_id").value;
+                var version = document.getElementById("version_id").value;
+                var url ="<?php echo base_url(); ?>home/viewonlyspec/"+spec_id_change+"/"+version;
+
+                window.location = url;  
+            }
+            else
+            {
+                var existmodifying = document.getElementById("existmodifying").value;
+                if(existmodifying == 'inprocess')
+                {
+                    // document.getElementById("specsubmit").disabled = true;
                     document.getElementById("viewmode").style.display = 'block';
                     document.getElementById("discardchange").style.display = 'none';
                     document.getElementById("specsubmit").style.display = 'none';
@@ -1006,132 +1014,229 @@ if($approved_info == 1) {
                     var msg =  'You have reached maximum limit (3) of specifications you can modify. Please submit one of the previous specifications to proceed. These specifications are: ';
                     var lockedmsg = msg + lockedspecids;
                     alert(lockedmsg);
-				}
-				else if(existmodifying == 'otherusing')
+
+                    //alert('A specification is currently being modified by you. Please submit the previous specification to proceed.');
+                }
+                else if(existmodifying == 'otherusing')
+                {
+                    // document.getElementById("specsubmit").disabled = true;
+                    document.getElementById("viewmode").style.display = 'block';
+                    document.getElementById("discardchange").style.display = 'none';
+                    document.getElementById("specsubmit").style.display = 'none';
+                    document.getElementById("saveprogress").style.display = 'none';
+
+                    alert('Current specification modifying other user please wait until they will finish it!');
+                }
+                else
+                {
+                    if (confirm('To modify this specification, click on OK. Click on Cancel to view the specification')) 
+                    {
+                        var existmodifying = document.getElementById("existmodifying").value;
+                        if(existmodifying == 'inprocess')
+                        {
+                            document.getElementById("viewmode").style.display = 'block';
+                            document.getElementById("discardchange").style.display = 'none';
+                            document.getElementById("specsubmit").style.display = 'none';
+                            document.getElementById("saveprogress").style.display = 'none';
+
+                            alert('A specification is currently being modified by you. Please submit the previous specification to proceed.');
+                        }
+                        else if(existmodifying == 'otherusing')
+                        {
+                            document.getElementById("viewmode").style.display = 'block';
+                            document.getElementById("discardchange").style.display = 'none';
+                            document.getElementById("specsubmit").style.display = 'none';
+                            document.getElementById("saveprogress").style.display = 'none';
+
+                            alert('Current specification modifying other user please wait until they will finish it!');
+                        }
+                        else
+                        {
+                            var spec_id_change = document.getElementById("spec_id").value;
+                            var version = document.getElementById("version_id").value;
+
+                            $.ajax({
+                                url: "<?php echo base_url(); ?>home/lockspec/"+spec_id_change+"/"+version,
+                                type: "post",
+                                data: {spec_id: +encodeURIComponent(spec_id_change), version: +version},
+                                success: function (response) 
+                                {
+                                    //alert('This specification is now locked for you.');
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                   console.log(textStatus, errorThrown);
+                                }
+                            });
+                        }
+                    } else 
+                    {
+                        var spec_id_change = document.getElementById("spec_id").value;
+                        var version = document.getElementById("version_id").value;
+                        var url ="<?php echo base_url(); ?>home/viewonlyspec/"+spec_id_change+"/"+version;
+
+                        // alert(url);
+
+                        window.location = url;                       
+
+                        document.getElementById("viewmode").style.display = 'block';
+                        document.getElementById("discardchange").style.display = 'none';
+                        document.getElementById("specsubmit").style.display = 'none';
+                        document.getElementById("saveprogress").style.display = 'none';
+                    }
+                }
+            }
+			// if(existmodifying == 'otherusing')
+			// {
+			// 	document.getElementById("viewmode").style.display = 'block';
+			// 	document.getElementById("discardchange").style.display = 'none';
+			// 	document.getElementById("specsubmit").style.display = 'none';
+			// 	document.getElementById("saveprogress").style.display = 'none';
+
+			// 	var lockedby = '<?php echo $lockedby; ?>';
+			// 	var msg =  'You wont be able to make any changes as this specification is currently being modified by: ';
+			// 	var lockedmsg = msg + lockedby;
+			// 	alert(lockedmsg);
+			// }
+			// else
+			// {
+			// 	var existmodifying = document.getElementById("existmodifying").value;
+			// 	if(existmodifying == 'inprocess')
+			// 	{
+   //                  document.getElementById("viewmode").style.display = 'block';
+   //                  document.getElementById("discardchange").style.display = 'none';
+   //                  document.getElementById("specsubmit").style.display = 'none';
+   //                  document.getElementById("saveprogress").style.display = 'none';
+
+   //                  var lockedspecids = '<?php echo $lockedspecids; ?>';
+   //                  var msg =  'You have reached maximum limit (3) of specifications you can modify. Please submit one of the previous specifications to proceed. These specifications are: ';
+   //                  var lockedmsg = msg + lockedspecids;
+   //                  alert(lockedmsg);
+			// 	}
+			// 	else if(existmodifying == 'otherusing')
+			// 	{
+			// 		// document.getElementById("specsubmit").disabled = true;
+			// 		document.getElementById("viewmode").style.display = 'block';
+			// 		document.getElementById("discardchange").style.display = 'none';
+			// 		document.getElementById("specsubmit").style.display = 'none';
+			// 		document.getElementById("saveprogress").style.display = 'none';
+
+			// 		alert('Current specification modifying other user please wait until they will finish it!');
+			// 	}
+			// 	else
+			// 	{
+			// 		if (confirm('To modify this specification, click on OK. Click on Cancel to view the specification')) 
+			// 		{
+			// 			var existmodifying = document.getElementById("existmodifying").value;
+			// 			if(existmodifying == 'inprocess')
+			// 			{
+			// 				document.getElementById("viewmode").style.display = 'block';
+			// 				document.getElementById("discardchange").style.display = 'none';
+			// 				document.getElementById("specsubmit").style.display = 'none';
+			// 				document.getElementById("saveprogress").style.display = 'none';
+
+			// 				alert('A specification is currently being modified by you. Please submit the previous specification to proceed.');
+			// 			}
+			// 			else if(existmodifying == 'otherusing')
+			// 			{
+			// 				document.getElementById("viewmode").style.display = 'block';
+			// 				document.getElementById("discardchange").style.display = 'none';
+			// 				document.getElementById("specsubmit").style.display = 'none';
+			// 				document.getElementById("saveprogress").style.display = 'none';
+
+			// 				alert('Current specification modifying other user please wait until they will finish it!');
+			// 			}
+			// 			else
+			// 			{
+			// 				var spec_id_change = document.getElementById("spec_id").value;
+			// 				var version = document.getElementById("version_id").value;
+
+			// 				$.ajax({
+			// 			        url: "<?php echo base_url(); ?>home/lockspec/"+spec_id_change+"/"+version,
+			// 			        type: "post",
+			// 			        data: {spec_id: +encodeURIComponent(spec_id_change), version: +version},
+			// 			        success: function (response) 
+			// 			        {
+			// 			        	//alert('This specification is now locked for you.');
+			// 			        },
+			// 			        error: function(jqXHR, textStatus, errorThrown) {
+			// 			           console.log(textStatus, errorThrown);
+			// 			        }
+			// 			    });
+			// 			}
+			// 		} else 
+			// 		{
+			// 			document.getElementById("viewmode").style.display = 'block';
+			// 			document.getElementById("discardchange").style.display = 'none';
+			// 			document.getElementById("specsubmit").style.display = 'none';
+			// 			document.getElementById("saveprogress").style.display = 'none';
+
+			// 			//alert('You can only view this spec!');
+			// 		}
+			// 	}
+			// }
+
+			setInterval(function()
+			{
+				<?php 
+				if (isset($lastactivitytimeold)) 
 				{
-					// document.getElementById("specsubmit").disabled = true;
-					document.getElementById("viewmode").style.display = 'block';
-					document.getElementById("discardchange").style.display = 'none';
-					document.getElementById("specsubmit").style.display = 'none';
-					document.getElementById("saveprogress").style.display = 'none';
+					?>
+					var lastactivitytimeold = document.getElementById("timestamp").value;
 
-					alert('Current specification modifying other user please wait until they will finish it!');
-				}
-				else
-				{
-					if (confirm('To modify this specification, click on OK. Click on Cancel to view the specification')) 
-					{
-						var existmodifying = document.getElementById("existmodifying").value;
-						if(existmodifying == 'inprocess')
-						{
-							document.getElementById("viewmode").style.display = 'block';
-							document.getElementById("discardchange").style.display = 'none';
-							document.getElementById("specsubmit").style.display = 'none';
-							document.getElementById("saveprogress").style.display = 'none';
+					$.ajax({
+				        url: "<?php echo base_url(); ?>home/getsessiontime/"+lastactivitytimeold,
+				        type: "post",
+				        data: "values" ,
+				        success: function (response) 
+				        {
+				        	var response = JSON.parse(response);
+				        	var lastactivitytime = response.lastactivitytime;
+				        	var afteractivity_timespent = response.afteractivity_timespent;
+				        	var timeremainingforsessiontimeout = response.timeremainingforsessiontimeout;
+				        	var timeremainingforsessiontimeoutinsec = response.timeremainingforsessiontimeoutinsec;
 
-							alert('A specification is currently being modified by you. Please submit the previous specification to proceed.');
-						}
-						else if(existmodifying == 'otherusing')
-						{
-							document.getElementById("viewmode").style.display = 'block';
-							document.getElementById("discardchange").style.display = 'none';
-							document.getElementById("specsubmit").style.display = 'none';
-							document.getElementById("saveprogress").style.display = 'none';
+				        	// document.getElementById("lastactivitytime").innerHTML = lastactivitytime;
+				        	// document.getElementById("afteractivity_timespent").innerHTML = afteractivity_timespent;
+				        	document.getElementById("timeremainingforsessiontimeout").innerHTML = timeremainingforsessiontimeout;
+				        	// document.getElementById("timeremainingforsessiontimeoutinsec").innerHTML = timeremainingforsessiontimeoutinsec;
 
-							alert('Current specification modifying other user please wait until they will finish it!');
-						}
-						else
-						{
-							var spec_id_change = document.getElementById("spec_id").value;
-							var version = document.getElementById("version_id").value;
+				        	if(timeremainingforsessiontimeoutinsec <= 300)
+				        	{
+				        		if (confirm('Your Session is about to expire in 5 Minute, Click "OK" to extend your session.')) 
+				        		{
+				        			document.getElementById("timestamp").value = Math.floor(Date.now() / 1000);
+								  // Save it!
+								  $.ajax({
+							            url:"<?php echo base_url(); ?>home",
+							            type: "post",    //request type,
+							            dataType: 'json',
+							            data: {registration: "success", name: "xyz", email: "abc@gmail.com"},
+							            success:function(result){
+							                console.log(result.abc);
+							                //document.getElementById("timestamp").value = '';
+				        					//document.getElementById("timestamp").value = <?php echo time(); ?>;
+							            }
+							        });
+								} else 
+								{
+									document.location = '<?php echo base_url(); ?>home';
+								}
+				        	}
+				        	
 
-							$.ajax({
-						        url: "<?php echo base_url(); ?>home/lockspec/"+spec_id_change+"/"+version,
-						        type: "post",
-						        data: {spec_id: +encodeURIComponent(spec_id_change), version: +version},
-						        success: function (response) 
-						        {
-						        	//alert('This specification is now locked for you.');
-						        },
-						        error: function(jqXHR, textStatus, errorThrown) {
-						           console.log(textStatus, errorThrown);
-						        }
-						    });
-						}
-					} else 
-					{
-						document.getElementById("viewmode").style.display = 'block';
-						document.getElementById("discardchange").style.display = 'none';
-						document.getElementById("specsubmit").style.display = 'none';
-						document.getElementById("saveprogress").style.display = 'none';
+				        	// alert(lastactivitytime.lastactivitytime);
+				           // You will get response from your PHP page (what you echo or print)
+				        },
+				        error: function(jqXHR, textStatus, errorThrown) {
+				           console.log(textStatus, errorThrown);
+				        }
+				    });
 
-						//alert('You can only view this spec!');
+					<?php
 					}
-				}
-			}
-
-					setInterval(function()
-					{
-						<?php 
-						if (isset($lastactivitytimeold)) 
-						{
-							?>
-							var lastactivitytimeold = document.getElementById("timestamp").value;
-
-							$.ajax({
-						        url: "<?php echo base_url(); ?>home/getsessiontime/"+lastactivitytimeold,
-						        type: "post",
-						        data: "values" ,
-						        success: function (response) 
-						        {
-						        	var response = JSON.parse(response);
-						        	var lastactivitytime = response.lastactivitytime;
-						        	var afteractivity_timespent = response.afteractivity_timespent;
-						        	var timeremainingforsessiontimeout = response.timeremainingforsessiontimeout;
-						        	var timeremainingforsessiontimeoutinsec = response.timeremainingforsessiontimeoutinsec;
-
-						        	// document.getElementById("lastactivitytime").innerHTML = lastactivitytime;
-						        	// document.getElementById("afteractivity_timespent").innerHTML = afteractivity_timespent;
-						        	document.getElementById("timeremainingforsessiontimeout").innerHTML = timeremainingforsessiontimeout;
-						        	// document.getElementById("timeremainingforsessiontimeoutinsec").innerHTML = timeremainingforsessiontimeoutinsec;
-
-						        	if(timeremainingforsessiontimeoutinsec <= 300)
-						        	{
-						        		if (confirm('Your Session is about to expire in 5 Minute, Click "OK" to extend your session.')) 
-						        		{
-						        			document.getElementById("timestamp").value = Math.floor(Date.now() / 1000);
-										  // Save it!
-										  $.ajax({
-									            url:"<?php echo base_url(); ?>home",
-									            type: "post",    //request type,
-									            dataType: 'json',
-									            data: {registration: "success", name: "xyz", email: "abc@gmail.com"},
-									            success:function(result){
-									                console.log(result.abc);
-									                //document.getElementById("timestamp").value = '';
-						        					//document.getElementById("timestamp").value = <?php echo time(); ?>;
-									            }
-									        });
-										} else 
-										{
-											document.location = '<?php echo base_url(); ?>home';
-										}
-						        	}
-						        	
-
-						        	// alert(lastactivitytime.lastactivitytime);
-						           // You will get response from your PHP page (what you echo or print)
-						        },
-						        error: function(jqXHR, textStatus, errorThrown) {
-						           console.log(textStatus, errorThrown);
-						        }
-						    });
-
-							<?php
-							}
-						?>
-				    },5000);
-				});
+				?>
+		    },5000);
+		});
 
 				var acc = document.getElementsByClassName("accordion");
 				var i;
