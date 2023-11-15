@@ -562,15 +562,15 @@ define('pdfspecpath', $pdfspecpath);
 define('s3_bucket_path', $s3_bucket_path );
 define('exportcsvpath' , $exportcsvpath);
 
-define('ppk','["PPK-standard"]');
+define('ppk','["PPK-CDISC"]');
 define('er',  '["ER-ISOP-safety-efficacy"]');
 define('other', '["Blank Template"]');
-define('ppkother', '["PPK-standard", "Blank Template"]');
+define('ppkother', '["Blank Template","PPK-CDISC"]');
 define('erother', '["Blank Template"]');
 
 $config['specnotallowed'] = array();
 $config['oldspec'] = array('ER-SAFETY-EFFICACY');
 
-$config['specordering'] = array('PPK-standard','ER-ISOP-safety-efficacy','Blank Template');
+$config['specordering'] = array('PPK-CDISC','ER-ISOP-safety-efficacy','Blank Template');
 
-$config['specorderingmanage'] = array('PPK-standard','ER-ISOP-safety-efficacy','Blank Template');
+$config['specorderingmanage'] = array('PPK-CDISC','ER-ISOP-safety-efficacy','Blank Template');

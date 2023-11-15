@@ -194,6 +194,7 @@ class CIHome extends CI_Controller {
 	    else {
 	        $data['spec_types'] = $this->MSpec->getSpecType();
 	        $this->load->view('inc/h1.inc.php');
+	        // echo '<pre>';print_r($data);die;
     	    $this->load->view('new_spec', $data);
 	    }
 	}
@@ -820,13 +821,13 @@ class CIHome extends CI_Controller {
 			$version_id = $this->input->post("version_id");
 
 			$data['importexisting'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
-			 //print_r($data['importexisting']);exit;
+			 // print_r($data['importexisting']);exit;
 			list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['importexisting']['user_spec']['type']);
 
-			// echo '<pre>';print_r($dslabel);die;
+			$ppk = ["PPK-CDISC"];
+            $erother=["Blank Template","ER-ISOP-safety-efficacy","Other"];
 
-			$ppk = ["PPK-standard"];
-            $erother=["Blank Template","ER-ISOP-safety-efficacy"];
+
 
 			$otheroptional = $this->MSpec->getotheroptional($data['importexisting']['all_var'] , $dstype, $ppk, $erother);
 			
@@ -834,10 +835,17 @@ class CIHome extends CI_Controller {
            		 $data['importexisting'] = array_merge($data['importexisting'], $otheroptional);
         	}
 
+        	// echo '<pre>';print_r($data);die;
+
         	$data['importexisting']['dataset_sorted'] = $dataset_sorted;
         	$data['importexisting']['ds_label'] = $dslabel;
 
         	$data['importexisting']['lastactivitytimeold']      = $_SESSION['LAST_ACTIVITY'];
+        	$date = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d")+14, date("Y")));
+            $data['importexisting']['user_spec']['dataset_date'] = $date;
+
+            // echo 'hi';die;
+
 
 	        $this->load->view('inc/h1.inc.php');
 	       
@@ -915,8 +923,8 @@ class CIHome extends CI_Controller {
 	        $data['modify'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
 
 	        list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['modify']['user_spec']['type']);
-			$ppk = ["PPK-standard"];
-            $erother=["Blank Template"];
+			$ppk = ["PPK-CDISC"];
+            $erother=["Blank Template","Other"];
 
 			$otheroptional = $this->MSpec->getotheroptional($data['modify']['all_var'] , $dstype, $ppk, $erother);
 			
@@ -927,8 +935,14 @@ class CIHome extends CI_Controller {
 
 
         	$checkotherspecinprocess = $this->MUser->checkotherspecinprocess($spec_id, 1);
+
+        	// echo '<pre>';print_r($checkotherspecinprocess);die;
+
+
         	if(!empty($checkotherspecinprocess))
         	{
+        		// echo count($checkotherspecinprocess);die;
+        		// echo 'hi';die;
         		if(count($checkotherspecinprocess) >= 3)
         		{
         			$specidsarr = array();
@@ -945,7 +959,6 @@ class CIHome extends CI_Controller {
         		}
         		else
         		{
-
         			// echo 'hey';die;
         			$checkotherspecinprocess = $this->MUser->checkotherspecinprocesshome($spec_id, 1);
 
@@ -1073,9 +1086,11 @@ class CIHome extends CI_Controller {
 	       $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
 	       downlondPdf($data['pdf_specs']);
 	    } else if(strtolower($param) == "pdffilereview") { 
+
            $spec_id = $_POST['spec_id']; 
            $version_id = $_POST['version_id'];
 	       $data['pdf_specs'] = $this->MDownload->getAllSpecPdf($spec_id, $version_id);
+	       
 	       downlondReviewPdf($data['pdf_specs']);
 	    } else if(strtolower($param) == "csvfile") {
 	    	// echo 'hi';die;
@@ -1620,7 +1635,7 @@ class CIHome extends CI_Controller {
 
         list($dstype, $dslabel, $cname, $dataset_sorted) = $this->MSpec->getTypeLabel($data['modify']['user_spec']['type']);
 
-        $ppk = ["PPK-standard"];
+        $ppk = ["PPK-CDISC"];
         $erother=["Blank Template"];
 		
 		$otheroptional = $this->MSpec->getotheroptional($data['modify']['all_var'] , $dstype, $ppk, $erother);

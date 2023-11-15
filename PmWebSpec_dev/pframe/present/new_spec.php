@@ -54,11 +54,11 @@ if ($user_name[0]['user_id'] == NULL) {
 			</select>
 			<br/><br/>
 			<div id="SpecType">
-			    <div id="PPK-standard">
-			          <span class="alert alert-success">
+			    <div id="PPK-CDISC">
+			       <span class="alert alert-success">
 				    <i class="fa fa-info-circle"></i>
-			         Population pharmacokinetic analysis dataset specification - used for all other drugs.</span>
-			        <br/><br/>
+			        CDISC ADaM population pharmacokinetic analysis dataset specification.</span>
+				     <br/><br/>
 			    </div>
 			    <div id="Blank-Template">
 			          <span class="alert alert-success">

@@ -6,7 +6,7 @@
 
 function downlondReviewPdf($data) {
 
-	//print_r($data['title']);exit;
+	// print_r($data['title']);exit;
  //create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'utf-8', false);
 
@@ -373,15 +373,20 @@ $html2 = '';
 
     $html5 = '</table>';
 
+
+
     $pdf->writeHTML($html1 . $html2 . $html3 . $html4 . $html5, true, false, false, false, '');
 
 	$filename = $data['dataset_path'];
 
-	$filename = str_replace(pkms_path, '', $filename);
-	$filename = str_replace(pkms_path2, '', $filename);
+	// $filename = str_replace(pkms_path, '', $filename);
+	// $filename = str_replace(pkms_path2, '', $filename);
 
 	$filename = str_replace('/', '_', $filename);
 	$specid = str_replace(':', '-', $data['spec_id']);
+
+
+	   // echo 'hi1';die;
 
     ob_end_clean();
 

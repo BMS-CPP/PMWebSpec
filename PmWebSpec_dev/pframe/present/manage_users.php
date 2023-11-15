@@ -252,18 +252,23 @@ if ($user_name[0]['user_id'] == NULL) {
 	//add user
 if(isset($_POST['usertoadd']) && !empty($_POST['usertoadd'])) 
 {
-	// echo '<pre>';print_r($_POST);die;
+	// echo '<pre>';print_r($_POST);
 	$usertoadd = $_POST["usertoadd"];
-	exec("java LdapConnect $usertoadd", $output);   
+	exec("java LdapConnect $usertoadd", $output);  
 
 	$s=sizeof($output);
+	// echo '<pre>';print_r($s);die; 
 	if($s>1){
 		$email_add = $output[2];     
 		$fname_add = $output[0];
 		$lname_add = $output[1];
 		$checkinput = 'valid';
 	} else {
-		$checkinput = 'invalid';
+		$checkinput = 'valid';
+		$email_add = '';     
+		$fname_add = '';
+		$lname_add = '';
+		// $checkinput = 'invalid';
 	}
 }
 
@@ -512,6 +517,10 @@ console.log(assignednew);
 				<input class="button tab" type="submit" name="manage" value="Update Derivations" />
 				<input class="button tab" type="submit" name="manage" value="User Reports" />
 				<input class="button tab" type="submit" name="manage" value="Locked Spec" />
+
+				<?php if(($user_name[0]['user_id'] == 'sawanta1') || ($user_name[0]['user_id'] == 'madanp')) { ?>
+				<!-- <input class="button tab" type="submit" name="manage" value="User Information" /> -->
+			<?php } ?>
 		</form>
 	</div>
 
@@ -540,7 +549,7 @@ console.log(assignednew);
 		        echo '<fieldset>';
 		        echo '<legend>Add user/role</legend>';
 		        echo '<form method="post" action="'.base_url('admin/manage/view/add/user').'">';
-				echo '<p>Domain User Id  <input type="text" id="userid" name="usertoadd"/></p>';
+				echo '<p>BMS User Id  <input type="text" id="userid" name="usertoadd"/></p>';
 				echo '<span id="username_result"></span>';
 				echo '<p><input class="button" type="submit" name="chooseUser" value="Add" /></p>';
 				echo '</form>';
@@ -556,7 +565,7 @@ console.log(assignednew);
 		        echo '<fieldset>';
 		        echo '<legend>Select User</legend>';
 		        echo '<form method="post" action="'.base_url('admin/manage/view/update/user').'">';
-				echo '<p>Domain User Id <select name="usertoupdate">';
+				echo '<p>BMS User Id <select name="usertoupdate">';
 				echo '<option></option>';
 
  				foreach($users_info as $arr) {
@@ -579,7 +588,7 @@ console.log(assignednew);
 				echo '<fieldset>';
 		        echo '<legend>Remove User</legend>';
 		        echo '<form method="post" action="'.base_url('admin/manage/view/remove/user').'">';
-				echo '<p>Domain User Id  <select name="usertoremove">';
+				echo '<p>BMS User Id  <select name="usertoremove">';
 				echo '<option></option>';
 
  				foreach($users_info as $arr) {
@@ -1034,10 +1043,10 @@ console.log(assignednew);
 					echo '<fieldset>';
 			        echo '<legend>Add user</legend>';
 			        echo '<form method="post" action='.base_url('admin/manage/view/add/useradd').'>';
-					echo '<p>Domain User Id  <input type="text" id="userid" name="userid" value="' .$usertoadd. '"  readonly/></p>';
+					echo '<p>BMS User Id  <input type="text" id="userid" name="userid" value="' .$usertoadd. '"  readonly/></p>';
 					echo '<p>First Name  <input type="text" id="fname" name="fname" value="' . $fname_add. '" required /></p>';
 					echo '<p>Last Name  <input type="text" id="lname" name="lname" value="'. $lname_add.'" required /></p>';
-					echo '<p>Email address  <input type="text" id="email" name="email" value="'. $email_add . '" required readonly /></p>';
+					echo '<p>Email address  <input type="text" id="email" name="email" value="'. $email_add . '" required /></p>';
 					echo '<p>Role  <select name="role" required >';
 					
 
@@ -1056,8 +1065,8 @@ console.log(assignednew);
  			        echo '<fieldset>';
  			        echo '<legend>Add User/Role</legend>';
  			        echo '<form method="post" action="'.base_url('admin/manage/view/add/user').'">';
- 			        echo 'The Domain userid is invalid. Please try again!';
- 					echo '<p>Domain User Id  <input type="text" id="userid" name="usertoadd" required /></p>';
+ 			        echo 'The BMS userid is invalid. Please try again!';
+ 					echo '<p>BMS User Id  <input type="text" id="userid" name="usertoadd" required /></p>';
 					echo '<p><input class="button" type="submit" name="chooseUser" value="Add" /></p>';
  					echo '</form>';
  					echo '</fieldset>';
@@ -1075,7 +1084,7 @@ console.log(assignednew);
 				echo '<fieldset>';
 		        echo '<legend>Update user</legend>';
 		        echo '<form method="post" action="'.base_url('admin/manage/view/add/user/update').'">';
-				echo '<p>Domain User Id  <input type="text" id="userid" name="userid" value="' . $user_id . '" readonly /></p>';
+				echo '<p>BMS User Id  <input type="text" id="userid" name="userid" value="' . $user_id . '" readonly /></p>';
 				echo '<p>First Name  <input type="text" id="fname" name="fname" value="' . $users_info['first_name']. '" required /></p>';
 				echo '<p>Last Name  <input type="text" id="lname" name="lname" value="' . $users_info['last_name'] . '" required /></p>';
 				echo '<p>Email address  <input type="email" id="email" name="email" value="' . $users_info['email_address']. '" required /></p>';
@@ -1114,7 +1123,7 @@ console.log(assignednew);
 				echo '<fieldset>';
 		        echo '<legend>Remove user</legend>';
 		        echo '<form method="post" action="'.base_url('admin/manage/view/remove/user_role').'">';
-				echo '<p>Domain User Id  <input type="text" id="userid" name="useridrm" value="' . $user_id  . '" readonly /></p>';
+				echo '<p>BMS User Id  <input type="text" id="userid" name="useridrm" value="' . $user_id  . '" readonly /></p>';
 				echo '<label>Select the Role you want to remove </label><br/>';
 				echo '<select style = "width:50%" name="existing_role[]" size="5" multiple required >';
 				//print_r($users_info['role']);exit;
@@ -1211,7 +1220,8 @@ console.log(assignednew);
 				$remove_var =& get_instance();
 				$remove_var->load->model('CIModTempManagement');
 				$vars = $remove_var->CIModTempManagement->getList('dsstruct',$temptomodify);
-				if(in_array($temptomodify, erother)) {
+				$erother = ["ER-safety", "ER-efficacy", "TGD", "PKPD", "Blank Template","Other"];
+				if(in_array($temptomodify, $erother)) {
 					$vars2 = $remove_var->CIModTempManagement->getListother('dsstruct',$temptomodify);
 				} else {
 					$vars2 = $vars;
@@ -1293,8 +1303,9 @@ console.log(assignednew);
 					$temp_var =& get_instance();
 					$temp_var->load->model('CIModTempManagement');
 					$vars = $temp_var->CIModTempManagement->getList('dsstruct',$temptomodify);
-					//print_r($ppk);exit;
-					if(in_array($temptomodify, erother)) {
+					// print_r(erother);exit;
+					$erother = ["ER-safety", "ER-efficacy", "TGD", "PKPD", "Blank Template","Other"];
+					if(in_array($temptomodify, $erother)) {
 						$vars2 = $temp_var->CIModTempManagement->getListother('dsstruct',$temptomodify);
 					} else {
 						$vars2 = $vars;

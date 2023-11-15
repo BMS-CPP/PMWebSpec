@@ -42,6 +42,7 @@ class CISpecification extends CI_Controller {
              $version_id = $_POST['version_id'];
 			 $this->load->view('inc/h1.inc.php');
              $data['esub_export'] = $this->MDownload->getAllSpecEsub($spec_id, $version_id);
+             // echo 'hi';die;
 			 downlondEsubft($data['esub_export']);
             $this->load->view('export_esub', $data['esub_export']);
         } else {

@@ -19,16 +19,16 @@ class CIModSession extends CI_Model {
         $cookie_params = $_COOKIE;
         if (isset($cookie_params['sm_user']) && !empty($cookie_params['sm_user'])) 
         {
-            setcookie('sm_user', 'gallanik', time() + (86400 * 30), '/');
-            $this->session->set_userdata('user_id', 'gallanik');
+            setcookie('sm_user', 'testu1', time() + (86400 * 30), '/');
+            $this->session->set_userdata('user_id', 'testu1');
         }
         else
         {
             $cookie_name = "sm_user";
-            $cookie_value = "gallanik";
+            $cookie_value = "testu1";
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
-            $this->session->set_userdata('user_id', 'gallanik');
+            $this->session->set_userdata('user_id', 'testu1');
         }
 
 

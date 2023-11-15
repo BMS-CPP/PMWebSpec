@@ -9,7 +9,7 @@ class CIModUser extends CI_Model {
         $this->load->database();
         $this->load->library('email');
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'gallanik';
+        $this->user_id = 'testu1';
     }
 
 	public function getDatabaseInfo() {
@@ -29,20 +29,20 @@ class CIModUser extends CI_Model {
         $cookie_params = $_COOKIE;
         if (isset($cookie_params['sm_user']) && !empty($cookie_params['sm_user'])) 
         {
-            setcookie('sm_user', 'gallanik', time() + (86400 * 30), '/');
-            $this->session->set_userdata('user_id', 'gallanik');
+            setcookie('sm_user', 'testu1', time() + (86400 * 30), '/');
+            $this->session->set_userdata('user_id', 'testu1');
         }
         else
         {
             $cookie_name = "sm_user";
-            $cookie_value = "gallanik";
+            $cookie_value = "testu1";
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
-            $this->session->set_userdata('user_id', 'gallanik');
+            $this->session->set_userdata('user_id', 'testu1');
         }
 
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'gallanik';
+        $this->user_id = 'testu1';
         $this->db->select("*");
         $this->db->from('users');
         $this->db->where('user_id', trim($this->user_id));
@@ -83,7 +83,7 @@ class CIModUser extends CI_Model {
     // Get all access related data from vw_user_access
     public function getUserAccessDataByUserName() {
         // $this->user_id = $this->session->userdata('user_id');
-        $this->user_id = 'gallanik';
+        $this->user_id = 'testu1';
         $this->db->select('screen_name');
         $this->db->from('vw_user_access as vua');
         $this->db->where('vua.user_id', $this->user_id);
@@ -909,6 +909,40 @@ class CIModUser extends CI_Model {
         return $spec_ids_data = $query->result();
     }
 
+    // public function checkotherspecinprocesshome($spec_id,$versionid) 
+    // {
+    //     $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
+
+    //     $date = date("Y-m-d H:i:s");
+    //     $user_name = $this->session->user_details;
+    //     $fullname = $user_name[0]['first_name']." ".$user_name[0]['last_name'];
+    //     $created_by_session = $user_name[0]['user_id'];
+        
+    //     //checked whether other spec is in process for current user
+    //     $this->aws_conn_obj->select('*');
+    //     $this->aws_conn_obj->from('spec_general');
+    //     $this->aws_conn_obj->where('spec_id !=',$spec_id);
+    //     $this->aws_conn_obj->where('lockedby',$created_by_session);
+    //     $this->aws_conn_obj->where('islocked','1');
+    //     $query = $this->aws_conn_obj->get();
+    //     $spec_ids_data = $query->result();
+
+    //     if(!empty($spec_ids_data))
+    //     {
+    //         return $spec_ids_data;
+    //     }
+    //     else
+    //     {
+    //         $this->aws_conn_obj->select('*');
+    //         $this->aws_conn_obj->from('spec_general');
+    //         $this->aws_conn_obj->where('spec_id',$spec_id);
+    //         $this->aws_conn_obj->where('lockedby !=',$created_by_session);
+    //         $this->aws_conn_obj->where('islocked','1');
+    //         $query1 = $this->aws_conn_obj->get();
+    //         return $spec_ids_data1 = $query1->result();
+    //     }
+    // }
+
     public function checkotherspecinprocesshome($spec_id,$versionid) 
     {
         $this->aws_conn_obj = $this->load->database('aws_db', TRUE);
@@ -919,28 +953,38 @@ class CIModUser extends CI_Model {
         $created_by_session = $user_name[0]['user_id'];
         
         //checked whether other spec is in process for current user
+
         $this->aws_conn_obj->select('*');
         $this->aws_conn_obj->from('spec_general');
-        $this->aws_conn_obj->where('spec_id !=',$spec_id);
-        $this->aws_conn_obj->where('lockedby',$created_by_session);
+        $this->aws_conn_obj->where('spec_id',$spec_id);
+        $this->aws_conn_obj->where('lockedby !=',$created_by_session);
         $this->aws_conn_obj->where('islocked','1');
-        $query = $this->aws_conn_obj->get();
-        $spec_ids_data = $query->result();
+        $query1 = $this->aws_conn_obj->get();
+        return $spec_ids_data1 = $query1->result();
 
-        if(!empty($spec_ids_data))
-        {
-            return $spec_ids_data;
-        }
-        else
-        {
-            $this->aws_conn_obj->select('*');
-            $this->aws_conn_obj->from('spec_general');
-            $this->aws_conn_obj->where('spec_id',$spec_id);
-            $this->aws_conn_obj->where('lockedby !=',$created_by_session);
-            $this->aws_conn_obj->where('islocked','1');
-            $query1 = $this->aws_conn_obj->get();
-            return $spec_ids_data1 = $query1->result();
-        }
+        // $this->aws_conn_obj->select('*');
+        // $this->aws_conn_obj->from('spec_general');
+        // $this->aws_conn_obj->where('spec_id !=',$spec_id);
+        // $this->aws_conn_obj->where('lockedby',$created_by_session);
+        // $this->aws_conn_obj->where('islocked','1');
+        // $query = $this->aws_conn_obj->get();
+        // $spec_ids_data = $query->result();
+
+        // if(!empty($spec_ids_data))
+        // {
+        //     return $spec_ids_data;
+        // }
+        // else
+        // {
+        //     $this->aws_conn_obj->select('*');
+        //     $this->aws_conn_obj->from('spec_general');
+        //     $this->aws_conn_obj->where('spec_id',$spec_id);
+        //     $this->aws_conn_obj->where('lockedby !=',$created_by_session);
+        //     $this->aws_conn_obj->where('islocked','1');
+        //     $query1 = $this->aws_conn_obj->get();
+        //     return $spec_ids_data1 = $query1->result();
+        // }
+        // echo '<pre>';print_r($spec_ids_data);die;
     }
 
     public function discardchange($spec_id) 

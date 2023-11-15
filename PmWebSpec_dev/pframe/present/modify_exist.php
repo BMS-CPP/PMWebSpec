@@ -65,6 +65,7 @@ if($approved_info == 1) {
 		<input id="derive" name="derive" type="hidden" />
 		<input id="flgs" name="flgs" type="hidden" />
 		<input id="confs" name="confs" type="hidden" />
+		<input id="spec_type" name="spec_type" value="<?php echo $user_spec['type']; ?>" type="hidden" />
     	<br/>
 		<div class="required title-info">
     	<font size="4" color="red" style="margin-left: 10px">*</font><font size="4"><b>  Required input from Pharmacometrician</b></font>
@@ -778,7 +779,7 @@ if($approved_info == 1) {
 
 				echo '</tbody></table> 	';	
 				echo '<br/>';
-				echo '<p><button type="button" onClick="addOptional();" class="w3-btn w3-round-large w3-grey w3-medium">Add optional variable<i class="w3-margin-left material-icons">add_box</i></button></p>';
+				// echo '<p><button type="button" onClick="addOptional();" class="w3-btn w3-round-large w3-grey w3-medium">Add optional variable<i class="w3-margin-left material-icons">add_box</i></button></p>';
 				echo '</div>';
 			?>
 	
@@ -1283,181 +1284,381 @@ if($approved_info == 1) {
 		var otheroptional = <?php echo json_encode($otheroptional); ?>;
 
 
-    function handleClick(cb) 
-    {
-        var spec_type = document.getElementById("spec_type");
+    // function handleClick(cb) 
+    // {
+    //     var spec_type = document.getElementById("spec_type");
 
-        var select_value =  cb.id;
+    //     var select_value =  cb.id;
 
-        if(select_value == "TTYPEF") {
-            document.getElementById("TTYPEN").checked = true;    
-        }
-        if(select_value == "TTYPEN") {
-            document.getElementById("TTYPEF").checked = true;    
-        }
+    //     if(select_value == "TTYPEF") {
+    //         document.getElementById("TTYPEN").checked = true;    
+    //     }
+    //     if(select_value == "TTYPEN") {
+    //         document.getElementById("TTYPEF").checked = true;    
+    //     }
         
 
 
-        if((select_value == "SEX")) {
-             document.getElementById("SEXN").checked = true;
-        }
-        if(select_value == "SEXN") {
-            document.getElementById("SEX").checked = true;   
-        }
+    //     if((select_value == "SEX")) {
+    //          document.getElementById("SEXN").checked = true;
+    //     }
+    //     if(select_value == "SEXN") {
+    //         document.getElementById("SEX").checked = true;   
+    //     }
            
 
 
-        if(select_value == "RACE") {
-             document.getElementById("RACEN").checked = true;
-        }
-        if(select_value == "RACEN") {
-             document.getElementById("RACE").checked = true;
-        }
+    //     if(select_value == "RACE") {
+    //          document.getElementById("RACEN").checked = true;
+    //     }
+    //     if(select_value == "RACEN") {
+    //          document.getElementById("RACE").checked = true;
+    //     }
         
 
-        if(select_value == "HEPA") {
-             document.getElementById("HEPAN").checked = true;
-        }
-        if(select_value == "HEPAN") {
-             document.getElementById("HEPA").checked = true;
-        }
+    //     if(select_value == "HEPA") {
+    //          document.getElementById("HEPAN").checked = true;
+    //     }
+    //     if(select_value == "HEPAN") {
+    //          document.getElementById("HEPA").checked = true;
+    //     }
             
 
-        if(select_value == "ETHC") {
-             document.getElementById("ETHCN").checked = true;
-        }
-        if(select_value == "ETHCN") {
-             document.getElementById("ETHC").checked = true;
-        }
+    //     if(select_value == "ETHC") {
+    //          document.getElementById("ETHCN").checked = true;
+    //     }
+    //     if(select_value == "ETHCN") {
+    //          document.getElementById("ETHC").checked = true;
+    //     }
 
-        if(select_value == "ETHJ") {
-             document.getElementById("ETHJN").checked = true;
-        }
-        if(select_value == "ETHJN") {
-             document.getElementById("ETHJ").checked = true;
-        }
+    //     if(select_value == "ETHJ") {
+    //          document.getElementById("ETHJN").checked = true;
+    //     }
+    //     if(select_value == "ETHJN") {
+    //          document.getElementById("ETHJ").checked = true;
+    //     }
 
-        if(select_value == "ETH") {
-             document.getElementById("ETHN").checked = true;
-        }
-        if(select_value == "ETHN") {
-             document.getElementById("ETH").checked = true;
-        }
+    //     if(select_value == "ETH") {
+    //          document.getElementById("ETHN").checked = true;
+    //     }
+    //     if(select_value == "ETHN") {
+    //          document.getElementById("ETH").checked = true;
+    //     }
 
-        if(select_value == "LINEC") {
-             document.getElementById("LINEN").checked = true;
-        }
-        if(select_value == "LINEN") {
-             document.getElementById("LINEC").checked = true;
-        }
+    //     if(select_value == "LINEC") {
+    //          document.getElementById("LINEN").checked = true;
+    //     }
+    //     if(select_value == "LINEN") {
+    //          document.getElementById("LINEC").checked = true;
+    //     }
 
-        if(select_value == "BOR") {
-             document.getElementById("BORN").checked = true;
-        }
-        if(select_value == "BORN") {
-             document.getElementById("BOR").checked = true;
-        }
+    //     if(select_value == "BOR") {
+    //          document.getElementById("BORN").checked = true;
+    //     }
+    //     if(select_value == "BORN") {
+    //          document.getElementById("BOR").checked = true;
+    //     }
 
-        if(select_value == "ETIOLOGN") {
-             document.getElementById("ETIOLOGY").checked = true;
-        }
-        if(select_value == "ETIOLOGY") {
-             document.getElementById("ETIOLOGN").checked = true;
-        }
+    //     if(select_value == "ETIOLOGN") {
+    //          document.getElementById("ETIOLOGY").checked = true;
+    //     }
+    //     if(select_value == "ETIOLOGY") {
+    //          document.getElementById("ETIOLOGN").checked = true;
+    //     }
 
-        if(select_value == "EVID") {
-             document.getElementById("MDV").checked = true;
-        }
-        if(select_value == "MDV") {
-             document.getElementById("EVID").checked = true;
-        }
+    //     if(select_value == "EVID") {
+    //          document.getElementById("MDV").checked = true;
+    //     }
+    //     if(select_value == "MDV") {
+    //          document.getElementById("EVID").checked = true;
+    //     }
 
-        if(select_value == "ADDL") {
-             document.getElementById("II").checked = true;
-        }
-        if(select_value == "II") {
-             document.getElementById("ADDL").checked = true;
-        }
+    //     if(select_value == "ADDL") {
+    //          document.getElementById("II").checked = true;
+    //     }
+    //     if(select_value == "II") {
+    //          document.getElementById("ADDL").checked = true;
+    //     }
 
-        if(select_value == "FLAG") {
-             document.getElementById("FLAGC").checked = true;
-        }
-        if(select_value == "FLAGC") {
-             document.getElementById("FLAG").checked = true;
-        }
+    //     if(select_value == "FLAG") {
+    //          document.getElementById("FLAGC").checked = true;
+    //     }
+    //     if(select_value == "FLAGC") {
+    //          document.getElementById("FLAG").checked = true;
+    //     }
 
-        if(select_value == "EXCLF") {
-             document.getElementById("EXCLFC").checked = true;
-        }
-        if(select_value == "EXCLFC") {
-             document.getElementById("EXCLF").checked = true;
-        }
+    //     if(select_value == "EXCLF") {
+    //          document.getElementById("EXCLFC").checked = true;
+    //     }
+    //     if(select_value == "EXCLFC") {
+    //          document.getElementById("EXCLF").checked = true;
+    //     }
 
-        if(select_value == "STUDYID") {
-             document.getElementById("STUDYIDN").checked = true;
-        }
-        if(select_value == "STUDYIDN") {
-             document.getElementById("STUDYID").checked = true;
-        }
+    //     if(select_value == "STUDYID") {
+    //          document.getElementById("STUDYIDN").checked = true;
+    //     }
+    //     if(select_value == "STUDYIDN") {
+    //          document.getElementById("STUDYID").checked = true;
+    //     }
 
-        if(select_value == "USUBJID") {
-             document.getElementById("USUBJIDN").checked = true;
-        }
-        if(select_value == "USUBJIDN") {
-             document.getElementById("USUBJID").checked = true;
-        }
+    //     if(select_value == "USUBJID") {
+    //          document.getElementById("USUBJIDN").checked = true;
+    //     }
+    //     if(select_value == "USUBJIDN") {
+    //          document.getElementById("USUBJID").checked = true;
+    //     }
 
-        if(select_value == "DOSEP1") {
-             document.getElementById("DU1").checked = true;
-        }
-        if(select_value == "DU1") {
-             document.getElementById("DOSEP1").checked = true;
-        }
+    //     if(select_value == "DOSEP1") {
+    //          document.getElementById("DU1").checked = true;
+    //     }
+    //     if(select_value == "DU1") {
+    //          document.getElementById("DOSEP1").checked = true;
+    //     }
 
-        if(select_value == "DOSEPSS") {
-             document.getElementById("DUSS").checked = true;
-        }
-        if(select_value == "DUSS") {
-             document.getElementById("DOSEPSS").checked = true;
-        }
+    //     if(select_value == "DOSEPSS") {
+    //          document.getElementById("DUSS").checked = true;
+    //     }
+    //     if(select_value == "DUSS") {
+    //          document.getElementById("DOSEPSS").checked = true;
+    //     }
 
-        if(select_value == "FORM") {
-             document.getElementById("FORMN").checked = true;
-        }
-        if(select_value == "FORMN") {
-             document.getElementById("FORM").checked = true;
-        }
+    //     if(select_value == "FORM") {
+    //          document.getElementById("FORMN").checked = true;
+    //     }
+    //     if(select_value == "FORMN") {
+    //          document.getElementById("FORM").checked = true;
+    //     }
 
-        if(select_value == "PROC") {
-             document.getElementById("PROCN").checked = true;
-        }
-        if(select_value == "PROCN") {
-             document.getElementById("PROC").checked = true;
-        }
+    //     if(select_value == "PROC") {
+    //          document.getElementById("PROCN").checked = true;
+    //     }
+    //     if(select_value == "PROCN") {
+    //          document.getElementById("PROC").checked = true;
+    //     }
 
-        if(select_value == "ROUTE") {
-             document.getElementById("ROUTEN").checked = true;
-        }
-        if(select_value == "ROUTEN") {
-             document.getElementById("ROUTE").checked = true;
-        }
+    //     if(select_value == "ROUTE") {
+    //          document.getElementById("ROUTEN").checked = true;
+    //     }
+    //     if(select_value == "ROUTEN") {
+    //          document.getElementById("ROUTE").checked = true;
+    //     }
 
-        if(select_value == "SUBJTYP") {
-             document.getElementById("SUBJTYPN").checked = true;
-        }
-        if(select_value == "SUBJTYPN") {
-             document.getElementById("SUBJTYP").checked = true;
-        }
+    //     if(select_value == "SUBJTYP") {
+    //          document.getElementById("SUBJTYPN").checked = true;
+    //     }
+    //     if(select_value == "SUBJTYPN") {
+    //          document.getElementById("SUBJTYP").checked = true;
+    //     }
 
-        if(select_value == "ETHNIC") {
-            document.getElementById("ETHNICN").checked = true;
-        }
-        if(select_value == "ETHNICN") {
-             document.getElementById("ETHNIC").checked = true;
-        }
+    //     if(select_value == "ETHNIC") {
+    //         document.getElementById("ETHNICN").checked = true;
+    //     }
+    //     if(select_value == "ETHNICN") {
+    //          document.getElementById("ETHNIC").checked = true;
+    //     }
         
-        addOptional();         
-    }
+    //     addOptional();         
+    // }
+
+	function handleClick(cb) 
+	{
+		var spec_type = document.getElementById("spec_type").value;
+		var select_value =  cb.id;
+
+		if(select_value == "EVID") {
+			 document.getElementById("MDV").checked = true;
+		}
+		if(select_value == "MDV") {
+			 document.getElementById("EVID").checked = true;
+		}
+		if(select_value == "ADDL") {
+			 document.getElementById("II").checked = true;
+		}
+		if(select_value == "II") {
+			 document.getElementById("ADDL").checked = true;
+		}
+		if(select_value == "FLGREAS") {
+			 document.getElementById("FLGREASC").checked = true;
+		}
+		if(select_value == "FLGREASC") {
+			 document.getElementById("FLGREAS").checked = true;
+		}
+
+		// New case 
+		if(spec_type == 'PPK-CDISC')
+		{
+			if(select_value == "EXCLF") {
+				 document.getElementById("EXCLFCOM").checked = true;
+			}
+			if(select_value == "EXCLFCOM") {
+				 document.getElementById("EXCLF").checked = true;
+			}
+		}
+		else
+		{
+			if(select_value == "EXCLF") {
+				 document.getElementById("EXCLFC").checked = true;
+			}
+			if(select_value == "EXCLFC") {
+				 document.getElementById("EXCLF").checked = true;
+			}
+		}
+
+		if(spec_type == 'PPK-CDISC')
+		{
+			if(select_value == "SUBJTYP") {
+				 document.getElementById("SUBJTYPC").checked = true;
+			}
+			if(select_value == "SUBJTYPC") {
+				 document.getElementById("SUBJTYP").checked = true;
+			}
+		}
+		else
+		{
+			if(select_value == "SUBJTYP") {
+				 document.getElementById("SUBJTYPN").checked = true;
+			}
+			if(select_value == "SUBJTYPN") {
+				 document.getElementById("SUBJTYP").checked = true;
+			}
+		}
+
+		// if(select_value == "STUDYID") {
+		// 	 document.getElementById("STUDYIDN").checked = true;
+		// }
+		// if(select_value == "STUDYIDN") {
+		// 	 document.getElementById("STUDYID").checked = true;
+		// }
+
+		
+		// if(select_value == "USUBJID") {
+		// 	 document.getElementById("USUBJIDN").checked = true;
+		// }
+		// if(select_value == "USUBJIDN") {
+		// 	 document.getElementById("USUBJID").checked = true;
+		// }
+		if(select_value == "FORM") {
+			 document.getElementById("FORMN").checked = true;
+		}
+		if(select_value == "FORMN") {
+			 document.getElementById("FORM").checked = true;
+		}
+		if(select_value == "ROUTE") {
+			 document.getElementById("ROUTEN").checked = true;
+		}
+		if(select_value == "ROUTEN") {
+			 document.getElementById("ROUTE").checked = true;
+		}
+		
+
+		if(select_value == "AETHNIC") {
+			 document.getElementById("AETHNICN").checked = true;
+		}
+		if(select_value == "AETHNICN") {
+			 document.getElementById("AETHNIC").checked = true;
+		}
+		if(select_value == "HEPA") {
+			 document.getElementById("HEPAN").checked = true;
+		}
+		if(select_value == "HEPAN") {
+			 document.getElementById("HEPA").checked = true;
+		}	
+		if(select_value == "TTYPEF") {
+  		document.getElementById("TTYPEN").checked = true; 	 
+		}
+		if(select_value == "TTYPEN") {
+  		document.getElementById("TTYPEF").checked = true; 	 
+		}
+		if((select_value == "SEX")) {
+			 document.getElementById("SEXN").checked = true;
+		}
+		if(select_value == "SEXN") {
+  		document.getElementById("SEX").checked = true; 	 
+		}
+		if(select_value == "RACE") {
+			 document.getElementById("RACEN").checked = true;
+		}
+		if(select_value == "RACEN") {
+			 document.getElementById("RACE").checked = true;
+		}
+
+		if(select_value == "ARACE") {
+			 document.getElementById("ARACEN").checked = true;
+		}
+		if(select_value == "ARACEN") {
+			 document.getElementById("ARACE").checked = true;
+		}
+
+		// below old one
+		if(select_value == "ETHNIC") {
+		 	document.getElementById("ETHNICN").checked = true;
+		}
+		if(select_value == "ETHNICN") {
+			 document.getElementById("ETHNIC").checked = true;
+		}
+		if(select_value == "ETHC") {
+			 document.getElementById("ETHCN").checked = true;
+		}
+		if(select_value == "ETHCN") {
+			 document.getElementById("ETHC").checked = true;
+		}
+		if(select_value == "ETHJ") {
+			 document.getElementById("ETHJN").checked = true;
+		}
+		if(select_value == "ETHJN") {
+			 document.getElementById("ETHJ").checked = true;
+		}
+		if(select_value == "ETH") {
+			 document.getElementById("ETHN").checked = true;
+		}
+		if(select_value == "ETHN") {
+			 document.getElementById("ETH").checked = true;
+		}
+		if(select_value == "LINEC") {
+			 document.getElementById("LINEN").checked = true;
+		}
+		if(select_value == "LINEN") {
+			 document.getElementById("LINEC").checked = true;
+		}
+		if(select_value == "BOR") {
+			 document.getElementById("BORN").checked = true;
+		}
+		if(select_value == "BORN") {
+			 document.getElementById("BOR").checked = true;
+		}
+		if(select_value == "ETIOLOGN") {
+			 document.getElementById("ETIOLOGY").checked = true;
+		}
+		if(select_value == "ETIOLOGY") {
+			 document.getElementById("ETIOLOGN").checked = true;
+		}
+		if(select_value == "FLAG") {
+			 document.getElementById("FLAGC").checked = true;
+		}
+		if(select_value == "FLAGC") {
+			 document.getElementById("FLAG").checked = true;
+		}
+		if(select_value == "DOSEP1") {
+			 document.getElementById("DU1").checked = true;
+		}
+		if(select_value == "DU1") {
+			 document.getElementById("DOSEP1").checked = true;
+		}
+		if(select_value == "DOSEPSS") {
+			 document.getElementById("DUSS").checked = true;
+		}
+		if(select_value == "DUSS") {
+			 document.getElementById("DOSEPSS").checked = true;
+		}
+		if(select_value == "PROC") {
+			 document.getElementById("PROCN").checked = true;
+		}
+		if(select_value == "PROCN") {
+			 document.getElementById("PROC").checked = true;
+		}
+
+  		addOptional();
+	}
 	</script>
 	</body>
 </html>

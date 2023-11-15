@@ -254,10 +254,10 @@ class CIModDownload extends CI_Model {
 
 
 
-        $ppk = ["PPK-standard"];
+        $ppk = ["PPK-CDISC"];
         $er = ["ER-ISOP-safety-efficacy"];
         $other=["Blank Template"];
-        $ppkother=["PPK-standard", "Blank Template"];
+        $ppkother=["PPK-CDISC","Blank Template"];
         $erother=["Blank Template"];
         $isop=["ER-ISOP-safety-efficacy"];
 

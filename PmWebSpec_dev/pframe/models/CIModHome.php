@@ -13,10 +13,10 @@ class CIModHome extends CI_Model {
         parent::__construct();
 
         $this->pkms_path = '/directory/folder/tosave';
-        $this->ppk = array('PPK-standard');
+        $this->ppk = array('PPK-CDISC');
         $this->er = array('ER-ISOP-safety-efficacy');
         $this->other = array('Blank Template');
-        $this->ppkother = array('PPK-standard', 'Blank Template');
+        $this->ppkother = array('PPK-CDISC','Blank Template');
         $this->erother = array('Blank Template','ER-ISOP-safety-efficacy');
     }
 

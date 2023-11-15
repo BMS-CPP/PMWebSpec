@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2022 at 11:30 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.30
+-- Generation Time: Nov 10, 2023 at 08:53 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `approve_request` (
   `message` text NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `request_by` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -52,11 +52,8 @@ CREATE TABLE `clinical_data` (
   `level1` text DEFAULT NULL,
   `level2` text DEFAULT NULL,
   `format` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `clinical_data`
---
 -- --------------------------------------------------------
 
 --
@@ -77,11 +74,8 @@ CREATE TABLE `dataset_general` (
   `dataset_sort` text DEFAULT NULL,
   `dataset_dev_path` text DEFAULT NULL,
   `dataset_qc_path` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `dataset_general`
---
 -- --------------------------------------------------------
 
 --
@@ -108,12 +102,11 @@ CREATE TABLE `dataset_structure` (
   `missValChange` int(11) DEFAULT NULL,
   `noteChange` int(11) DEFAULT NULL,
   `sourceChange` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `dataset_structure`
 --
-
 -- --------------------------------------------------------
 
 --
@@ -125,12 +118,11 @@ CREATE TABLE `derivations` (
   `version_id` int(11) DEFAULT NULL,
   `field` text DEFAULT NULL,
   `algorithm` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `derivations`
 --
-
 
 -- --------------------------------------------------------
 
@@ -145,11 +137,8 @@ CREATE TABLE `files` (
   `name` text DEFAULT NULL,
   `type` text DEFAULT NULL,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
---
--- Dumping data for table `files`
---
 -- --------------------------------------------------------
 
 --
@@ -168,13 +157,11 @@ CREATE TABLE `file_transfer` (
   `created_by` varchar(50) NOT NULL,
   `transfer_date` datetime DEFAULT NULL,
   `transfer_by` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `file_transfer`
 --
-
-
 -- --------------------------------------------------------
 
 --
@@ -188,12 +175,11 @@ CREATE TABLE `flag` (
   `flag_comment` text DEFAULT NULL,
   `flag_notes` text DEFAULT NULL,
   `required` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `flag`
 --
-
 -- --------------------------------------------------------
 
 --
@@ -205,7 +191,7 @@ CREATE TABLE `formula` (
   `field` varchar(255) NOT NULL,
   `algorithm` text NOT NULL,
   `isactive` int(2) NOT NULL DEFAULT 1 COMMENT '1 for active \r\n0 for deleted'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `formula`
@@ -222,12 +208,11 @@ CREATE TABLE `missing_outlier` (
   `version_id` int(11) DEFAULT NULL,
   `outlier` text DEFAULT NULL,
   `missing` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `missing_outlier`
 --
-
 -- --------------------------------------------------------
 
 --
@@ -239,7 +224,7 @@ CREATE TABLE `pkms_path` (
   `version_id` int(11) DEFAULT NULL,
   `libname` text DEFAULT NULL,
   `libpath` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -253,11 +238,7 @@ CREATE TABLE `pk_data` (
   `study` varchar(50) DEFAULT NULL,
   `study_type` varchar(50) DEFAULT NULL,
   `lock_type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pk_data`
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -268,7 +249,7 @@ CREATE TABLE `pk_data` (
 CREATE TABLE `signature` (
   `spec_id` varchar(200) DEFAULT NULL,
   `image` blob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -291,11 +272,7 @@ CREATE TABLE `spec_general` (
   `islocked` int(2) NOT NULL DEFAULT 0 COMMENT '0 - Not Locked\r\n1 - Locked',
   `lockedby` varchar(255) NOT NULL,
   `spec_status` int(2) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `spec_general`
---
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -313,7 +290,7 @@ CREATE TABLE `study` (
   `protocol` text DEFAULT NULL,
   `protocol_date` text DEFAULT NULL,
   `protocol_version` decimal(10,0) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -334,12 +311,11 @@ CREATE TABLE `user_spec` (
   `removed` int(11) NOT NULL,
   `removed_by` text NOT NULL,
   `removed_date` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user_spec`
 --
-
 --
 -- Indexes for dumped tables
 --
@@ -461,13 +437,13 @@ ALTER TABLE `files`
 -- AUTO_INCREMENT for table `file_transfer`
 --
 ALTER TABLE `file_transfer`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
 
 --
 -- AUTO_INCREMENT for table `formula`
 --
 ALTER TABLE `formula`
-  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables

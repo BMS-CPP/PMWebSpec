@@ -141,9 +141,9 @@ class CIModSpec extends CI_Model {
     // pre-populate dataset label, type and compound name
     public function getTypeLabel($type) {
 
-        if ($type == 'PPK-standard') {
+        if(strpos($type, 'PPK-CDISC') !== false) {
             $label = 'Data for Population PK Analysis';
-            $dataset_sorted = 'STUDYID, USUBJID, AFRELTM, EVID'; 
+            $dataset_sorted = 'STUDYID, USUBJID, AFRLT, EVID';
         }else if(strpos($type, 'PPK') !== false) {
             $label = 'Data for Population PK Analysis';
             $dataset_sorted = 'STUDYID, USUBJID, AFRELTM, EVID';
@@ -158,6 +158,8 @@ class CIModSpec extends CI_Model {
         }
 
         $cname = '';
+
+        // echo 'hi';die;
 
         return array($type, $label, $cname, $dataset_sorted);
     }
@@ -268,15 +270,11 @@ class CIModSpec extends CI_Model {
 			}
 		}
 
-        // optional query
-		//print_r($this->MHome->ppk);exit;
         if($optionalquery->num_rows() > 0) {
             foreach( $optionalquery->result_array() as $index => $row ) {
                 $otheroptional[] = $row;
             }
         }
-        // echo '<pre>';print_r($otheroptional);exit;
-        // print_r($structarray);exit;
         return array($structarray, $optional, $otheroptional);
     }
 
@@ -285,7 +283,6 @@ class CIModSpec extends CI_Model {
         $this->db = $this->load->database('default', TRUE);
         $isop=["ER-ISOP-safety-efficacy"];
 
-       // print_r($otherdataset);exit;
         if (in_array($datasettype, $pkdataset)) {
             
             $this->db->select('*');
@@ -293,9 +290,7 @@ class CIModSpec extends CI_Model {
             $this->db->where(array('SpecType' => $datasettype, 'requiredFlag' => 0));
              $this->db->order_by('var_name','asc');
             $optionalquery = $this->db->get();
-            //echo $this->db->last_query();exit;
         } else if(in_array($datasettype, $otherdataset)) {
-            // echo "2";die;
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$datasettype.'" and requiredFlag = 0)');
@@ -303,7 +298,6 @@ class CIModSpec extends CI_Model {
             $optionalquery = $this->db->get();
         }
         elseif(in_array($datasettype, $isop)) {   
-            // echo "3";die;
             $this->db->select('*');
             $this->db->from('dsstruct');
             $this->db->where('SpecType = "ER-optional" or (SpecType= "'.$datasettype.'" and requiredFlag = 0)');
@@ -313,16 +307,17 @@ class CIModSpec extends CI_Model {
         }
 
         if($optionalquery->num_rows() > 0) {
-         foreach( $optionalquery->result_array() as $index => $row ) {
-            //print_r($row['var_name']);exit;
-            if(!in_array($row['var_name'], $invars)) {
-                $otheroptional1['otheroptional'][] = $row;
-            }
-         }
-     }
+             foreach( $optionalquery->result_array() as $index => $row ) {
+                if(!empty($invars))
+                {
+                   if(!in_array($row['var_name'], $invars)) {
+                        $otheroptional1['otheroptional'][] = $row;
+                    } 
+                }
+             }
+        }
 
-    return $otheroptional1;
-
+        return $otheroptional1;
     }
 
     public function tempFlagQuery($spec_type) {
@@ -693,7 +688,7 @@ class CIModSpec extends CI_Model {
          $this->aws_conn_obj->distinct();
         $this->aws_conn_obj->from('user_spec as us');
         $this->aws_conn_obj->join('dataset_general as dg', 'us.spec_id = dg.spec_id');
-        //$this->aws_conn_obj->where('approved = 0');
+        $this->aws_conn_obj->where('approved = 0');
         $this->aws_conn_obj->where('removed != 1');
         $this->aws_conn_obj->where('dg.version_id = (select max(dg_inner.version_id) from dataset_general as dg_inner where dg.spec_id = dg_inner.spec_id);');
         //$this->aws_conn_obj->order_by('version_id', 'desc');

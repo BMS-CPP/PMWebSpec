@@ -287,7 +287,249 @@
 			}							
 		}
 
-		function validateMyForm() {
+		// function validateMyForm() {
+		// 	var valid=true;
+
+		// 	if(checkfield('title', 'Title cannot be empty')===false) {
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('project_name', 'Project name cannot be empty')===false) {
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('version_id', 'Version cannot be empty')===false){
+		// 		valid=false;
+		// 	}			
+		// 	if(checkfield('pk_scientist', 'PK scientist cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	else
+		// 	{
+		// 		var hasNumber = /\d/;   
+		// 		if (hasNumber.test(document.getElementById('pk_scientist').value)) 
+		// 		{
+		// 			alert('pk_scientist should not contain number');
+		// 		    valid=false;
+		// 		}
+		// 	}
+
+		// 	if(checkfield('pm_scientist', 'PM scientist cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	else
+		// 	{
+		// 		var hasNumber = /\d/;   
+		// 		if (hasNumber.test(document.getElementById('pm_scientist').value)) 
+		// 		{
+		// 			alert('pm_scientist should not contain number');
+		// 		    valid=false;
+		// 		}
+		// 	}
+		
+		// 	if(checkfield('statistician', 'Statistician cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	else
+		// 	{
+		// 		var hasNumber = /\d/;   
+		// 		if (hasNumber.test(document.getElementById('statistician').value)) 
+		// 		{
+		// 			alert('statistician should not contain number');
+		// 		    valid=false;
+		// 		}
+		// 	}
+
+		// 	if(checkfield('dataset_path', 'Dataset Location cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	else
+		// 	{
+		// 		if (/\s/.test(document.getElementById('dataset_path').value)) {
+		// 		    alert('dataset_path should not contain space');
+		// 		    valid=false;
+		// 		}
+		// 	}
+
+		// 	if(checkfield('dataset_name', 'Dataset name cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_label', 'Dataset label cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_descriptor', 'Dataset description cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_records', 'Dataset contains cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_criteria', 'Dataset criteria (study and cohort to include) cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_sort', 'Dataset sorting variable(s) cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	if(checkfield('dataset_date', 'Dataset delivery date cannot be empty')===false){
+		// 		valid=false;
+		// 	}
+		// 	else
+		// 	{
+		// 		var UserDate = document.getElementById("dataset_date").value;
+
+		// 		myDate = UserDate.split("-");
+		// 		var newDate = new Date( myDate[0], myDate[1] - 1, myDate[2]);
+		// 	    var userDate1 = newDate.getTime();
+
+		// 	    var todayDate = new Date().toISOString().slice(0, 10);
+		// 	    toDate = todayDate.split("-");
+		// 	    var toDate = new Date( toDate[0], toDate[1] - 1, toDate[2]);
+
+		// 	    var todayDate1 = toDate.getTime(); 
+
+		// 		if (todayDate1 > userDate1){
+		// 		   alert("Delivery date should be greater than or equal to current date");
+		// 			valid=false;
+		// 		}
+		// 	}
+
+		// 	//retrieve information from the structure table
+		// 	var table = document.getElementById('myTable');	
+		// 	var input = table.getElementsByClassName('struct');
+		// 	var arr = [];
+			
+		// 	for (var z = 0; z < input.length;  z++) {		
+		// 		if (z % 18 ==10) {	
+		// 			//check if variable name is missing
+		// 			if (input[z].value=="") {
+		// 				alert("Variable name cannot be empty");
+		// 				valid=false;
+		// 			} 
+		// 			else if (isValid(input[z].value)===false) {
+		// 				alert("Variable "+input[z].value+" can only contain letters, numbers, or underscore and must start with letters or underscore. Please check variable names!");
+		// 				valid=false;
+		// 			}
+		// 			else {
+		// 				arr.push(input[z].value.toUpperCase());
+		// 			}				
+					
+		// 		} else if (z % 18 ==11) {
+		// 			//check if variable label is missing
+		// 			if (input[z].value=="") {
+		// 				alert("Variable label cannot be empty");
+		// 				valid=false;
+		// 			}
+
+		// 			if (input[z+1].value=='NA') {
+		// 				var total = input[z].value;
+		// 			} else {
+		// 				var total = input[z].value + "(" + input[z+1].value + ")";
+		// 			}
+					
+		// 			if (total.length>40) {
+		// 				alert("The length of label "+input[z].value+"  + unit is greater than 40 characters for variable " + input[z-1].value);
+		// 				valid=false;
+		// 			}
+		// 		}					
+		// 	}
+
+		// 	var table = document.getElementById('pkTable');	
+		// 	var input = table.getElementsByClassName('struct');
+		// 	var arr = [];
+			
+		// 	for (var z = 0; z < input.length;  z++) {
+		// 		if (z % 3 ==0) {	
+		// 			if (input[z].value=="") {
+		// 				alert("Study cannot be empty");
+		// 				valid=false;
+		// 			} 
+		// 			else {
+		// 				arr.push(input[z].value.toUpperCase());
+		// 			}				
+		// 		} 					
+		// 	}
+
+		// 	// console.log(findDuplicate(arr).length);
+			
+		// 	if(findDuplicate(arr).length > 0) { 
+		// 		alert("Study " + findDuplicate(arr) + " from PK Data Source is already exist!");
+		// 		valid=false;
+		// 	}
+
+
+		// 	var table = document.getElementById('pathTable');	
+		// 	var input = table.getElementsByClassName('struct');
+		// 	var arr = [];
+			
+		// 	for (var z = 0; z < input.length;  z++) {
+		// 		if (z % 6 ==0) {
+		// 			if (input[z].value=="") {
+		// 				alert("Study from clinical data cannot be empty");
+		// 				valid=false;
+		// 			} 
+		// 			else {
+		// 				arr.push(input[z].value.toUpperCase());
+		// 			}				
+		// 		} 					
+		// 	}
+			
+		// 	if(findDuplicate(arr).length > 0) { 
+		// 		alert("Study " + findDuplicate(arr) + " from clinical Data Source is already exist!");
+		// 		valid=false;
+		// 	}
+
+		// 	var table = document.getElementById('flagTable');	
+		// 	var input = table.getElementsByClassName('struct');
+		// 	var arr = [];
+
+		// 	for (var z = 0; z < input.length;  z++) {
+				
+		// 		if (z % 4 ==0) {
+		// 			input[z].value = input[z].value.replace(/\s+/g, "");
+		// 			if (Number(input[z].value)=="0" || isNaN(Number(input[z].value))) { 
+		// 				alert("flag number should be number and cannot empty");
+		// 				valid=false;
+		// 			} 
+		// 			else 
+		// 			{
+		// 				if(input[z].value.includes("."))
+		// 				{
+		// 					alert("flag number cannot be float");
+		// 					valid=false;
+		// 				}
+		// 				else
+		// 				{
+		// 					arr.push(input[z].value.toUpperCase());
+		// 				}
+		// 			}				
+		// 		} 	
+
+		// 		if (z % 4 ==1) 
+		// 		{
+		// 			if (input[z].value=="") {
+		// 				alert("Flag comment cannot be empty");
+		// 				valid=false;
+		// 			} 
+		// 		}				
+		// 	}
+
+		// 	if(findDuplicate(arr).length > 0) { 
+		// 		alert("Variable " + findDuplicate(arr) + " already exist!");
+		// 		valid=false;
+		// 	}
+
+		// 	// console.log(findDuplicate(arr).length);
+			
+		// 	if(findDuplicate(arr).length > 0) { 
+		// 		alert("Variable " + findDuplicate(arr) + " already exist!");
+		// 		valid=false;
+		// 	}
+
+			
+		// 	var cname= document.getElementById("cname").value;
+
+		// 	return valid;
+		// }
+
+		function validateMyForm() 
+		{
 			var valid=true;
 
 			if(checkfield('title', 'Title cannot be empty')===false) {
@@ -338,17 +580,6 @@
 				}
 			}
 
-			if(checkfield('dataset_path', 'Dataset Location cannot be empty')===false){
-				valid=false;
-			}
-			else
-			{
-				if (/\s/.test(document.getElementById('dataset_path').value)) {
-				    alert('dataset_path should not contain space');
-				    valid=false;
-				}
-			}
-
 			if(checkfield('dataset_name', 'Dataset name cannot be empty')===false){
 				valid=false;
 			}
@@ -367,6 +598,17 @@
 			if(checkfield('dataset_sort', 'Dataset sorting variable(s) cannot be empty')===false){
 				valid=false;
 			}
+			if(checkfield('dataset_path', 'Dataset Location cannot be empty')===false){
+				valid=false;
+			}
+			else
+			{
+				if (/\s/.test(document.getElementById('dataset_path').value)) {
+				    alert('dataset_path should not contain space');
+				    valid=false;
+				}
+			}
+
 			if(checkfield('dataset_date', 'Dataset delivery date cannot be empty')===false){
 				valid=false;
 			}
@@ -394,6 +636,8 @@
 			var table = document.getElementById('myTable');	
 			var input = table.getElementsByClassName('struct');
 			var arr = [];
+
+			// alert(input.length);
 			
 			for (var z = 0; z < input.length;  z++) {		
 				if (z % 18 ==10) {	
@@ -428,6 +672,11 @@
 						valid=false;
 					}
 				}					
+			}
+			
+			if(findDuplicate(arr).length > 0) { 
+				alert("Variable " + findDuplicate(arr) + " already exist!");
+				valid=false;
 			}
 
 			var table = document.getElementById('pkTable');	
@@ -475,6 +724,7 @@
 				valid=false;
 			}
 
+
 			var table = document.getElementById('flagTable');	
 			var input = table.getElementsByClassName('struct');
 			var arr = [];
@@ -514,17 +764,7 @@
 				alert("Variable " + findDuplicate(arr) + " already exist!");
 				valid=false;
 			}
-
-			// console.log(findDuplicate(arr).length);
 			
-			if(findDuplicate(arr).length > 0) { 
-				alert("Variable " + findDuplicate(arr) + " already exist!");
-				valid=false;
-			}
-
-			
-			var cname= document.getElementById("cname").value;
-
 			return valid;
 		}
 		

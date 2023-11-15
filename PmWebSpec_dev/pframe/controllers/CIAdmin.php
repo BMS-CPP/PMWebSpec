@@ -145,6 +145,7 @@ public function Create($action=NULL, $operation=NULL) {
 			$created_by_session = "God";
 		}
         if(strtolower($param) == "viewmodifytemplate") {
+            // echo 'hi';die;
             $act_type = $this->input->post('choose_temp');
             $data['action_type'] = strtolower(str_replace(" ", "", $act_type));
         }
@@ -617,6 +618,8 @@ public function Create($action=NULL, $operation=NULL) {
              exit;
 
         } 
+
+        // echo '<pre>';print_r($data);die;
 
         $this->load->view('inc/h1.inc.php');
         $this->load->view('manage_users', $data);

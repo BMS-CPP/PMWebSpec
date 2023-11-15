@@ -57,48 +57,48 @@ if ($user_name[0]['user_id'] == NULL) {
             $dataset_type = $user_spec[0]['type'];
             $parts = explode('-', $dataset_type);
 
-            if (in_array('ISOP', $parts)) 
+            if (in_array('CDISC', $parts)) 
             {
                   echo "
-                              <pre><font size='4' color='red'>* --------------------- hepatic function ------------------ *; </font></pre>
+                              <pre><font size='4' color='red'>* --------------------- hepatic function: HEPA/HEPAN ------------------ *; </font></pre>
 
                               <pre>length hepa $ 20; </pre>
-                              <pre>if n(ulntbili, tbilb)=2 then do;</pre>
+                              <pre>if n(ulntbili, tbilbl)=2 then do;</pre>
                               <pre>   ulntbili15=1.5*ulntbili;</pre>
                               <pre>   ulntbili3=3*ulntbili;</pre>
                               <pre>   select;</pre>
-                              <pre>      when (tbilb > ulntbili3) do;</pre>
+                              <pre>      when (tbilbl > ulntbili3) do;</pre>
                               <pre>           hepa='GROUP D: Severe';</pre>
                               <pre>           hepan=4;</pre>
                               <pre>      end;</pre>
-                              <pre>      when (ulntbili15 < tbilb <= ulntbili3) do;</pre>
+                              <pre>      when (ulntbili15 < tbilbl <= ulntbili3) do;</pre>
                               <pre>         hepa='GROUP C: Moderate';</pre>
                               <pre>         hepan=3;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((ulntbili < tbilb <= ulntbili15) or (n(ulnast, astb)=2 and astb > ulnast)) do; *hepan=2 for tbilb OR astb;</pre>
+                              <pre>      when ((ulntbili < tbilbl <= ulntbili15) or (n(ulnast, astbl)=2 and astbl > ulnast)) do; *hepan=2 for tbilbl OR astbl;</pre>
                               <pre>         hepa='GROUP B: Mild';</pre>
                               <pre>         hepan=2;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((tbilb <= ulntbili) and (n(ulnast, astb)=2 and astb <= ulnast)) do; *hepan=1 if <=ULN for tbilb AND astb;</pre>
+                              <pre>      when ((tbilbl <= ulntbili) and (n(ulnast, astbl)=2 and astbl <= ulnast)) do; *hepan=1 if <=ULN for tbilbl AND astbl;</pre>
                               <pre>         hepa='GROUP A: Normal';</pre>
                               <pre>         hepan=1;</pre>
                               <pre>      end;</pre>
-                              <pre>       when ((tbilb <= ulntbili) and n(ulnast, astb) < 2) do; *unable to assign hepa/hepan if tbilb<=ULN, but astb or ulnast is missing;</pre>
+                              <pre>       when ((tbilbl <= ulntbili) and n(ulnast, astbl) < 2) do; *unable to assign hepa/hepan if tbilbl<=ULN, but astbl or ulnast is missing;</pre>
                               <pre>         hepa='';</pre>
                               <pre>         hepan=.;</pre>
                               <pre>      end;</pre>
                               <pre>      otherwise;</pre>
                               <pre>   end;</pre>
                               <pre>end;</pre>
-                              <pre>else do; *hepa value missing if tbilb or ulntbili value missing;</pre>
+                              <pre>else do; *hepa value missing if tbilbl or ulntbili value missing;</pre>
                               <pre>   hepa='';</pre>
                               <pre>   hepan=.;</pre>
                               <pre>end;</pre>
                               <br />";
                               echo '<br />
-                              <pre><font size="4" color="red">* ---------------- EGFRB, CRCLB and IBWB -------------- *; </font></pre>
+                              <pre><font size="4" color="red">* ---------------- EGFRBL, CRCLBL and IBWBL -------------- *; </font></pre>
 
-                              <pre>****** EGFRB ******;</pre>
+                              <pre>****** EGFRBL ******;</pre>
                               <pre>if age > 18 then do;</pre>
                               <pre>    if sexn=1 then do; * male;</pre>
                               <pre>        k=.9;</pre> 
@@ -108,79 +108,79 @@ if ($user_name[0]['user_id'] == NULL) {
                               <pre>        k=.7; </pre>
                               <pre>        a=-.329; </pre>
                               <pre>    end;      </pre>    
-                              <pre>    if n(creatb, sexn, racen)=3 then do; </pre>
-                              <pre>        egfrb=141*(min((creatb/k),1)**a)*(max(creatb/k,1)**-1.209)*(0.993**age); </pre>
-                              <pre>        if sexn=2 then egfrb=egfrb*1.018;</pre> 
-                              <pre>        if racen=2 then egfrb=egfrb*1.159; </pre>
+                              <pre>    if n(creatbl, sexn, racen)=3 then do; </pre>
+                              <pre>        egfrbl=141*(min((creatbl/k),1)**a)*(max(creatbl/k,1)**-1.209)*(0.993**age); </pre>
+                              <pre>        if sexn=2 then egfrbl=egfrbl*1.018;</pre> 
+                              <pre>        if racen=2 then egfrbl=egfrbl*1.159; </pre>
                               <pre>    end; </pre>
                               <pre>end;</pre>
                               <pre>else if 0 < age <= 18 then do;   </pre>    
-                              <pre>    if n(creatb, htb)=2 then egfrb=0.413*(htb/creatb);</pre>
+                              <pre>    if n(creatbl, htbl)=2 then egfrbl=0.413*(htbl/creatbl);</pre>
                               <pre>end;</pre>
                               <pre>drop k a; </pre>
                               <pre>****** CRCLB  ******; </pre>
-                              <pre>    if n(wtb, creatb, sexn, age)=4 then crclb=(((140-age)*wtb)/(72*creatb)); </pre>
-                              <pre>    if sexn=2 and crclb>. then crclb=crclb * 0.85; </pre>
+                              <pre>    if n(wtbl, creatbl, sexn, age)=4 then crclbl=(((140-age)*wtbl)/(72*creatbl)); </pre>
+                              <pre>    if sexn=2 and crclbl>. then crclbl=crclbl * 0.85; </pre>
                               
-                              <pre>****** IBWB ******;</pre>
-                              <pre>if n(htb, sexn)=2 then do; </pre>
-                              <pre>    ht_in = htb*0.3937; * 1 cm = 0.3937 in; </pre>
+                              <pre>****** IBWBL ******;</pre>
+                              <pre>if n(htbl, sexn)=2 then do; </pre>
+                              <pre>    ht_in = htbl*0.3937; * 1 cm = 0.3937 in; </pre>
                               <pre>    if sexn=1 then do; </pre>
-                              <pre>        if ht_in > 60 then ibwb=50+2.3*(ht_in-60);</pre> 
-                              <pre>        else ibwb=50; </pre>
+                              <pre>        if ht_in > 60 then ibwbl=50+2.3*(ht_in-60);</pre> 
+                              <pre>        else ibwbl=50; </pre>
                               <pre>    end; </pre>
                               <pre>    else if sexn =2 then do; </pre>
-                              <pre>        if ht_in > 60 then ibwb=45.5+2.3*(ht_in-60); </pre>
-                              <pre>        else ibwb=45.5; </pre>
+                              <pre>        if ht_in > 60 then ibwbl=45.5+2.3*(ht_in-60); </pre>
+                              <pre>        else ibwbl=45.5; </pre>
                               <pre>    end; </pre>
                               <pre>end; </pre>
                               <br />';
             }
             else
             {
-                  if (strpos($dataset_type, 'PPK') !== false) {
+                  if (strpos($dataset_type, 'ER') !== false) {
                         echo "
-                              <pre><font size='4' color='red'>* --------------------- hepatic function ------------------ *; </font></pre>
+                              <pre><font size='4' color='red'>* --------------------- hepatic function: HEPA/HEPAN ------------------ *; </font></pre>
 
                               <pre>length hepa $ 20; </pre>
-                              <pre>if n(ulntbili, tbilb)=2 then do;</pre>
+                              <pre>if n(ulntbili, tbilbl)=2 then do;</pre>
 
                               <pre>   ulntbili15=1.5*ulntbili;</pre>
                               <pre>   ulntbili3=3*ulntbili;</pre>
 
                               <pre>   select;</pre>
-                              <pre>      when (tbilb > ulntbili3) do;</pre>
+                              <pre>      when (tbilbl > ulntbili3) do;</pre>
                               <pre>           hepa='GROUP D: Severe';</pre>
                               <pre>           hepan=4;</pre>
                               <pre>      end;</pre>
-                              <pre>      when (ulntbili15 < tbilb <= ulntbili3) do;</pre>
+                              <pre>      when (ulntbili15 < tbilbl <= ulntbili3) do;</pre>
                               <pre>         hepa='GROUP C: Moderate';</pre>
                               <pre>         hepan=3;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((ulntbili < tbilb <= ulntbili15) or (n(ulnast, astb)=2 and astb > ulnast)) do; *hepan=2 for tbilb OR astb;</pre>
+                              <pre>      when ((ulntbili < tbilbl <= ulntbili15) or (n(ulnast, astbl)=2 and astbl > ulnast)) do; *hepan=2 for tbilbl OR astbl;</pre>
                               <pre>         hepa='GROUP B: Mild';</pre>
                               <pre>         hepan=2;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((tbilb <= ulntbili) and (n(ulnast, astb)=2 and astb <= ulnast)) do; *hepan=1 if <=ULN for tbilb AND astb;</pre>
+                              <pre>      when ((tbilbl <= ulntbili) and (n(ulnast, astbl)=2 and astbl <= ulnast)) do; *hepan=1 if <=ULN for tbilbl AND astbl;</pre>
                               <pre>         hepa='GROUP A: Normal';</pre>
                               <pre>         hepan=1;</pre>
                               <pre>      end;</pre>
-                              <pre>       when ((tbilb <= ulntbili) and n(ulnast, astb) < 2) do; *unable to assign hepa/hepan if tbilb<=ULN, but astb or ulnast is missing;</pre>
+                              <pre>       when ((tbilbl <= ulntbili) and n(ulnast, astbl) < 2) do; *unable to assign hepa/hepan if tbilbl<=ULN, but astbl or ulnast is missing;</pre>
                               <pre>         hepa='';</pre>
                               <pre>         hepan=.;</pre>
                               <pre>      end;</pre>
                               <pre>      otherwise;</pre>
                               <pre>   end;</pre>
                               <pre>end;</pre>
-                              <pre>else do; *hepa value missing if tbilb or ulntbili value missing;</pre>
+                              <pre>else do; *hepa value missing if tbilbl or ulntbili value missing;</pre>
                               <pre>   hepa='';</pre>
                               <pre>   hepan=.;</pre>
                               <pre>end;</pre>
                               <br />";
 
-                              echo '<pre><font size="4" color="red">* ---------------- BGFR, BCRCL and BIBW -------------- *; </font></pre>
+                              echo '<pre><font size="4" color="red">* ---------------- EGFRBL, CRCLBL and IBWBL -------------- *; </font></pre>
                                 
-                                    <pre>****** EGFRB ******;</pre>
+                                    <pre>****** EGFRBL ******;</pre>
                                     <pre>if age > 18 then do;</pre>
                                     <pre>    if sexn=1 then do; * male ;</pre>
                                     <pre>        k=.9;</pre> 
@@ -190,29 +190,29 @@ if ($user_name[0]['user_id'] == NULL) {
                                     <pre>        k=.7; </pre>
                                     <pre>        a=-.329; </pre>
                                     <pre>    end;      </pre>    
-                                    <pre>    if n(creatb, sexn, racen)=3 then do; </pre>
-                                    <pre>        egfrb=141*(min((creatb/k),1)**a)*(max(creatb/k,1)**-1.209)*(0.993**age); </pre>
-                                    <pre>        if sexn=2 then egfrb=egfrb*1.018;</pre> 
-                                    <pre>        if racen=2 then egfrb=egfrb*1.159; </pre>
+                                    <pre>    if n(creatbl, sexn, racen)=3 then do; </pre>
+                                    <pre>        egfrbl=141*(min((creatbl/k),1)**a)*(max(creatbl/k,1)**-1.209)*(0.993**age); </pre>
+                                    <pre>        if sexn=2 then egfrbl=egfrbl*1.018;</pre> 
+                                    <pre>        if racen=2 then egfrbl=egfrbl*1.159; </pre>
                                     <pre>    end; </pre>
                                     <pre>end;</pre>
                                     <pre>else if 0 < age <= 18 then do;   </pre>    
-                                    <pre>    if n(creatb, htb)=2 then egfrb=0.413*(htb/creatb);</pre>
+                                    <pre>    if n(creatbl, htbl)=2 then egfrbl=0.413*(htbl/creatbl);</pre>
                                     <pre>end;</pre>
                                     <pre>drop k a ; </pre>
-                                    <pre>****** CRCLB  ******; </pre>
-                                    <pre>    if n(wtb, creatb, sexn, age)=4 then crclb=(((140-age)*wtb)/(72*creatb)); </pre>
-                                    <pre>    if sexn=2 and crclb>. then crclb=crclb * 0.85; </pre>
-                                    <pre>****** IBWB ******; </pre>
-                                    <pre>if n(htb, sexn)=2 then do; </pre>
-                                    <pre>    ht_in = htb*0.3937; * 1 cm = 0.3937 in ; </pre>
+                                    <pre>****** CRCLBL  ******; </pre>
+                                    <pre>    if n(wtbl, creatbl, sexn, age)=4 then crclbl=(((140-age)*wtbl)/(72*creatbl)); </pre>
+                                    <pre>    if sexn=2 and crclbl>. then crclbl=crclbl * 0.85; </pre>
+                                    <pre>****** IBWBL ******; </pre>
+                                    <pre>if n(htbl, sexn)=2 then do; </pre>
+                                    <pre>    ht_in = htbl*0.3937; * 1 cm = 0.3937 in ; </pre>
                                     <pre>    if sexn=1 then do; </pre>
-                                    <pre>        if ht_in > 60 then ibwb=50+2.3*(ht_in-60);</pre> 
-                                    <pre>        else ibwb=50; </pre>
+                                    <pre>        if ht_in > 60 then ibwbl=50+2.3*(ht_in-60);</pre> 
+                                    <pre>        else ibwbl=50; </pre>
                                     <pre>    end; </pre>
                                     <pre>    else if sexn =2 then do; </pre>
-                                    <pre>        if ht_in > 60 then ibwb=45.5+2.3*(ht_in-60); </pre>
-                                    <pre>        else ibwb=45.5; </pre>
+                                    <pre>        if ht_in > 60 then ibwbl=45.5+2.3*(ht_in-60); </pre>
+                                    <pre>        else ibwbl=45.5; </pre>
                                     <pre>    end; </pre>
                                     <pre>end; </pre>
 
@@ -222,45 +222,45 @@ if ($user_name[0]['user_id'] == NULL) {
 
             if($dataset_type == 'Blank Template')
             {
-                 echo "<pre><font size='4' color='red'>* --------------------- hepatic function ------------------ *; </font></pre>
+                 echo "<pre><font size='4' color='red'>* --------------------- hepatic function: HEPA/HEPAN  ------------------ *; </font></pre>
 
                               <pre>length hepa $ 20; </pre>
-                              <pre>if n(ulntbili, tbilb)=2 then do;</pre>
+                              <pre>if n(ulntbili, tbilbl)=2 then do;</pre>
                               <pre>   ulntbili15=1.5*ulntbili;</pre>
                               <pre>   ulntbili3=3*ulntbili;</pre>
                               <pre>   select;</pre>
-                              <pre>      when (tbilb > ulntbili3) do;</pre>
+                              <pre>      when (tbilbl > ulntbili3) do;</pre>
                               <pre>           hepa='GROUP D: Severe';</pre>
                               <pre>           hepan=4;</pre>
                               <pre>      end;</pre>
-                              <pre>      when (ulntbili15 < tbilb <= ulntbili3) do;</pre>
+                              <pre>      when (ulntbili15 < tbilbl <= ulntbili3) do;</pre>
                               <pre>         hepa='GROUP C: Moderate';</pre>
                               <pre>         hepan=3;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((ulntbili < tbilb <= ulntbili15) or (n(ulnast, astb)=2 and astb > ulnast)) do; *hepan=2 for tbilb OR astb;</pre>
+                              <pre>      when ((ulntbili < tbilbl <= ulntbili15) or (n(ulnast, astbl)=2 and astbl > ulnast)) do; *hepan=2 for tbilbl OR astbl;</pre>
                               <pre>         hepa='GROUP B: Mild';</pre>
                               <pre>         hepan=2;</pre>
                               <pre>      end;</pre>
-                              <pre>      when ((tbilb <= ulntbili) and (n(ulnast, astb)=2 and astb <= ulnast)) do; *hepan=1 if <=ULN for tbilb AND astb;</pre>
+                              <pre>      when ((tbilbl <= ulntbili) and (n(ulnast, astbl)=2 and astbl <= ulnast)) do; *hepan=1 if <=ULN for tbilbl AND astbl;</pre>
                               <pre>         hepa='GROUP A: Normal';</pre>
                               <pre>         hepan=1;</pre>
                               <pre>      end;</pre>
-                              <pre>       when ((tbilb <= ulntbili) and n(ulnast, astb) < 2) do; *unable to assign hepa/hepan if tbilb<=ULN, but astb or ulnast is missing;</pre>
+                              <pre>       when ((tbilbl <= ulntbili) and n(ulnast, astbl) < 2) do; *unable to assign hepa/hepan if tbilbl<=ULN, but astbl or ulnast is missing;</pre>
                               <pre>         hepa='';</pre>
                               <pre>         hepan=.;</pre>
                               <pre>      end;</pre>
                               <pre>      otherwise;</pre>
                               <pre>   end;</pre>
                               <pre>end;</pre>
-                              <pre>else do; *hepa value missing if tbilb or ulntbili value missing;</pre>
+                              <pre>else do; *hepa value missing if tbilbl or ulntbili value missing;</pre>
                               <pre>   hepa='';</pre>
                               <pre>   hepan=.;</pre>
                               <pre>end;</pre>
                               <br />";
                               echo '<br />
-                              <pre><font size="4" color="red">* ---------------- EGFRB, CRCLB and IBWB -------------- *; </font></pre>
+                              <pre><font size="4" color="red">* ---------------- EGFRBL, CRCLBL and IBWBL -------------- *; </font></pre>
 
-                              <pre>****** EGFRB ******;</pre>
+                              <pre>****** EGFRBL ******;</pre>
                               <pre>if age > 18 then do;</pre>
                               <pre>    if sexn=1 then do; * male;</pre>
                               <pre>        k=.9;</pre> 
@@ -270,30 +270,30 @@ if ($user_name[0]['user_id'] == NULL) {
                               <pre>        k=.7; </pre>
                               <pre>        a=-.329; </pre>
                               <pre>    end;      </pre>    
-                              <pre>    if n(creatb, sexn, racen)=3 then do; </pre>
-                              <pre>        egfrb=141*(min((creatb/k),1)**a)*(max(creatb/k,1)**-1.209)*(0.993**age); </pre>
-                              <pre>        if sexn=2 then egfrb=egfrb*1.018;</pre> 
-                              <pre>        if racen=2 then egfrb=egfrb*1.159; </pre>
+                              <pre>    if n(creatbl, sexn, racen)=3 then do; </pre>
+                              <pre>        egfrbl=141*(min((creatbl/k),1)**a)*(max(creatbl/k,1)**-1.209)*(0.993**age); </pre>
+                              <pre>        if sexn=2 then egfrbl=egfrbl*1.018;</pre> 
+                              <pre>        if racen=2 then egfrbl=egfrbl*1.159; </pre>
                               <pre>    end; </pre>
                               <pre>end;</pre>
                               <pre>else if 0 < age <= 18 then do;   </pre>    
-                              <pre>    if n(creatb, htb)=2 then egfrb=0.413*(htb/creatb);</pre>
+                              <pre>    if n(creatbl, htbl)=2 then egfrbl=0.413*(htbl/creatbl);</pre>
                               <pre>end;</pre>
                               <pre>drop k a; </pre>
-                              <pre>****** CRCLB  ******; </pre>
-                              <pre>    if n(wtb, creatb, sexn, age)=4 then crclb=(((140-age)*wtb)/(72*creatb)); </pre>
-                              <pre>    if sexn=2 and crclb>. then crclb=crclb * 0.85; </pre>
+                              <pre>****** CRCLBL  ******; </pre>
+                              <pre>    if n(wtbl, creatbl, sexn, age)=4 then crclbl=(((140-age)*wtbl)/(72*creatbl)); </pre>
+                              <pre>    if sexn=2 and crclbl>. then crclbl=crclbl * 0.85; </pre>
                               
-                              <pre>****** IBWB ******;</pre>
-                              <pre>if n(htb, sexn)=2 then do; </pre>
-                              <pre>    ht_in = htb*0.3937; * 1 cm = 0.3937 in; </pre>
+                              <pre>****** IBWBL ******;</pre>
+                              <pre>if n(htbl, sexn)=2 then do; </pre>
+                              <pre>    ht_in = htbl*0.3937; * 1 cm = 0.3937 in; </pre>
                               <pre>    if sexn=1 then do; </pre>
-                              <pre>        if ht_in > 60 then ibwb=50+2.3*(ht_in-60);</pre> 
-                              <pre>        else ibwb=50; </pre>
+                              <pre>        if ht_in > 60 then ibwbl=50+2.3*(ht_in-60);</pre> 
+                              <pre>        else ibwbl=50; </pre>
                               <pre>    end; </pre>
                               <pre>    else if sexn =2 then do; </pre>
-                              <pre>        if ht_in > 60 then ibwb=45.5+2.3*(ht_in-60); </pre>
-                              <pre>        else ibwb=45.5; </pre>
+                              <pre>        if ht_in > 60 then ibwbl=45.5+2.3*(ht_in-60); </pre>
+                              <pre>        else ibwbl=45.5; </pre>
                               <pre>    end; </pre>
                               <pre>end; </pre>
                               <br />'; 
@@ -391,5 +391,4 @@ if ($user_name[0]['user_id'] == NULL) {
 		<pre>run; </pre>
 		</div>
 	</body>
-
 </html>
