@@ -11,7 +11,7 @@
 
     <footer class="mastfoot mt-auto"> 
     	<div class="footer-copyright">  
-        	<ul><li>Copyright © 2029 Bristol Myers Squibb. All Rights Reserved.</li></ul>
+        	<ul><li>Copyright © 2020 Company name. All rights reserved.</li></ul>
     	</div>
     </footer>
 
